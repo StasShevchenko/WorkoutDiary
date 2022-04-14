@@ -2,6 +2,7 @@ plugins {
     id ("com.android.application")
     id ("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -15,6 +16,9 @@ android {
         versionName = Dependencies.ProjectConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    kapt {
+        correctErrorTypes = true
     }
 
     buildTypes {
@@ -47,6 +51,8 @@ dependencies {
     kapt(Dependencies.DaggerHilt.hiltCompiler)
     implementation(Dependencies.DaggerHilt.hiltAndroid)
 
+    implementation(Dependencies.Coroutines.coroutinesCore)
+    implementation(Dependencies.Coroutines.coroutinesAndroid)
 
     testImplementation (Dependencies.Testing.junit4)
     androidTestImplementation (Dependencies.Testing.junitAndroidExt)

@@ -31,11 +31,20 @@ object Dependencies {
     }
 
     object DaggerHilt{
-        private const val hiltVersion = "2.40"
+        private const val hiltVersion = "2.41"
         const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+        const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 
+    object Coroutines{
+        private const val coroutinesCoreVersion = "1.5.0"
+        const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
+
+        private const val coroutinesAndroidVersion = "1.5.1"
+        const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+    }
 
     object Material{
         private const val materialVersion = "1.5.0"
