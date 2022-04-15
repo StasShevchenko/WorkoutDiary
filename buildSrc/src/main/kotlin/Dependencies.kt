@@ -9,6 +9,8 @@ object Dependencies {
 
         private const val constraintLayoutVersion = "2.1.3"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+
     }
 
     object Testing{
@@ -36,6 +38,15 @@ object Dependencies {
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
         const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+    }
+
+    object Navigation{
+        private const val navigationVersion = "2.4.2"
+
+        const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+        const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+        const val navigationSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
+
     }
 
     object Coroutines{

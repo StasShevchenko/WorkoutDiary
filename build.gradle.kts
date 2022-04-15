@@ -8,6 +8,7 @@ buildscript {
 
     dependencies {
         classpath(Dependencies.DaggerHilt.hiltPlugin)
+        classpath(Dependencies.Navigation.navigationSafeArgs)
     }
 }
 
