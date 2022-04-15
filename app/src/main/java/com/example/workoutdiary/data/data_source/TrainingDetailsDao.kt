@@ -39,6 +39,6 @@ interface TrainingDetailsDao {
             "(SELECT trainingBlockId, setOrder, repeats, weight, time, distance FROM " +
             "OrderedSet JOIN TrainingParameters USING(trainingParametersId))" +
             "USING (trainingBlockId) WHERE trainingBlockId = :trainingBlockId")
-    fun getTrainingDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>>
+    fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>>
 
 }

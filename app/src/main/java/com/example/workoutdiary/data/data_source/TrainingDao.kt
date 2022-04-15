@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface TrainingDao {
 
     @Query("SELECT * FROM Training")
-    fun getTrainings(): Flow<List<Training>>
+    fun getAllTrainings(): Flow<List<Training>>
 
     @Query("SELECT trainingBlockId, trainingBlockOrder, exerciseName," +
             "exerciseType, setOrder, repeats, weight, time, distance " +
