@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/activity_main.xml" value="0.20380434782608695" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/calendar_screen_fragment.xml" value="0.21422101449275363" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/home_screen_fragment.xml" value="0.21422101449275363" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
       </map>
     </option>
   </component>

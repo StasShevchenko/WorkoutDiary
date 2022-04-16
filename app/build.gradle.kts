@@ -21,6 +21,9 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    buildFeatures{
+        viewBinding = true
+    }
 
     buildTypes {
         release {
@@ -44,6 +47,9 @@ dependencies {
     implementation (Dependencies.AndroidX.constraintLayout)
 
     implementation (Dependencies.Material.material)
+
+    implementation(Dependencies.Navigation.navigationUi)
+    implementation(Dependencies.Navigation.navigationFragment)
 
     kapt(Dependencies.Room.roomCompiler)
     implementation(Dependencies.Room.roomKtx)
