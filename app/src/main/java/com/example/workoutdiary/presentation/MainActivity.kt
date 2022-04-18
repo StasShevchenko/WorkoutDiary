@@ -34,21 +34,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeScreenFragment,
-            R.id.calendarScreenFragment
-        ))
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         navView.background = null
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
-
-        val date: LocalDateTime = LocalDateTime.now()
-        val data: LocalDateTime = LocalDateTime.parse(date.toString())
-        val dateTime: ZonedDateTime = ZonedDateTime.now()
-        Log.d(TAG, data.month.getDisplayName(TextStyle.FULL_STANDALONE, ConfigurationCompat.getLocales(resources.configuration)[0]))
-
     }
 }

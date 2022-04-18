@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/training_item"
+    android:layout_margin="8dp"
+    android:layout_width="150dp"
+    app:cardElevation="4dp"
+    android:layout_height="150dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/day_text_view"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:layout_height="wrap_content"
+            tools:text = "Суббота 16" />
+        <TextView
+            android:id="@+id/training_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:text = "Спина и бицепс"
+            />
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

@@ -10,7 +10,7 @@ object Dependencies {
         private const val constraintLayoutVersion = "2.1.3"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
-
+        const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
     }
 
     object Testing{
@@ -55,6 +55,12 @@ object Dependencies {
 
         private const val coroutinesAndroidVersion = "1.5.1"
         const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesAndroidVersion"
+
+    }
+
+    object LiveData{
+        private const val liveDataLifecycleVersion = "2.4.1"
+        const val liveDataLifecycle = "androidx.lifecycle:lifecycle-livedata-ktx:$liveDataLifecycleVersion"
     }
 
     object Material{

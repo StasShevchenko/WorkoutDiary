@@ -45,6 +45,7 @@ dependencies {
     implementation (Dependencies.AndroidX.coreKtx)
     implementation (Dependencies.AndroidX.appCompat)
     implementation (Dependencies.AndroidX.constraintLayout)
+    implementation (Dependencies.AndroidX.recyclerView)
 
     implementation (Dependencies.Material.material)
 
@@ -60,6 +61,8 @@ dependencies {
 
     implementation(Dependencies.Coroutines.coroutinesCore)
     implementation(Dependencies.Coroutines.coroutinesAndroid)
+
+    implementation(Dependencies.LiveData.liveDataLifecycle)
 
     testImplementation (Dependencies.Testing.junit4)
     androidTestImplementation (Dependencies.Testing.junitAndroidExt)

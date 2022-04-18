@@ -6,6 +6,7 @@ import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.domain.repository.TrainingRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -13,7 +14,7 @@ class GetTrainingsByMonth(
     private val trainingRepository: TrainingRepository
 ) {
     @RequiresApi(Build.VERSION_CODES.O)
-    operator fun invoke(currentDate: LocalDateTime): Flow<List<Training>> {
+    operator fun invoke(currentDate: LocalDate): Flow<List<Training>> {
         return trainingRepository.getAllTrainings().map { trainings ->
             trainings.filter { training ->
                 training.trainingDate.year == currentDate.year &&
