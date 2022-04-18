@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.onEach
 import java.time.LocalDate
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
 val trainingUseCase: GetTrainingsByMonth
@@ -26,7 +25,6 @@ val trainingUseCase: GetTrainingsByMonth
     private var getTrainingDaysJob: Job? = null
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getTrainingDaysByMonth(date: LocalDate) {
         getTrainingDaysJob?.cancel()
         getTrainingDaysJob = trainingUseCase(date).onEach { trainings ->
@@ -54,7 +52,6 @@ val trainingUseCase: GetTrainingsByMonth
         getTrainingDaysByMonth(LocalDate.now())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun onEvent(event: HomeScreenEvent) {
         when (event){
             is HomeScreenEvent.ChangeDate -> {

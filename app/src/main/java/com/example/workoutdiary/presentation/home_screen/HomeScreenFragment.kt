@@ -19,7 +19,6 @@ import java.time.LocalDate
 class HomeScreenFragment : Fragment(R.layout.home_screen_fragment) {
     private val viewModel: HomeScreenViewModel by viewModels()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

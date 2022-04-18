@@ -13,7 +13,6 @@ import java.util.*
 class GetTrainingsByMonth(
     private val trainingRepository: TrainingRepository
 ) {
-    @RequiresApi(Build.VERSION_CODES.O)
     operator fun invoke(currentDate: LocalDate): Flow<List<Training>> {
         return trainingRepository.getAllTrainings().map { trainings ->
             trainings.filter { training ->

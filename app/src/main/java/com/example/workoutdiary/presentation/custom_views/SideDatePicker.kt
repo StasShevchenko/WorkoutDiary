@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.*
@@ -13,14 +14,10 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.os.ConfigurationCompat
 import com.example.workoutdiary.R
 import java.time.LocalDate
-
-import java.time.LocalDateTime
 import java.time.format.TextStyle
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 class SideDatePicker(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
-    @RequiresApi(Build.VERSION_CODES.O)
     private var date: LocalDate = LocalDate.now()
     private var onDateChanged: ((LocalDate) -> Unit)? = null
     private var onTextClickedAction: (() -> Unit)? = null
@@ -40,6 +37,10 @@ class SideDatePicker(context: Context, attrs: AttributeSet) : RelativeLayout(con
     }
     fun setOnTextClickedAction(listener: () -> Unit) {
         onTextClickedAction = listener
+    }
+    private fun getMonthName(calendar: Calendar): String {
+        var flags: Int = (DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_MONTH_DAY or DateUtils.FORMAT_NO_YEAR);
+        return DateUtils.formatDateTime(getContext(), calendar.getTimeInMillis(), flags);
     }
 
     override fun onFinishInflate() {
@@ -66,7 +67,9 @@ class SideDatePicker(context: Context, attrs: AttributeSet) : RelativeLayout(con
 
     @SuppressLint("SetTextI18n")
     private fun updateText(){
-            this.findViewById<TextView>(R.id.sidedatepicker_view_current_value).text = date.month.getDisplayName(TextStyle.FULL_STANDALONE, ConfigurationCompat.getLocales(resources.configuration)[0])
+        val calendar = Calendar.getInstance()
+        calendar.set(date.year, date.monthValue-1, date.dayOfMonth)
+            this.findViewById<TextView>(R.id.sidedatepicker_view_current_value).text = getMonthName(calendar)
                 .replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
                 } + " "+ date.year

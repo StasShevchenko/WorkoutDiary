@@ -26,7 +26,6 @@ class TrainingDaysAdapter : ListAdapter<TrainingDay, TrainingDaysAdapter.Trainin
         return TrainingDaysViewHolder(binding, ConfigurationCompat.getLocales(parent.context.resources.configuration)[0])
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TrainingDaysViewHolder, position: Int) {
         val currentItem = getItem(position)
         if (currentItem != null) {
@@ -38,7 +37,6 @@ class TrainingDaysAdapter : ListAdapter<TrainingDay, TrainingDaysAdapter.Trainin
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(trainingDay: TrainingDay) {
             if (trainingDay.trainingList.isEmpty()) {
                 binding.apply {

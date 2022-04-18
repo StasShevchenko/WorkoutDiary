@@ -13,6 +13,10 @@ object Dependencies {
         const val recyclerView = "androidx.recyclerview:recyclerview:1.2.1"
     }
 
+    object CoreLibraryDesugaring{
+        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
+    }
+
     object Testing{
         private const val junitVersion = "4.13.2"
         const val junit4 = "junit:junit:$junitVersion"
