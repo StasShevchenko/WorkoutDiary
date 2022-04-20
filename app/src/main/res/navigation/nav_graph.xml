@@ -9,10 +9,27 @@
         android:id="@+id/homeScreenFragment"
         android:name="com.example.workoutdiary.presentation.home_screen.HomeScreenFragment"
         android:label="Home screen"
-        tools:layout="@layout/home_screen_fragment" />
+        tools:layout="@layout/home_screen_fragment" >
+        <action
+            android:id="@+id/action_homeScreenFragment_to_addEditTrainingScreenFragment"
+            app:destination="@id/addEditTrainingScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/calendarScreenFragment"
         android:name="com.example.workoutdiary.presentation.calendar_screen.CalendarScreenFragment"
         android:label="Calendar screen"
         tools:layout="@layout/calendar_screen_fragment" />
+    <fragment
+        android:id="@+id/addEditTrainingScreenFragment"
+        android:name="com.example.workoutdiary.presentation.add_edit_training_screen.AddEditTrainingScreenFragment"
+        android:label="add_edit_training_screen"
+        tools:layout="@layout/add_edit_training_screen" >
+        <argument
+            android:name="trainingDate"
+            app:argType="java.time.LocalDate" />
+        <argument
+            android:name="trainingId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

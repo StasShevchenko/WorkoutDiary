@@ -36,8 +36,8 @@
         android:id="@+id/training_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="0dp"
         android:src="@drawable/ic_add"
-        app:elevation="0dp"
         app:layout_anchor="@id/bottomAppBar"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 

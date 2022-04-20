@@ -1,31 +1,21 @@
 package com.example.workoutdiary.presentation
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.ConfigurationCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.workoutdiary.R
+import com.example.workoutdiary.presentation.utils.FabButtonClick
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZonedDateTime
-import java.time.format.TextStyle
-import java.util.*
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val TAG = "Date time"
+    private var fabButtonClick: FabButtonClick? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +24,29 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        val bottomBar: BottomAppBar = findViewById(R.id.bottomAppBar)
         navView.background = null
+        val fab = findViewById<FloatingActionButton>(R.id.training_fab)
+        fab.setOnClickListener {
+           fabButtonClick?.onFabClicked()
+        }
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener{_, destination, _ ->
+            when (destination.id) {
+                R.id.addEditTrainingScreenFragment -> {
+                   fab.hide()
+                   bottomBar.performHide()
+                }
+                else -> {
+                   fab.show()
+                   bottomBar.performShow()
+
+                }
+            }
+        }
+    }
+
+     fun setFabListener(listener: FabButtonClick) {
+        fabButtonClick = listener
     }
 }
