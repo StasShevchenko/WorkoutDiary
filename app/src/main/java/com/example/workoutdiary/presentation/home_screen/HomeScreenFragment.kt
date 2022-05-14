@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutdiary.R
@@ -15,6 +18,10 @@ import com.example.workoutdiary.databinding.HomeScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @AndroidEntryPoint
@@ -44,8 +51,13 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             }
 
         }
-        viewModel.trainingDaysList.observe(viewLifecycleOwner){
-        trainingDaysAdapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.trainingDaysList
+                    .collectLatest {
+                        trainingDaysAdapter.submitList(it)
+                }
+            }
         }
 
 

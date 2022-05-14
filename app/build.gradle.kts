@@ -54,6 +54,8 @@ dependencies {
     implementation(Dependencies.Navigation.navigationUi)
     implementation(Dependencies.Navigation.navigationFragment)
 
+    implementation(Dependencies.LifeCycle.lifecycle)
+
     kapt(Dependencies.Room.roomCompiler)
     implementation(Dependencies.Room.roomKtx)
     implementation(Dependencies.Room.roomRuntime)

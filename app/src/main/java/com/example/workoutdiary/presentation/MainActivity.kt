@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             fabButtonClick?.onFabClicked()
         }
-        fab.useCompatPadding = true
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {

@@ -62,6 +62,10 @@ object Dependencies {
 
     }
 
+    object LifeCycle{
+         const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    }
+
     object LiveData{
         private const val liveDataLifecycleVersion = "2.4.1"
         const val liveDataLifecycle = "androidx.lifecycle:lifecycle-livedata-ktx:$liveDataLifecycleVersion"
