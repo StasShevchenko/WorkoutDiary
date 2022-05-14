@@ -1,6 +1,7 @@
 package com.example.workoutdiary.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -28,25 +29,30 @@ class MainActivity : AppCompatActivity() {
         navView.background = null
         val fab = findViewById<FloatingActionButton>(R.id.training_fab)
         fab.setOnClickListener {
-           fabButtonClick?.onFabClicked()
+            fabButtonClick?.onFabClicked()
         }
+        fab.useCompatPadding = true
         navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener{_, destination, _ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.addEditTrainingScreenFragment -> {
-                   fab.hide()
-                   bottomBar.performHide()
+                    fab.visibility = View.GONE
+                    fab.isEnabled = false
+                    navView.visibility = View.GONE
+                    bottomBar.visibility = View.GONE
                 }
                 else -> {
-                   fab.show()
-                   bottomBar.performShow()
-
+                    bottomBar.visibility = View.VISIBLE
+                    navView.visibility = View.VISIBLE
+                    fab.visibility = View.VISIBLE
+                    bottomBar.fabCradleMargin = 24f
+                    fab.isEnabled = true
                 }
             }
         }
     }
 
-     fun setFabListener(listener: FabButtonClick) {
+    fun setFabListener(listener: FabButtonClick) {
         fabButtonClick = listener
     }
 }

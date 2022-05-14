@@ -31,5 +31,9 @@
             android:name="trainingId"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="trainingName"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>

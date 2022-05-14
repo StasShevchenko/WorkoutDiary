@@ -13,5 +13,5 @@ interface TrainingRepository {
 
     suspend fun insertTraining(training: Training): Long
 
-    suspend fun deleteTraining(training: Training)
+    suspend fun deleteTraining(trainingId: Int)
 }

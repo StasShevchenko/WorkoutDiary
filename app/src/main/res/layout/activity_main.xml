@@ -10,7 +10,6 @@
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:layout_height="match_parent"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true" />
@@ -19,8 +18,6 @@
     android:id="@+id/bottomAppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
-    app:fabCradleMargin="12dp"
     android:layout_gravity="bottom">
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -36,7 +33,6 @@
         android:id="@+id/training_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="0dp"
         android:src="@drawable/ic_add"
         app:layout_anchor="@id/bottomAppBar"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />

@@ -9,14 +9,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.TrainingItemBinding
 import com.example.workoutdiary.domain.model.TrainingDay
 import com.example.workoutdiary.presentation.utils.resolveColorAttr
+import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-class TrainingDaysAdapter : ListAdapter<TrainingDay, TrainingDaysAdapter.TrainingDaysViewHolder>(
-    TrainingDaysAdapter.TrainingDaysComparator()
+class TrainingDaysAdapter(private val clickListener: OnTrainingClickListener) : ListAdapter<TrainingDay, TrainingDaysAdapter.TrainingDaysViewHolder>(
+   TrainingDaysComparator()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingDaysViewHolder {
         val binding =
@@ -31,8 +33,20 @@ class TrainingDaysAdapter : ListAdapter<TrainingDay, TrainingDaysAdapter.Trainin
         }
     }
 
-    class TrainingDaysViewHolder(private val binding: TrainingItemBinding, private val currentLocale: Locale) :
+    inner class TrainingDaysViewHolder(private val binding: TrainingItemBinding, private val currentLocale: Locale) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                val position = absoluteAdapterPosition
+                if(position != RecyclerView.NO_POSITION){
+                    val currentItem = getItem(position)
+                    if(currentItem.trainingList.isNotEmpty())
+                    clickListener.onTrainingClick(getItem(position).trainingList[0], currentItem.date)
+                    else clickListener.onTrainingClick(null, currentItem.date)
+                }
+            }
+        }
 
         @SuppressLint("SetTextI18n")
         fun bind(trainingDay: TrainingDay) {
@@ -64,6 +78,10 @@ class TrainingDaysAdapter : ListAdapter<TrainingDay, TrainingDaysAdapter.Trainin
         override fun areContentsTheSame(oldItem: TrainingDay, newItem: TrainingDay): Boolean =
             oldItem == newItem
 
+    }
+
+    interface OnTrainingClickListener{
+        fun onTrainingClick(training: Training?, date: LocalDate)
     }
 }
 

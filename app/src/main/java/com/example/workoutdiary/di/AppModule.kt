@@ -5,7 +5,10 @@ import androidx.room.Room
 import com.example.workoutdiary.data.data_source.WorkoutDatabase
 import com.example.workoutdiary.data.repository.TrainingRepositoryImpl
 import com.example.workoutdiary.domain.repository.TrainingRepository
+import com.example.workoutdiary.domain.use_case.DeleteTraining
+import com.example.workoutdiary.domain.use_case.GetTrainingDetailsByTrainingID
 import com.example.workoutdiary.domain.use_case.GetTrainingsByMonth
+import com.example.workoutdiary.domain.use_case.InsertTraining
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +41,24 @@ object AppModule {
     @Singleton
     fun provideGetTrainingsByMonthUseCase(repository: TrainingRepository): GetTrainingsByMonth {
         return GetTrainingsByMonth(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteTrainingUseCase(repository: TrainingRepository): DeleteTraining{
+        return DeleteTraining(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInsertTrainingUseCase(repository: TrainingRepository): InsertTraining{
+        return InsertTraining(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetTrainingDetailsByTrainingIdUseCase(repository: TrainingRepository): GetTrainingDetailsByTrainingID {
+        return  GetTrainingDetailsByTrainingID(repository)
     }
 
 }

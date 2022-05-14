@@ -26,6 +26,7 @@ interface TrainingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTraining(training: Training): Long
 
-    @Delete
-    suspend fun deleteTraining(training: Training)
+    @Query("DELETE FROM Training WHERE trainingId = :trainingId")
+    suspend fun deleteTraining(trainingId: Int)
+
 }

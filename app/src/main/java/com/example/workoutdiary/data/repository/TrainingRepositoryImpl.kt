@@ -20,7 +20,7 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
         return trainingDao.insertTraining(training)
     }
 
-    override suspend fun deleteTraining(training: Training) {
-        trainingDao.deleteTraining(training)
+    override suspend fun deleteTraining(trainingId: Int) {
+        trainingDao.deleteTraining(trainingId)
     }
 }

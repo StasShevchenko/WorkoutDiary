@@ -1,6 +1,7 @@
 package com.example.workoutdiary.presentation.home_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.HomeScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
 import com.example.workoutdiary.presentation.utils.FabButtonClick
@@ -16,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick {
+class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick, TrainingDaysAdapter.OnTrainingClickListener {
     private val viewModel: HomeScreenViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +27,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         activity.setFabListener(this)
         val binding = HomeScreenFragmentBinding.bind(view)
 
-        val trainingDaysAdapter = TrainingDaysAdapter()
+        val trainingDaysAdapter = TrainingDaysAdapter(this)
 
         binding.apply {
             trainingRecyclerView.apply {
@@ -46,12 +48,29 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         trainingDaysAdapter.submitList(it)
         }
 
+
     }
+
+    override fun onTrainingClick(training: Training?, date: LocalDate) {
+        val action =
+            HomeScreenFragmentDirections
+                .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
+                    trainingDate = training?.trainingDate?.toLocalDate() ?: date,
+                    trainingId = training?.trainingId ?: -1,
+                    trainingName = training?.trainingName ?: ""
+                )
+        findNavController().navigate(action)
+    }
+
 
     override fun onFabClicked() {
         val action =
             HomeScreenFragmentDirections
-                .actionHomeScreenFragmentToAddEditTrainingScreenFragment(trainingDate = LocalDate.now(), trainingId = -1)
+                .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
+                    trainingDate = LocalDate.now(),
+                    trainingId = viewModel.currentItem?.trainingId ?: -1,
+                    trainingName = viewModel.currentItem?.trainingName ?: ""
+                )
         findNavController().navigate(action)
     }
 }

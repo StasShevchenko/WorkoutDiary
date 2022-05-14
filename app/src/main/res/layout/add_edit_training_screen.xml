@@ -21,7 +21,6 @@
        />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/training_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -29,7 +28,7 @@
         android:layout_margin="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/cost_of_service_edit_text"
+            android:id="@+id/training_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
          />
@@ -40,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="16dp"
+        android:padding="8dp"
         />
     <Button
         android:id="@+id/add_training_block_button"
