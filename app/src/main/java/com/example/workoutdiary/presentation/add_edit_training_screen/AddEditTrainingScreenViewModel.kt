@@ -60,12 +60,11 @@ class AddEditTrainingScreenViewModel @Inject constructor(
         if (currentTrainingId == -1) {
             isNewEntryReceived = true
             viewModelScope.launch {
-                val trainingDate = LocalDateTime.of(date, LocalTime.now())
                 currentTrainingId = insertTrainingUseCase(
                     Training(
                         0,
                         trainingName = trainingName,
-                        trainingDate = trainingDate
+                        trainingDate = date
                     )
                 ).toInt()
                 isInserted = true

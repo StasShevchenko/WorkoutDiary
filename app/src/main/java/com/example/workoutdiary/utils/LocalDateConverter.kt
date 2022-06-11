@@ -3,17 +3,18 @@ package com.example.workoutdiary.utils
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
-class LocalDateTimeConverter {
+class LocalDateConverter {
     @TypeConverter
-    fun fromString(value: String?): LocalDateTime? {
-        return LocalDateTime.parse(value)
+    fun fromString(value: String?): LocalDate? {
+        return LocalDate.parse(value)
     }
 
     @TypeConverter
-    fun dateToString(date: LocalDateTime?): String? {
+    fun dateToString(date: LocalDate?): String? {
         return date?.toString()
     }
 }

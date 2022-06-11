@@ -49,7 +49,7 @@ class HomeScreenViewModel @Inject constructor(
                                 i++
                             }
                             for (training: Training in trainings) {
-                                if (training.trainingDate.toLocalDate() == LocalDate.now())
+                                if (training.trainingDate == LocalDate.now())
                                     currentItem = training
                                 val index = cacheList.indexOf(cacheList.find { trainingDay ->
                                     trainingDay.date.year == training.trainingDate.year && trainingDay.date.month == training.trainingDate.month

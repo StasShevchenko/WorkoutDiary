@@ -67,7 +67,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         val action =
             HomeScreenFragmentDirections
                 .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
-                    trainingDate = training?.trainingDate?.toLocalDate() ?: date,
+                    trainingDate = training?.trainingDate ?: date,
                     trainingId = training?.trainingId ?: -1,
                     trainingName = training?.trainingName ?: ""
                 )
