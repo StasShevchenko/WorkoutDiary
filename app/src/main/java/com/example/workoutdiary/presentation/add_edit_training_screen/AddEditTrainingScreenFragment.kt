@@ -13,12 +13,17 @@ import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -31,11 +36,15 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = AddEditTrainingScreenBinding.bind(view)
+        binding.root.visibility = View.INVISIBLE
+
         binding.apply {
-            if(viewModel.date == LocalDate.now()) {
-                dateTextView.text = viewModel.date.format(DateTimeFormatter.ofPattern("dd.MM.yy")) +" "+ getString(R.string.today)
-            }
-            else{
+            if (viewModel.date == LocalDate.now()) {
+                dateTextView.text =
+                    viewModel.date.format(DateTimeFormatter.ofPattern("dd.MM.yy")) + " " + getString(
+                        R.string.today
+                    )
+            } else {
                 dateTextView.text = viewModel.date.format(DateTimeFormatter.ofPattern("dd.MM.yy"))
             }
 
@@ -59,38 +68,57 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             viewModel.onEvent(AddEditTrainingScreenEvent.OnBackPressed)
         }
 
-        viewModel.trainingDetails.observe(viewLifecycleOwner){ trainingDetails ->
-            trainingDetails.forEach{ trainingBlock ->
-                val trainingDetailsItemBinding = LayoutInflater.from(requireContext()).inflate(R.layout.training_details_item, binding.trainingBlocksList, false)
-                trainingDetailsItemBinding.findViewById<TextView>(R.id.training_block_name_text_view).text = trainingBlock.key.exerciseName
-                when (trainingBlock.key.exerciseType) {
-                    "Вес и повторения" -> {
-                        trainingBlock.value.forEach{
-                            val textView = TextView(requireContext())
-                            textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
-                            textView.text = "Подход ${it.setOrder}: ${it.repeats} повторений ${it.weight} кг"
-                            trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list).addView(textView)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.trainingDetails.collectLatest { trainingDetails ->
+                    if ((viewModel.isCurrentItemReceived && trainingDetails.isNotEmpty()) || viewModel.isNewEntryReceived) {
+                        trainingDetails.forEach { trainingBlock ->
+                            val trainingDetailsItemBinding = LayoutInflater.from(requireContext())
+                                .inflate(
+                                    R.layout.training_details_item,
+                                    binding.trainingBlocksList,
+                                    false
+                                )
+                            trainingDetailsItemBinding.findViewById<TextView>(R.id.training_block_name_text_view).text =
+                                trainingBlock.key.exerciseName
+                            when (trainingBlock.key.exerciseType) {
+                                "Вес и повторения" -> {
+                                    trainingBlock.value.forEach {
+                                        val textView = TextView(requireContext())
+                                        textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
+                                        textView.text =
+                                            "Подход ${it.setOrder}: ${it.repeats} повторений ${it.weight} кг"
+                                        trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list)
+                                            .addView(textView)
+                                    }
+                                }
+                                "Повторения" -> {
+                                    trainingBlock.value.forEach {
+                                        val textView = TextView(requireContext())
+                                        textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
+                                        textView.text =
+                                            "Подход ${it.setOrder}: ${it.repeats} повторений"
+                                        trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list)
+                                            .addView(textView)
+                                    }
+                                }
+                            }
+                            binding.trainingBlocksList.addView(trainingDetailsItemBinding)
                         }
-                    }
-                    "Повторения" ->{
-                        trainingBlock.value.forEach{
-                            val textView = TextView(requireContext())
-                            textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
-                            textView.text = "Подход ${it.setOrder}: ${it.repeats} повторений"
-                            trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list).addView(textView)
-                        }
+                        binding.root.visibility = View.VISIBLE
                     }
                 }
-                binding.trainingBlocksList.addView(trainingDetailsItemBinding)
             }
         }
     }
 }
 
-fun Fragment.onBackPressedCustomAction(action: () -> Unit){
-    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true){
-        override fun handleOnBackPressed() {
-            action()
-        }
-    })
+fun Fragment.onBackPressedCustomAction(action: () -> Unit) {
+    requireActivity().onBackPressedDispatcher.addCallback(
+        viewLifecycleOwner,
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                action()
+            }
+        })
 }
