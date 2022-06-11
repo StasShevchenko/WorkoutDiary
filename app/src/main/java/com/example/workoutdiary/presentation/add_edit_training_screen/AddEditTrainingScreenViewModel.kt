@@ -45,6 +45,8 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     var trainingName = ""
         private set
 
+    private lateinit var unchangedTrainingName: String
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -57,6 +59,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
         date = state.get<LocalDate>("trainingDate")!!
         currentTrainingId = state.get<Int>("trainingId")!!
         trainingName = state.get<String>("trainingName") ?: ""
+        unchangedTrainingName = trainingName
         if (currentTrainingId == -1) {
             isNewEntryReceived = true
             viewModelScope.launch {
@@ -93,6 +96,15 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         if (trainingDetails.value.keys.isEmpty()) {
                             deleteTrainingUseCase(currentTrainingId)
+                        }
+                        else if (trainingName != unchangedTrainingName){
+                            insertTrainingUseCase(
+                                Training(
+                                    currentTrainingId,
+                                    trainingName,
+                                    date
+                                )
+                            )
                         }
                         _eventFlow.emit(
                             UiEvent.OnBackPressed
