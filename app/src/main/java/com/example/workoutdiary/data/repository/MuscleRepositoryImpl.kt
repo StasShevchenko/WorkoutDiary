@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class MuscleRepositoryImpl(
     private val dao: MuscleDao
 ) : MuscleRepository {
-    override fun getAllMuscles(): Flow<Muscle> {
+    override fun getAllMuscles(): Flow<List<Muscle>> {
         return dao.getAllMuscles()
     }
 

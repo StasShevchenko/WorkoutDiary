@@ -1,8 +1,15 @@
 package com.example.workoutdiary.presentation
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -26,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHostFragment.navController
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         val bottomBar: BottomAppBar = findViewById(R.id.bottomAppBar)
+
+
         navView.background = null
         val fab = findViewById<FloatingActionButton>(R.id.training_fab)
         fab.setOnClickListener {
@@ -58,6 +67,27 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        val ret = super.dispatchTouchEvent(ev)
+        ev?.let { event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                currentFocus?.let { view ->
+                    if (view is EditText || view is AutoCompleteTextView) {
+                        val touchCoordinates = IntArray(2)
+                        view.getLocationOnScreen(touchCoordinates)
+                        val x: Float = event.rawX + view.getLeft() - touchCoordinates[0]
+                        val y: Float = event.rawY + view.getTop() - touchCoordinates[1]
+                        if (x < view.getLeft() || x >= view.getRight() || y < view.getTop() || y > view.getBottom()) {
+                            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                            imm.hideSoftInputFromWindow(view.windowToken, 0)
+                            view.clearFocus()
+                        }
+                    }
+                }
+            }
+        }
+        return ret
+    }
     fun setFabListener(listener: FabButtonClick) {
         fabButtonClick = listener
     }

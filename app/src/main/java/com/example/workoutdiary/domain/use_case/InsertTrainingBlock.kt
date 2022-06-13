@@ -16,7 +16,7 @@ class InsertTrainingBlock(
     ) {
         val trainingBlockId = repository.insertTrainingBlock(trainingBlock)
         val resOrderedSets: MutableList<OrderedSet> =
-            listOf<OrderedSet>() as MutableList<OrderedSet>
+            arrayListOf()
         parameterizedSets.forEach {
             val parameters: TrainingParameters? = repository.getTrainingParametersByParams(
                 it.repeats,

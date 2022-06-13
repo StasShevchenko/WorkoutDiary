@@ -28,9 +28,9 @@
                 android:id="@+id/muscleChoiceView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:hint="@string/muscle_type"
                 android:inputType="none"
+                android:dropDownHeight="250dp"
                 tools:text="Бицепс" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,6 +49,15 @@
                 android:inputType="none"
                 tools:text="Сгибания на бицепс" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="@string/sets_count"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,8 +78,8 @@
                 android:id="@+id/number_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:paddingEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 tools:text="1" />

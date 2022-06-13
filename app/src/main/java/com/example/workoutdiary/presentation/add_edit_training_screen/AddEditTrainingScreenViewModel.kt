@@ -27,6 +27,8 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     private val state: SavedStateHandle
 ) : ViewModel() {
 
+
+
     val _trainingDetails: MutableStateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> =
        MutableStateFlow(mapOf())
     val trainingDetails: StateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> = _trainingDetails
@@ -45,7 +47,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     var trainingName = ""
         private set
 
-    private lateinit var unchangedTrainingName: String
+    private var unchangedTrainingName: String
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()

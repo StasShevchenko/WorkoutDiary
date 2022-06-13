@@ -9,4 +9,8 @@ data class Muscle(
     @PrimaryKey(autoGenerate = true)
     val muscleId: Int,
     val muscleName: String
-)
+){
+    override fun toString(): String {
+        return this.muscleName
+    }
+}

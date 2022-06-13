@@ -11,8 +11,8 @@ interface MuscleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMuscle(muscle: Muscle)
 
-    @Query("SELECT * FROM Muscle")
-    fun getAllMuscles(): Flow<Muscle>
+    @Query("SELECT * FROM Muscle ORDER BY muscleName")
+    fun getAllMuscles(): Flow<List<Muscle>>
 
     @Delete
     suspend fun deleteMuscle(muscle: Muscle)
