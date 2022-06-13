@@ -34,18 +34,25 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.addEditTrainingScreenFragment -> {
-                    fab.visibility = View.GONE
-                    fab.isEnabled = false
-                    navView.visibility = View.GONE
-                    bottomBar.visibility = View.GONE
-                }
-                else -> {
+                R.id.homeScreenFragment -> {
                     bottomBar.visibility = View.VISIBLE
                     navView.visibility = View.VISIBLE
                     fab.visibility = View.VISIBLE
                     bottomBar.fabCradleMargin = 24f
                     fab.isEnabled = true
+                }
+                R.id.calendarScreenFragment ->{
+                    bottomBar.visibility = View.VISIBLE
+                    navView.visibility = View.VISIBLE
+                    fab.visibility = View.VISIBLE
+                    bottomBar.fabCradleMargin = 24f
+                    fab.isEnabled = true
+                }
+                else -> {
+                    fab.visibility = View.GONE
+                    fab.isEnabled = false
+                    navView.visibility = View.GONE
+                    bottomBar.visibility = View.GONE
                 }
             }
         }

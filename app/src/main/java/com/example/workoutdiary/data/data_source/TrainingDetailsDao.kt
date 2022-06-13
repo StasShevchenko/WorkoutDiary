@@ -1,6 +1,7 @@
 package com.example.workoutdiary.data.data_source
 
 import androidx.room.*
+import com.example.workoutdiary.data.model.entities.OrderedSet
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.entities.TrainingParameters
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
@@ -20,6 +21,9 @@ interface TrainingDetailsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrainingBlock(trainingBlock: TrainingBlock): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrderedSets(orderedSets: List<OrderedSet>)
+
     @Query("SELECT * FROM TrainingParameters WHERE " +
             "repeats = :repeats AND weight = :weight AND time = :time AND distance = :distance")
     suspend fun getTrainingParametersByParams(
@@ -27,10 +31,10 @@ interface TrainingDetailsDao {
        weight: Int? = null,
        time: Int? = null,
        distance: Int? = null
-    ): TrainingParameters
+    ): TrainingParameters?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrainingParameters(trainingParameters: TrainingParameters)
+    suspend fun insertTrainingParameters(trainingParameters: TrainingParameters): Long
 
     @Query("SELECT trainingBlockId, trainingBlockOrder, exerciseName," +
             "exerciseType, setOrder, repeats, weight, time, distance " +

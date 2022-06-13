@@ -52,6 +52,11 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             trainingNameEditText.addTextChangedListener {
                 viewModel.onEvent(AddEditTrainingScreenEvent.NameEntered(it.toString()))
             }
+
+            addTrainingBlockButton.setOnClickListener{
+                val action = AddEditTrainingScreenFragmentDirections.actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment()
+                findNavController().navigate(action)
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class OrderedSet(
     @PrimaryKey(autoGenerate = true)
-    val orderedSetId: Long,
+    val orderedSetId: Long = 0,
     val setOrder: Int,
     val trainingBlockId: Int,
     val trainingParametersId: Int

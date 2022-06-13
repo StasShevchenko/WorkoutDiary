@@ -5,4 +5,7 @@
     <string name="add_training_block">Добавить упражнение</string>
     <string name="delete_training">Удалить тренировку</string>
     <string name="today">(сегодня)</string>
+    <string name="muscle_type">Мышечная группа</string>
+    <string name="exercise_name">Упражнение</string>
+    <string name="training_block_header">Тренировочный блок</string>
 </resources>

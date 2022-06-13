@@ -35,5 +35,13 @@
             android:name="trainingName"
             app:argType="string"
             android:defaultValue='""' />
+        <action
+            android:id="@+id/action_addEditTrainingScreenFragment_to_addEditTrainingBlockScreenFragment"
+            app:destination="@id/addEditTrainingBlockScreenFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addEditTrainingBlockScreenFragment"
+        android:name="com.example.workoutdiary.presentation.add_edit_training_block_screen.AddEditTrainingBlockScreenFragment"
+        android:label="add_edit_training_block_screen"
+        tools:layout="@layout/add_edit_training_block_screen" />
 </navigation>
