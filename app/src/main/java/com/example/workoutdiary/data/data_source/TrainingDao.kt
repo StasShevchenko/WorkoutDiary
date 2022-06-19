@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TrainingDao {
 
+    @Query("DELETE FROM Training WHERE NOT EXISTS (SELECT * FROM TrainingBlock " +
+            "WHERE Training.trainingId = TrainingBlock.trainingId)")
+    suspend fun deleteEmptyTrainings()
+
     @Query("SELECT * FROM Training")
     fun getAllTrainings(): Flow<List<Training>>
 

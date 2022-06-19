@@ -12,4 +12,8 @@ data class Exercise(
     val exerciseType: String,
     val exerciseDescription: String? = null,
     val muscleId: Int
-)
+){
+    override fun toString(): String {
+        return this.exerciseName
+    }
+}

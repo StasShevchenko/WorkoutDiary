@@ -1,8 +1,8 @@
 package com.example.workoutdiary.presentation.add_edit_training_screen
 
-import android.os.Looper
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
@@ -10,13 +10,9 @@ import com.example.workoutdiary.domain.use_case.DeleteTraining
 import com.example.workoutdiary.domain.use_case.GetTrainingDetailsByTrainingID
 import com.example.workoutdiary.domain.use_case.InsertTraining
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel

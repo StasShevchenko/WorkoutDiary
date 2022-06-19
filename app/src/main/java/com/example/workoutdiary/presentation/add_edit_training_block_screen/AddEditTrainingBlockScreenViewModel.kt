@@ -35,6 +35,9 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     private val _exercises: MutableStateFlow<List<Exercise>> = MutableStateFlow(listOf())
     val exercise: StateFlow<List<Exercise>> = _exercises
 
+    private val _currentExercise: MutableStateFlow<Exercise?> = MutableStateFlow(null)
+    val currentExercise: StateFlow<Exercise?> = _currentExercise
+
 
     init {
         viewModelScope.launch {
@@ -42,7 +45,6 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                 _muscles.value = muscles
             }
         }
-        Log.d("MY DEBUG", "${muscles.value}")
     }
 
     fun onEvent(event: AddEditTrainingBlockScreenEvent) {
@@ -56,6 +58,14 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                 if (_setCounter.value < 10) {
                     _setCounter.value++
                 }
+            }
+            is AddEditTrainingBlockScreenEvent.MuscleSelected -> {
+                viewModelScope.launch {
+                    _exercises.value = getExercisesByMuscleId(event.muscle.muscleId)
+                }
+            }
+            is AddEditTrainingBlockScreenEvent.ExerciseSelected -> {
+                _currentExercise.value = event.exercise
             }
         }
     }

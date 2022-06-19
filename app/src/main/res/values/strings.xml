@@ -9,4 +9,7 @@
     <string name="exercise_name">Упражнение</string>
     <string name="training_block_header">Тренировочный блок</string>
     <string name="sets_count">Число подходов:</string>
+    <string name="save_text">Сохранить</string>
+    <string name="reps">Повторения</string>
+    <string name="weight">Вес</string>
 </resources>
