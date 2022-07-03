@@ -54,7 +54,11 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             }
 
             addTrainingBlockButton.setOnClickListener{
-                val action = AddEditTrainingScreenFragmentDirections.actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment()
+                val action = AddEditTrainingScreenFragmentDirections
+                    .actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
+                        trainingId = viewModel.currentTrainingId,
+                        setOrder = viewModel.trainingDetails.value.keys.size
+                    )
                 findNavController().navigate(action)
             }
         }

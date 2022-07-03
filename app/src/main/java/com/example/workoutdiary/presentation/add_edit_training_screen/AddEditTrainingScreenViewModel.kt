@@ -24,21 +24,21 @@ class AddEditTrainingScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-
     val _trainingDetails: MutableStateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> =
-       MutableStateFlow(mapOf())
-    val trainingDetails: StateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> = _trainingDetails
+        MutableStateFlow(mapOf())
+    val trainingDetails: StateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> =
+        _trainingDetails
 
     // this var is used to know can user navigate back, or he need to wait new entry inserting
     private var isInserted = false
 
     //this var is used to know can we display details when we insert new entry
     var isNewEntryReceived = false
-    private set
+        private set
 
     //this var is used to know can we display details for existing entry
     var isCurrentItemReceived = false
-    private set
+        private set
 
     var trainingName = ""
         private set
@@ -51,7 +51,8 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     var date: LocalDate
         private set
 
-    private var currentTrainingId = -1
+    var currentTrainingId = -1
+        private set
 
     init {
         date = state.get<LocalDate>("trainingDate")!!
@@ -69,7 +70,9 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     )
                 ).toInt()
                 isInserted = true
-                trainingDetailsUseCase(currentTrainingId).collectLatest { trainingDetails ->
+                trainingDetailsUseCase(currentTrainingId)
+                    .distinctUntilChanged()
+                    .collectLatest { trainingDetails ->
                     _trainingDetails.value = trainingDetails
                 }
             }
@@ -77,7 +80,9 @@ class AddEditTrainingScreenViewModel @Inject constructor(
             isInserted = true
             isCurrentItemReceived = true
             viewModelScope.launch {
-                trainingDetailsUseCase(currentTrainingId).collectLatest { trainingDetails ->
+                trainingDetailsUseCase(currentTrainingId)
+                    .distinctUntilChanged()
+                    .collectLatest { trainingDetails ->
                     _trainingDetails.value = trainingDetails
                 }
             }
@@ -94,8 +99,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     viewModelScope.launch {
                         if (trainingDetails.value.keys.isEmpty()) {
                             deleteTrainingUseCase(currentTrainingId)
-                        }
-                        else if (trainingName != unchangedTrainingName){
+                        } else if (trainingName != unchangedTrainingName) {
                             insertTrainingUseCase(
                                 Training(
                                     currentTrainingId,

@@ -22,15 +22,20 @@
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:layout_height="wrap_content"
             tools:text = "Суббота 16" />
+
         <TextView
             android:id="@+id/training_info_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|top"
+            android:textAlignment="center"
+            android:padding="8dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            tools:text = "Спина и бицепс"
-            />
+            android:textStyle="bold"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeTextType="uniform"
+            app:autoSizeStepGranularity="2sp"
+            tools:text="Трицепс" />
     </LinearLayout>
 
 
