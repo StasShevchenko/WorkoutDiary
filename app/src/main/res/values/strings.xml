@@ -11,5 +11,5 @@
     <string name="sets_count">Число подходов:</string>
     <string name="save_text">Сохранить</string>
     <string name="reps">Повторения</string>
-    <string name="weight">Вес(кг)</string>
+    <string name="weight">Вес (кг)</string>
 </resources>

@@ -52,8 +52,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             saveTrainingBlockButton.setOnClickListener {
                 if (viewModel.currentExercise.value != null) {
                     when (viewModel.currentExercise.value!!.exerciseType) {
-                        "Вес и повторения" -> {
-
+                        "WEIGHT AND REPS" -> {
                             var saveFlag = true
                             binding.setsLayout.children.forEach { currentView ->
                                 try {
@@ -124,7 +123,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                 viewModel.currentExercise.collectLatest { exercise ->
                     viewModel.setCounter.collectLatest { setsNumber ->
                         when (exercise?.exerciseType) {
-                            "Вес и повторения" -> {
+                            "WEIGHT AND REPS" -> {
                                 if (setsNumber > (binding.setsLayout.childCount + 1) / 2) {
                                     for (i in 1..(setsNumber - (binding.setsLayout.childCount + 1) / 2)) {
                                         val setNumberTextView = TextView(requireContext())
@@ -179,7 +178,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.parameterizedSets.collectLatest { setParameters ->
                     when (viewModel.currentExercise.value?.exerciseType) {
-                        "Вес и повторения" -> {
+                        "WEIGHT AND REPS" -> {
                             var counter = 0
                             binding.setsLayout.children.forEach {
                                 if (it.id == R.id.rep_weight_item) {

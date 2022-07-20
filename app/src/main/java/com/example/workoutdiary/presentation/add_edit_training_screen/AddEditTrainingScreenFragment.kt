@@ -63,7 +63,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                 findNavController().navigate(action)
             }
             deleteTrainingButton.setOnClickListener {
-                val deleteTrainingDialog = AlertDialog.Builder(requireContext())
+                AlertDialog.Builder(requireContext())
                     .setTitle("Удалить тренировку")
                     .setMessage("Вы действительно хотите удалить тренировку?")
                     .setIcon(R.drawable.ic_delete)
@@ -106,7 +106,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                             trainingDetailsItemBinding.findViewById<TextView>(R.id.training_block_name_text_view).text =
                                 trainingBlock.key.exerciseName
                             when (trainingBlock.key.exerciseType) {
-                                "Вес и повторения" -> {
+                                "WEIGHT AND REPS" -> {
                                     trainingBlock.value.forEach {
                                         val textView = TextView(requireContext())
                                         textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
@@ -116,7 +116,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                                             .addView(textView)
                                     }
                                 }
-                                "Повторения" -> {
+                                "REPS" -> {
                                     trainingBlock.value.forEach {
                                         val textView = TextView(requireContext())
                                         textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
