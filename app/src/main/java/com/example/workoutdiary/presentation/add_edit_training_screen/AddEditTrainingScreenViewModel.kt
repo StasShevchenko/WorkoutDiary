@@ -73,8 +73,8 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                 trainingDetailsUseCase(currentTrainingId)
                     .distinctUntilChanged()
                     .collectLatest { trainingDetails ->
-                    _trainingDetails.value = trainingDetails
-                }
+                        _trainingDetails.value = trainingDetails
+                    }
             }
         } else {
             isInserted = true
@@ -83,8 +83,8 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                 trainingDetailsUseCase(currentTrainingId)
                     .distinctUntilChanged()
                     .collectLatest { trainingDetails ->
-                    _trainingDetails.value = trainingDetails
-                }
+                        _trainingDetails.value = trainingDetails
+                    }
             }
         }
     }
@@ -115,13 +115,16 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                 }
             }
             is AddEditTrainingScreenEvent.DeletePressed -> {
-
+                viewModelScope.launch {
+                deleteTrainingUseCase(currentTrainingId)
+                    _eventFlow.emit(UiEvent.OnDeletePressed)
+                }
             }
         }
     }
 
     sealed class UiEvent {
         object OnBackPressed : UiEvent()
-        object OnDeletePressed: UiEvent()
+        object OnDeletePressed : UiEvent()
     }
 }

@@ -66,8 +66,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDeleteTrainingUseCase(repository: TrainingRepository): DeleteTraining {
-        return DeleteTraining(repository)
+    fun provideDeleteTrainingUseCase(
+        trainingRepository: TrainingRepository,
+        trainingDetailsRepository: TrainingDetailsRepository
+    ): DeleteTraining {
+        return DeleteTraining(trainingRepository, trainingDetailsRepository)
     }
 
     @Provides

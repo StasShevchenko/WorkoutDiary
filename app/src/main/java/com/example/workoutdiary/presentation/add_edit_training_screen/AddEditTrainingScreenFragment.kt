@@ -81,6 +81,9 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                     is AddEditTrainingScreenViewModel.UiEvent.OnBackPressed -> {
                         findNavController().popBackStack()
                     }
+                    AddEditTrainingScreenViewModel.UiEvent.OnDeletePressed -> {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
