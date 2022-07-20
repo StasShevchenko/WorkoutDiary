@@ -46,6 +46,14 @@ class TrainingDetailsRepositoryImpl(
         return dao.insertTrainingParameters(trainingParameters)
     }
 
+    override suspend fun deleteTrainingBlocksByTrainingId(trainingId: Int) {
+         dao.deleteTrainingBlocksByTrainingId(trainingId)
+    }
+
+    override suspend fun deleteOrderedSetsByTrainingId(trainingId: Int) {
+        dao.deleteOrderedSetsByTrainingId(trainingId)
+    }
+
     override fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> {
        return dao.getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId)
     }

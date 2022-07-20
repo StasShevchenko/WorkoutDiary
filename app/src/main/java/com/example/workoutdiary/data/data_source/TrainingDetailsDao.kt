@@ -15,6 +15,12 @@ interface TrainingDetailsDao {
     @Query("DELETE FROM TrainingBlock WHERE trainingBlockId = :trainingBlockId")
     suspend fun deleteTrainingBlock(trainingBlockId: Int)
 
+    @Query("DELETE FROM TrainingBlock WHERE trainingId = :trainingId")
+    suspend fun deleteTrainingBlocksByTrainingId(trainingId: Int)
+
+    @Query("DELETE FROM OrderedSet WHERE trainingBlockId IN (SELECT trainingBlockId FROM TrainingBlock WHERE trainingId = :trainingId)")
+    suspend fun deleteOrderedSetsByTrainingId(trainingId: Int)
+
     @Query("DELETE FROM OrderedSet WHERE trainingBlockId = :trainingBlockId")
     suspend fun deleteOrderedSets(trainingBlockId: Int)
 
@@ -35,6 +41,8 @@ interface TrainingDetailsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrainingParameters(trainingParameters: TrainingParameters): Long
+
+
 
     @Query("SELECT trainingBlockId, trainingBlockOrder, exerciseName," +
             "exerciseType, setOrder, repeats, weight, time, distance " +

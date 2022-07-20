@@ -26,5 +26,9 @@ interface TrainingDetailsRepository {
 
     suspend fun insertTrainingParameters(trainingParameters: TrainingParameters): Long
 
+    suspend fun deleteTrainingBlocksByTrainingId(trainingId: Int)
+
+    suspend fun deleteOrderedSetsByTrainingId(trainingId: Int)
+
     fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>>
 }

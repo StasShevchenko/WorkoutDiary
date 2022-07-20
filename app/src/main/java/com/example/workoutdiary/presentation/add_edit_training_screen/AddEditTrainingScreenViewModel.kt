@@ -94,7 +94,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
             is AddEditTrainingScreenEvent.NameEntered -> {
                 trainingName = event.text
             }
-            AddEditTrainingScreenEvent.OnBackPressed -> {
+            is AddEditTrainingScreenEvent.OnBackPressed -> {
                 if (isInserted) {
                     viewModelScope.launch {
                         if (trainingDetails.value.keys.isEmpty()) {
@@ -114,10 +114,14 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     }
                 }
             }
+            is AddEditTrainingScreenEvent.DeletePressed -> {
+
+            }
         }
     }
 
     sealed class UiEvent {
         object OnBackPressed : UiEvent()
+        object OnDeletePressed: UiEvent()
     }
 }

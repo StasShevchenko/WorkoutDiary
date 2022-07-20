@@ -1,6 +1,7 @@
 package com.example.workoutdiary.presentation.add_edit_training_screen
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -53,13 +54,24 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                 viewModel.onEvent(AddEditTrainingScreenEvent.NameEntered(it.toString()))
             }
 
-            addTrainingBlockButton.setOnClickListener{
+            addTrainingBlockButton.setOnClickListener {
                 val action = AddEditTrainingScreenFragmentDirections
                     .actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
                         trainingId = viewModel.currentTrainingId,
                         setOrder = viewModel.trainingDetails.value.keys.size
                     )
                 findNavController().navigate(action)
+            }
+            deleteTrainingButton.setOnClickListener {
+                val deleteTrainingDialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Удалить тренировку")
+                    .setMessage("Вы действительно хотите удалить тренировку?")
+                    .setIcon(R.drawable.ic_delete)
+                    .setPositiveButton("Да") { _, _ ->
+                        viewModel.onEvent(AddEditTrainingScreenEvent.DeletePressed)
+                    }.create()
+                    .show()
+
             }
         }
 
