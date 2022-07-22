@@ -44,6 +44,9 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     private val _currentExercise: MutableStateFlow<Exercise?> = MutableStateFlow(null)
     val currentExercise: StateFlow<Exercise?> = _currentExercise
 
+    var previousExercise: Exercise? = null
+    private set
+
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
@@ -77,6 +80,8 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             is AddEditTrainingBlockScreenEvent.MuscleSelected -> {
                 viewModelScope.launch {
                     _exercises.value = getExercisesByMuscleId(event.muscle.muscleId)
+                    _currentExercise.value = null
+                    previousExercise = null
                 }
             }
             is AddEditTrainingBlockScreenEvent.ExerciseSelected -> {
@@ -102,6 +107,9 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                         _eventFlow.emit(UiEvent.SavePressed)
                     }
                 }
+            }
+            is AddEditTrainingBlockScreenEvent.SetsRendered -> {
+                previousExercise = event.value
             }
         }
     }

@@ -13,7 +13,7 @@
         android:layout_margin="8dp">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/reps_edit_text"
+        android:id="@+id/repweight_reps_edit_text"
         android:layout_width="match_parent"
         android:inputType="number"
         android:maxLength="2"
@@ -30,7 +30,7 @@
         android:layout_margin="8dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/weight_edit_text"
+            android:id="@+id/repweight_weight_edit_text"
             android:layout_width="match_parent"
             android:maxLength="2"
             android:inputType="number"
