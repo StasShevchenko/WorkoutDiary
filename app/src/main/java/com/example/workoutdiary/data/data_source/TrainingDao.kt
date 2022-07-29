@@ -19,7 +19,7 @@ interface TrainingDao {
     fun getAllTrainings(): Flow<List<Training>>
 
     @Query("SELECT trainingBlockId, trainingBlockOrder, exerciseName," +
-            "exerciseType, setOrder, repeats, weight, time, distance " +
+            "exerciseType, exerciseId, setOrder, repeats, weight, time, distance " +
             "FROM TrainingBlock JOIN Exercise USING(exerciseId)" +
             "JOIN" +
             "(SELECT trainingBlockId, setOrder, repeats, weight, time, distance FROM " +

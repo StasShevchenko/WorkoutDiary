@@ -99,6 +99,18 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideGetExercise(repository: ExerciseRepository): GetExercise{
+        return GetExercise(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetMuscle(repository: MuscleRepository): GetMuscle{
+        return GetMuscle(repository)
+    }
+
+    @Provides
+    @Singleton
     fun provideDeleteTrainingBlock(repository: TrainingDetailsRepository): DeleteTrainingBlock {
         return DeleteTrainingBlock(repository)
     }

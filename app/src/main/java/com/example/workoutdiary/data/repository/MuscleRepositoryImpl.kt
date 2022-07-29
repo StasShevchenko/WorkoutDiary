@@ -19,4 +19,8 @@ class MuscleRepositoryImpl(
     override suspend fun deleteMuscle(muscle: Muscle) {
         dao.deleteMuscle(muscle)
     }
+
+    override suspend fun getMuscleById(muscleId: Int): Muscle {
+       return dao.getMuscleById(muscleId)
+    }
 }

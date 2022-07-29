@@ -109,6 +109,9 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.muscles.collect { muscles ->
+                    viewModel.currentMuscle.value?.let { currentMuscle ->
+                        binding.muscleChoiceView.setText(currentMuscle.muscleName)
+                    }
                     val muscleAdapter =
                         ArrayAdapter(
                             requireContext(),
@@ -133,6 +136,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             }
         }
 
+        //Adding list items
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.currentExercise.collectLatest { exercise ->
@@ -205,10 +209,20 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                     if (currentExercise == null) {
                         binding.setsLayout.removeAllViews()
                         binding.exerciseChoiceView.setText("")
+                    } else{
+                        binding.exerciseChoiceView.setText(currentExercise.exerciseName)
                     }
                 }
             }
-
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.currentMuscle.collectLatest { currentMuscle ->
+                    currentMuscle?.let {
+                       // binding.muscleChoiceView.setText(currentMuscle.muscleName)
+                    }
+                }
+            }
         }
 
 
@@ -259,7 +273,6 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         var counter = 0
         binding.setsLayout.children.forEach {
             if (it.id == R.id.rep_item) {
-                Log.d("MY DEBUG", "Restoring reps data")
                 it.findViewById<TextInputEditText>(R.id.rep_reps_edit_text)
                     .setText(
                         if (setParameters[counter].repeats == null) ""

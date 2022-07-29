@@ -9,4 +9,6 @@ interface MuscleRepository {
     suspend fun insertMuscle(muscle: Muscle)
 
     suspend fun deleteMuscle(muscle: Muscle)
+
+    suspend fun getMuscleById(muscleId: Int): Muscle
 }

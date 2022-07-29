@@ -23,4 +23,8 @@ class ExerciseRepositoryImpl(
     override suspend fun insertExercise(exercise: Exercise) {
         dao.insertExercise(exercise)
     }
+
+    override suspend fun getExerciseById(exerciseId: Int): Exercise {
+        return dao.getExerciseById(exerciseId)
+    }
 }

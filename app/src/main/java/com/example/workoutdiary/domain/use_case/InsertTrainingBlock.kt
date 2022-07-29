@@ -15,6 +15,7 @@ class InsertTrainingBlock(
         parameterizedSets: List<ParameterizedSet>
     ) {
         val trainingBlockId = repository.insertTrainingBlock(trainingBlock)
+        repository.deleteOrderedSets(trainingBlock.trainingBlockId)
         val resOrderedSets: MutableList<OrderedSet> =
             arrayListOf()
         parameterizedSets.forEach {
@@ -47,7 +48,6 @@ class InsertTrainingBlock(
                         setOrder = it.setOrder,
                         trainingParametersId = parameters.trainingParametersId.toInt(),
                         trainingBlockId = trainingBlockId.toInt()
-
                     )
                 )
             }

@@ -1,5 +1,6 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
+import android.util.Log
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.presentation.add_edit_training_screen.AddEditTrainingScreenViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,14 +23,17 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     private val insertTrainingBlock: InsertTrainingBlock,
     private val getMuscles: GetMuscles,
     private val getExercisesByMuscleId: GetExercisesByMuscleId,
-    private val deleteTrainingBlock: DeleteTrainingBlock
+    private val deleteTrainingBlock: DeleteTrainingBlock,
+    private val getExercise: GetExercise,
+    private val getMuscle: GetMuscle
 ) : ViewModel() {
-    val parameterizedSets: StateFlow<MutableList<ParameterizedSet>> =
+    val parameterizedSets: MutableStateFlow<MutableList<ParameterizedSet>> =
         MutableStateFlow(MutableList(1, init = { ParameterizedSet(setOrder = 1) }))
 
-    private val currentTrainingId: Int
 
-    private val currentTrainingBlockId: Int? = null
+    private val currentTrainingId: Int = state.get<Int>("trainingId")!!
+
+    private var currentTrainingBlockId: Int
 
     private var setOrder: Int? = null
 
@@ -45,20 +50,39 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     val currentExercise: StateFlow<Exercise?> = _currentExercise
 
     var previousExercise: Exercise? = null
-    private set
+        private set
+
+    private val _currentMuscle: MutableStateFlow<Muscle?> = MutableStateFlow(null)
+    val currentMuscle: StateFlow<Muscle?> = _currentMuscle
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
 
     init {
-        currentTrainingId = state.get<Int>("trainingId")!!
-        if (state.get<Int>("trainingBlockId") == -1) {
-            setOrder = state.get("setOrder")!!
-        }
-        viewModelScope.launch {
-            getMuscles().collect { muscles ->
-                _muscles.value = muscles
+        setOrder = state.get("setOrder")!!
+        if (state.get<Int>("trainingBlockId") != -1) {
+            currentTrainingBlockId = state.get<Int>("trainingBlockId")!!
+            viewModelScope.launch {
+                val exerciseId = state.get<Int>("exerciseId")
+                _currentExercise.value = getExercise(exerciseId!!)
+                _currentMuscle.value = getMuscle(_currentExercise.value!!.muscleId)
+                _exercises.value = getExercisesByMuscleId(_currentMuscle.value!!.muscleId)
+                trainingBlockDetails(currentTrainingBlockId).collectLatest { trainingBlockDetails ->
+                    getMuscles().collect { muscles ->
+                        _muscles.value = muscles
+                        _setCounter.value = trainingBlockDetails.values.toList()[0].size
+                        parameterizedSets.value =
+                            trainingBlockDetails.values.toList()[0] as MutableList<ParameterizedSet>
+                    }
+                }
+            }
+        } else {
+            currentTrainingBlockId = 0
+            viewModelScope.launch {
+                getMuscles().collect { muscles ->
+                    _muscles.value = muscles
+                }
             }
         }
     }
@@ -99,13 +123,17 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             }
             is AddEditTrainingBlockScreenEvent.SaveChosen -> {
                 viewModelScope.launch {
-                    if (currentTrainingBlockId == null) {
                         insertTrainingBlock(
-                            TrainingBlock(0, setOrder!!, currentTrainingId, currentExercise.value!!.exerciseId),
+                            TrainingBlock(
+                                currentTrainingBlockId,
+                                setOrder!!,
+                                currentTrainingId,
+                                currentExercise.value!!.exerciseId
+                            ),
                             parameterizedSets.value
                         )
                         _eventFlow.emit(UiEvent.SavePressed)
-                    }
+
                 }
             }
             is AddEditTrainingBlockScreenEvent.SetsRendered -> {

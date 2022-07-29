@@ -10,5 +10,6 @@ data class ExerciseTrainingBlock(
     val trainingBlockId: Int,
     val trainingBlockOrder: Int,
     val exerciseName: String,
-    val exerciseType: String
+    val exerciseType: String,
+    val exerciseId: Int
 )

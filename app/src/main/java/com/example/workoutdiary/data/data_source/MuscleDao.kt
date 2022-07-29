@@ -14,6 +14,9 @@ interface MuscleDao {
     @Query("SELECT * FROM Muscle ORDER BY muscleName")
     fun getAllMuscles(): Flow<List<Muscle>>
 
+    @Query("SELECT * FROM Muscle WHERE muscleId = :muscleId")
+    suspend fun getMuscleById(muscleId: Int): Muscle
+
     @Delete
     suspend fun deleteMuscle(muscle: Muscle)
 }

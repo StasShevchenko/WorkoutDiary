@@ -56,9 +56,8 @@
             app:argType="integer"
             android:defaultValue="-1" />
         <argument
-            android:name="ExerciseType"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="null" />
+            android:name="exerciseId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

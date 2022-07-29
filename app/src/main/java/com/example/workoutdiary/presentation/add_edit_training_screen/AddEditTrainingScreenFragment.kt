@@ -96,6 +96,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.trainingDetails.collectLatest { trainingDetails ->
                     if ((viewModel.isCurrentItemReceived && trainingDetails.isNotEmpty()) || viewModel.isNewEntryReceived) {
+                        binding.trainingBlocksList.removeAllViews()
                         trainingDetails.forEach { trainingBlock ->
                             val trainingDetailsItemBinding = LayoutInflater.from(requireContext())
                                 .inflate(
@@ -105,6 +106,16 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                                 )
                             trainingDetailsItemBinding.findViewById<TextView>(R.id.training_block_name_text_view).text =
                                 trainingBlock.key.exerciseName
+                            trainingDetailsItemBinding.setOnClickListener {
+                                // TODO finish navigation with arguments
+                                val action = AddEditTrainingScreenFragmentDirections.actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
+                                    viewModel.currentTrainingId,
+                                    trainingBlock.key.trainingBlockId,
+                                    trainingBlock.key.trainingBlockOrder,
+                                    trainingBlock.key.exerciseId
+                                )
+                                findNavController().navigate(action)
+                            }
                             when (trainingBlock.key.exerciseType) {
                                 "WEIGHT AND REPS" -> {
                                     trainingBlock.value.forEach {
