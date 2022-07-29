@@ -108,6 +108,14 @@
             android:text="@string/save_text"
             android:layout_height="wrap_content"/>
 
+        <Button
+            android:id="@+id/delete_training_block_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:text="@string/delete"/>
+
 
     </LinearLayout>
 

@@ -12,4 +12,5 @@ sealed class AddEditTrainingBlockScreenEvent {
     object SetNumberIncreased : AddEditTrainingBlockScreenEvent()
     object SetNumberDecreased : AddEditTrainingBlockScreenEvent()
     object SaveChosen : AddEditTrainingBlockScreenEvent()
+    object DeleteChosen : AddEditTrainingBlockScreenEvent()
 }

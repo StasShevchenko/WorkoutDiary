@@ -35,6 +35,12 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         super.onViewCreated(view, savedInstanceState)
         binding = AddEditTrainingBlockScreenBinding.bind(view)
         binding.apply {
+            if (viewModel.currentTrainingBlockId != 0) {
+                deleteTrainingBlockButton.visibility = View.VISIBLE
+            }
+            deleteTrainingBlockButton.setOnClickListener {
+                viewModel.onEvent(AddEditTrainingBlockScreenEvent.DeleteChosen)
+            }
             numberPickerDecreaseButton.setOnClickListener {
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.SetNumberDecreased)
             }
@@ -132,6 +138,9 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                     is AddEditTrainingBlockScreenViewModel.UiEvent.SavePressed -> {
                         findNavController().popBackStack()
                     }
+                    AddEditTrainingBlockScreenViewModel.UiEvent.DeletePressed -> {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
@@ -204,27 +213,17 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.currentExercise.collectLatest { currentExercise ->
                     if (currentExercise == null) {
                         binding.setsLayout.removeAllViews()
                         binding.exerciseChoiceView.setText("")
-                    } else{
+                    } else {
                         binding.exerciseChoiceView.setText(currentExercise.exerciseName)
                     }
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.currentMuscle.collectLatest { currentMuscle ->
-                    currentMuscle?.let {
-                       // binding.muscleChoiceView.setText(currentMuscle.muscleName)
-                    }
-                }
-            }
-        }
-
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -269,7 +268,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         }
     }
 
-    private fun restoreRepItemsData(setParameters: MutableList<ParameterizedSet>){
+    private fun restoreRepItemsData(setParameters: MutableList<ParameterizedSet>) {
         var counter = 0
         binding.setsLayout.children.forEach {
             if (it.id == R.id.rep_item) {

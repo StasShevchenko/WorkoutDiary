@@ -33,7 +33,8 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
 
     private val currentTrainingId: Int = state.get<Int>("trainingId")!!
 
-    private var currentTrainingBlockId: Int
+    var currentTrainingBlockId: Int
+        private set
 
     private var setOrder: Int? = null
 
@@ -123,26 +124,33 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             }
             is AddEditTrainingBlockScreenEvent.SaveChosen -> {
                 viewModelScope.launch {
-                        insertTrainingBlock(
-                            TrainingBlock(
-                                currentTrainingBlockId,
-                                setOrder!!,
-                                currentTrainingId,
-                                currentExercise.value!!.exerciseId
-                            ),
-                            parameterizedSets.value
-                        )
-                        _eventFlow.emit(UiEvent.SavePressed)
+                    insertTrainingBlock(
+                        TrainingBlock(
+                            currentTrainingBlockId,
+                            setOrder!!,
+                            currentTrainingId,
+                            currentExercise.value!!.exerciseId
+                        ),
+                        parameterizedSets.value
+                    )
+                    _eventFlow.emit(UiEvent.SavePressed)
 
                 }
             }
             is AddEditTrainingBlockScreenEvent.SetsRendered -> {
                 previousExercise = event.value
             }
+            AddEditTrainingBlockScreenEvent.DeleteChosen -> {
+                viewModelScope.launch {
+                    deleteTrainingBlock(currentTrainingBlockId)
+                    _eventFlow.emit(UiEvent.DeletePressed)
+                }
+            }
         }
     }
 
     sealed class UiEvent {
         object SavePressed : UiEvent()
+        object DeletePressed: UiEvent()
     }
 }

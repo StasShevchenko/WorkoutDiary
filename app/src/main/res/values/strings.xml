@@ -12,4 +12,5 @@
     <string name="save_text">Сохранить</string>
     <string name="reps">Повторения</string>
     <string name="weight">Вес (кг)</string>
+    <string name="delete">Удалить</string>
 </resources>
