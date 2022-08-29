@@ -34,6 +34,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = AddEditTrainingBlockScreenBinding.bind(view)
+        binding.root.visibility = View.INVISIBLE
         binding.apply {
             if (viewModel.currentTrainingBlockId != 0) {
                 deleteTrainingBlockButton.visibility = View.VISIBLE
@@ -150,43 +151,49 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.currentExercise.collectLatest { exercise ->
                     viewModel.setCounter.collectLatest { setsNumber ->
-                        when (exercise?.exerciseType) {
-                            "WEIGHT AND REPS" -> {
-                                if (viewModel.previousExercise == null || viewModel.previousExercise?.exerciseType != "WEIGHT AND REPS") {
-                                    binding.setsLayout.removeAllViews()
-                                    addRepWeightItems(setsNumber)
-                                    restoreRepWeightItemsData(viewModel.parameterizedSets.value)
-                                    viewModel.onEvent(
-                                        AddEditTrainingBlockScreenEvent.SetsRendered(
-                                            exercise
+                        viewModel.dataLoadingIsFinished.collectLatest { dataLoadingIsFinished ->
+                            if(dataLoadingIsFinished && exercise == null) binding.root.visibility = View.VISIBLE
+                            when (exercise?.exerciseType) {
+                                "WEIGHT AND REPS" -> {
+                                    if ((viewModel.previousExercise == null || viewModel.previousExercise?.exerciseType != "WEIGHT AND REPS") && dataLoadingIsFinished) {
+                                        binding.setsLayout.removeAllViews()
+                                        addRepWeightItems(setsNumber)
+                                        restoreRepWeightItemsData(viewModel.parameterizedSets.value)
+                                        viewModel.onEvent(
+                                            AddEditTrainingBlockScreenEvent.SetsRendered(
+                                                exercise
+                                            )
                                         )
-                                    )
-                                } else {
-                                    if (setsNumber > (binding.setsLayout.childCount + 1) / 2) {
-                                        addRepWeightItems(setsNumber - (binding.setsLayout.childCount + 1) / 2)
-                                    } else if (setsNumber < (binding.setsLayout.childCount + 1) / 2) {
-                                        binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
-                                        binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                        binding.root.visibility = View.VISIBLE
+                                    } else if(dataLoadingIsFinished) {
+                                        if (setsNumber > (binding.setsLayout.childCount + 1) / 2) {
+                                            addRepWeightItems(setsNumber - (binding.setsLayout.childCount + 1) / 2)
+                                        } else if (setsNumber < (binding.setsLayout.childCount + 1) / 2) {
+                                            binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                            binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                        }
+                                        binding.root.visibility = View.VISIBLE
                                     }
                                 }
-                            }
-                            "REPS" -> {
-                                if (viewModel.previousExercise == null || viewModel.previousExercise?.exerciseType != "REPS") {
-                                    binding.setsLayout.removeAllViews()
-                                    addRepItems(setsNumber)
-                                    restoreRepItemsData(viewModel.parameterizedSets.value)
-                                    viewModel.onEvent(
-                                        AddEditTrainingBlockScreenEvent.SetsRendered(
-                                            exercise
+                                "REPS" -> {
+                                    if (viewModel.previousExercise == null || viewModel.previousExercise?.exerciseType != "REPS") {
+                                        binding.setsLayout.removeAllViews()
+                                        addRepItems(setsNumber)
+                                        restoreRepItemsData(viewModel.parameterizedSets.value)
+                                        viewModel.onEvent(
+                                            AddEditTrainingBlockScreenEvent.SetsRendered(
+                                                exercise
+                                            )
                                         )
-                                    )
-                                } else {
-                                    if (setsNumber > (binding.setsLayout.childCount) / 2) {
-                                        addRepItems(setsNumber - (binding.setsLayout.childCount) / 2)
                                     } else {
-                                        if (setsNumber < (binding.setsLayout.childCount) / 2) {
-                                            binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
-                                            binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                        binding.root.visibility = View.VISIBLE
+                                        if (setsNumber > (binding.setsLayout.childCount) / 2) {
+                                            addRepItems(setsNumber - (binding.setsLayout.childCount) / 2)
+                                        } else {
+                                            if (setsNumber < (binding.setsLayout.childCount) / 2) {
+                                                binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                                binding.setsLayout.removeViewAt(binding.setsLayout.childCount - 1)
+                                            }
                                         }
                                     }
                                 }
@@ -198,7 +205,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.parameterizedSets.collectLatest { setParameters ->
                     when (viewModel.currentExercise.value?.exerciseType) {
                         "WEIGHT AND REPS" -> {
@@ -220,6 +227,13 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                         binding.exerciseChoiceView.setText("")
                     } else {
                         binding.exerciseChoiceView.setText(currentExercise.exerciseName)
+                        val exercisesAdapter = ArrayAdapter(
+                            requireContext(),
+                            R.layout.muscle_exercise_drop_down_item,
+                            viewModel.exercise.value
+                        )
+                        binding.exerciseChoiceView.setAdapter(exercisesAdapter)
+
                     }
                 }
             }

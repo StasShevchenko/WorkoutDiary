@@ -78,11 +78,11 @@ class AddEditTrainingScreenViewModel @Inject constructor(
             }
         } else {
             isInserted = true
-            isCurrentItemReceived = true
             viewModelScope.launch {
                 trainingDetailsUseCase(currentTrainingId)
                     .distinctUntilChanged()
                     .collectLatest { trainingDetails ->
+                        isCurrentItemReceived = true
                         _trainingDetails.value = trainingDetails
                     }
             }
@@ -116,7 +116,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
             }
             is AddEditTrainingScreenEvent.DeletePressed -> {
                 viewModelScope.launch {
-                deleteTrainingUseCase(currentTrainingId)
+                    deleteTrainingUseCase(currentTrainingId)
                     _eventFlow.emit(UiEvent.OnDeletePressed)
                 }
             }

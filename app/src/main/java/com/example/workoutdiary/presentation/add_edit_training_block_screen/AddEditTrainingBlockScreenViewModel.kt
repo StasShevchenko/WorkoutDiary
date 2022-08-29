@@ -38,6 +38,10 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
 
     private var setOrder: Int? = null
 
+
+    private val _dataLoadingIsFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val dataLoadingIsFinished: StateFlow<Boolean> = _dataLoadingIsFinished
+
     private val _setCounter: MutableStateFlow<Int> = MutableStateFlow(1)
     val setCounter: StateFlow<Int> = _setCounter
 
@@ -75,11 +79,13 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                         _setCounter.value = trainingBlockDetails.values.toList()[0].size
                         parameterizedSets.value =
                             trainingBlockDetails.values.toList()[0] as MutableList<ParameterizedSet>
+                        _dataLoadingIsFinished.value = true
                     }
                 }
             }
         } else {
             currentTrainingBlockId = 0
+            _dataLoadingIsFinished.value = true
             viewModelScope.launch {
                 getMuscles().collect { muscles ->
                     _muscles.value = muscles
