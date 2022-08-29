@@ -15,6 +15,7 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/repweight_reps_edit_text"
         android:layout_width="match_parent"
+        android:imeOptions="actionNext"
         android:inputType="number"
         android:maxLength="2"
         android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
             android:id="@+id/repweight_weight_edit_text"
             android:layout_width="match_parent"
             android:maxLength="2"
+            android:imeOptions="actionNext"
             android:inputType="number"
             android:layout_height="wrap_content"
             />
