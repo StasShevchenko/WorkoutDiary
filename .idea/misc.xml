@@ -7,14 +7,15 @@
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/drawable/ic_add.xml" value="0.1" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/drawable/ic_next.xml" value="0.1" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/add_edit_training_block_screen.xml" value="0.4" />
-        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/add_edit_training_screen.xml" value="0.4" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/add_edit_training_block_screen.xml" value="0.176" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/add_edit_training_screen.xml" value="0.264" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/calendar_screen_fragment.xml" value="0.21422101449275363" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/home_screen_fragment.xml" value="0.264" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/muscle_drop_down_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/rep_training_block_item.xml" value="0.22554347826086957" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/rep_weght_training_block_item.xml" value="0.1265625" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/rep_weght_training_set.xml" value="0.4" />
+        <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/sets_list_view.xml" value="0.13524590163934427" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/sidedatepicker_view.xml" value="0.264" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/training_details_item.xml" value="0.176" />
         <entry key="..\:/Users/darkk/AndroidStudioProjects/EducationProjects/WorkoutDiary/app/src/main/res/layout/training_item.xml" value="0.72" />

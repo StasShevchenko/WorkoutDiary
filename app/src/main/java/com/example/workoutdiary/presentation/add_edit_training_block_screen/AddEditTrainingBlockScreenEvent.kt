@@ -8,7 +8,6 @@ sealed class AddEditTrainingBlockScreenEvent {
     class ExerciseSelected(val exercise: Exercise): AddEditTrainingBlockScreenEvent()
     class RepsEntered(val index: Int, val value: String): AddEditTrainingBlockScreenEvent()
     class WeightEntered(val index: Int, val value: String): AddEditTrainingBlockScreenEvent()
-    class SetsRendered(val value: Exercise): AddEditTrainingBlockScreenEvent()
     object SetNumberIncreased : AddEditTrainingBlockScreenEvent()
     object SetNumberDecreased : AddEditTrainingBlockScreenEvent()
     object SaveChosen : AddEditTrainingBlockScreenEvent()

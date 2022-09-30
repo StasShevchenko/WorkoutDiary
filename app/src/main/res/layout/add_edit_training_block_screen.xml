@@ -1,123 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
     tools:context=".presentation.add_edit_training_block_screen.AddEditTrainingBlockScreenFragment">
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="@string/training_block_header"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/muscleChoiceView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/muscle_type"
-                android:inputType="none"
-                android:dropDownHeight="250dp"
-                tools:text="Бицепс" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <AutoCompleteTextView
-                android:id="@+id/exerciseChoiceView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="@string/exercise_name"
-                android:inputType="none"
-                tools:text="Сгибания на бицепс" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:text="@string/sets_count"
-            />
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/number_picker_decrease_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@android:color/transparent"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_previous" />
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/number_text_view"
-                android:layout_width="wrap_content"
+                android:id="@+id/training_block_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:paddingTop="8dp"
+                android:text="@string/training_block_header"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                tools:text="1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/number_picker_increase_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@android:color/transparent"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_next" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@id/training_block_text">
+
+                <AutoCompleteTextView
+                    android:id="@+id/muscleChoiceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dropDownHeight="250dp"
+                    android:hint="@string/muscle_type"
+                    android:inputType="none"
+                    tools:text="Бицепс" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/muscleChoiceView">
+
+                <AutoCompleteTextView
+                    android:id="@+id/exerciseChoiceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/exercise_name"
+                    android:inputType="none"
+                    tools:text="Сгибания на бицепс" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/sets_count"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/number_picker_decrease_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@android:color/transparent"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_previous" />
+
+                <TextView
+                    android:id="@+id/number_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    tools:text="1" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/number_picker_increase_button"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@android:color/transparent"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_next" />
+
+            </LinearLayout>
+
+            <com.example.workoutdiary.presentation.custom_views.SetsListView
+                android:id="@+id/sets_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/save_training_block_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/save_text" />
+
+            <Button
+                android:id="@+id/delete_training_block_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/delete"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/sets_layout"
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/save_training_block_button"
-            android:layout_width="match_parent"
-            android:layout_margin="8dp"
-            android:text="@string/save_text"
-            android:layout_height="wrap_content"/>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/delete_training_block_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:visibility="gone"
-            android:text="@string/delete"/>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-    </LinearLayout>
-
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
