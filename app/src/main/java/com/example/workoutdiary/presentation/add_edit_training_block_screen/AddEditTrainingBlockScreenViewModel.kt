@@ -1,5 +1,6 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
+import android.util.Log
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -25,11 +26,14 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     private val getExercise: GetExercise,
     private val getMuscle: GetMuscle
 ) : ViewModel() {
-    
+
     private val currentTrainingId: Int = state.get<Int>("trainingId")!!
 
     var currentTrainingBlockId: Int
         private set
+
+    var isDataLoadingFinished = false
+    private set
 
     private val _validateSets: MutableStateFlow<List<ValidateSet>> =
         MutableStateFlow(listOf())
@@ -64,6 +68,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                 _exercises.value = getExercisesByMuscleId(_currentMuscle.value!!.muscleId)
                 trainingBlockDetails(currentTrainingBlockId).collectLatest { trainingBlockDetails ->
                     getMuscles().collect { muscles ->
+                        isDataLoadingFinished = true
                         _muscles.value = muscles
                         _validateSets.value =
                             (trainingBlockDetails.values.toList()[0] as MutableList<ParameterizedSet>).map { parameterizedSet ->
@@ -74,6 +79,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             }
         } else {
             currentTrainingBlockId = 0
+            isDataLoadingFinished = true
             viewModelScope.launch {
                 getMuscles().collect { muscles ->
                     _muscles.value = muscles
@@ -94,7 +100,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             is AddEditTrainingBlockScreenEvent.SetNumberIncreased -> {
                 if (_validateSets.value.size < 10) {
                     val newList = _validateSets.value.toMutableList()
-                    newList.add(ValidateSet(ParameterizedSet(setOrder = _validateSets.value.size)))
+                    newList.add(ValidateSet(ParameterizedSet(setOrder = _validateSets.value.size + 1)))
                     _validateSets.value = newList
                 }
             }
@@ -158,6 +164,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
     }
 
     private fun validateList(): Boolean {
+        if(_validateSets.value.isEmpty()) return false
         val newList = _validateSets.value.toMutableList()
         var dataIsCorrect = true
         when (currentExercise.value?.exerciseType) {

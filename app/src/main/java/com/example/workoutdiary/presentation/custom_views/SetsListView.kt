@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.custom_views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -42,88 +43,83 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
 
     fun submitSetsList(validateSetsList: List<ValidateSet>, exerciseType: String) {
         val setsList = validateSetsList.map { it.setData }
-        if (exerciseType == "NOT SELECTED") {
-            setsLayout.removeAllViews()
-        } else {
-            //First launch views initiation
-            if (!dataIsInitiated) {
-                when (exerciseType) {
-                    "REPS" -> {
-                        currentExerciseType = "REPS"
-                        initiateRepItems(setsList.size - 1, setsList)
-                        dataIsInitiated = true
-                    }
-                    "WEIGHT AND REPS" -> {
-                        currentExerciseType = "WEIGHT AND REPS"
-                        initiateWeightAndRepsItems(setsList.size - 1, setsList)
-                        dataIsInitiated = true
-                    }
+        if (!dataIsInitiated && setsList.isNotEmpty()) {
+            when (exerciseType) {
+                "REPS" -> {
+                    currentExerciseType = "REPS"
+                    initiateRepItems(setsList.size - 1, setsList)
+                    dataIsInitiated = true
                 }
-            } else {
-                when (exerciseType) {
-                    "REPS" -> {
-                        //Adding views when exercise type has changed
-                        if (currentExerciseType != "REPS") {
-                            setsLayout.removeAllViews()
-                            initiateRepItems(setsList.size - 1, setsList)
-                            currentExerciseType = exerciseType
-                            //Adding views when exercise type hasn't changed
-                        } else {
-                            //Add view when sets count was increased
-                            if (setsList.size > setsLayout.childCount) {
-                                val repItemView = LayoutInflater.from(context).inflate(
-                                    R.layout.rep_training_block_item,
-                                    this,
-                                    false
-                                )
-                                repItemView.findViewById<TextView>(R.id.set_number_text_view).text =
-                                    "Подход № " + setsList.size
-                                repItemView.findViewById<TextInputEditText>(R.id.rep_reps_edit_text)
-                                    .addTextChangedListener { text ->
-                                        onRepsEntered?.invoke(setsList.size - 1, text.toString())
-                                    }
-                                setsLayout.addView(repItemView)
-                                //Remove last view when sets count was decreased
-                            } else if (setsList.size < setsLayout.childCount) {
-                                setsLayout.removeViewAt(setsLayout.childCount - 1)
-                            }
+                "WEIGHT AND REPS" -> {
+                    currentExerciseType = "WEIGHT AND REPS"
+                    initiateWeightAndRepsItems(setsList.size - 1, setsList)
+                    dataIsInitiated = true
+                }
+            }
+        } else {
+            when (exerciseType) {
+                "REPS" -> {
+                    //Adding views when exercise type has changed
+                    if (currentExerciseType != "REPS") {
+                        setsLayout.removeAllViews()
+                        initiateRepItems(setsList.size - 1, setsList)
+                        currentExerciseType = exerciseType
+                        //Adding views when exercise type hasn't changed
+                    } else {
+                        //Add view when sets count was increased
+                        if (setsList.size > setsLayout.childCount) {
+                            val repItemView = LayoutInflater.from(context).inflate(
+                                R.layout.rep_training_block_item,
+                                this,
+                                false
+                            )
+                            repItemView.findViewById<TextView>(R.id.set_number_text_view).text =
+                                "Подход № " + setsList.size
+                            repItemView.findViewById<TextInputEditText>(R.id.rep_reps_edit_text)
+                                .addTextChangedListener { text ->
+                                    onRepsEntered?.invoke(setsList.size - 1, text.toString())
+                                }
+                            setsLayout.addView(repItemView)
+                            //Remove last view when sets count was decreased
+                        } else if (setsList.size < setsLayout.childCount) {
+                            setsLayout.removeViewAt(setsLayout.childCount - 1)
                         }
                     }
-                    "WEIGHT AND REPS" -> {
-                        //Adding views when exercise type has changed
-                        if (currentExerciseType != "WEIGHT AND REPS") {
-                            setsLayout.removeAllViews()
-                            initiateWeightAndRepsItems(setsList.size - 1, setsList)
-                            currentExerciseType = exerciseType
-                        } else {
-                            //Adding views when exercise type hasn't changed
-                            if (setsList.size > setsLayout.childCount) {
-                                val repWeightItemView = LayoutInflater.from(context).inflate(
-                                    R.layout.rep_weght_training_block_item,
-                                    this,
-                                    false
-                                )
-                                repWeightItemView.findViewById<TextView>(R.id.set_number_text_view).text =
-                                    "Подход № " + setsList.size
-                                repWeightItemView.findViewById<TextInputEditText>(R.id.repweight_reps_edit_text)
-                                    .addTextChangedListener { text ->
-                                        onRepsEntered?.invoke(setsList.size - 1, text.toString())
-                                    }
-                                repWeightItemView.findViewById<TextInputEditText>(R.id.repweight_reps_edit_text)
-                                    .addTextChangedListener { text ->
-                                        onWeightEntered?.invoke(setsList.size - 1, text.toString())
-                                    }
-                                setsLayout.addView(repWeightItemView)
-                                //Remove last view when sets count was decreased
-                            } else if (setsList.size < setsLayout.childCount) {
-                                setsLayout.removeViewAt(setsLayout.childCount - 1)
-                            }
+                }
+                "WEIGHT AND REPS" -> {
+                    //Adding views when exercise type has changed
+                    if (currentExerciseType != "WEIGHT AND REPS") {
+                        setsLayout.removeAllViews()
+                        initiateWeightAndRepsItems(setsList.size - 1, setsList)
+                        currentExerciseType = exerciseType
+                    } else {
+                        //Adding views when exercise type hasn't changed
+                        if (setsList.size > setsLayout.childCount) {
+                            val repWeightItemView = LayoutInflater.from(context).inflate(
+                                R.layout.rep_weght_training_block_item,
+                                this,
+                                false
+                            )
+                            repWeightItemView.findViewById<TextView>(R.id.set_number_text_view).text =
+                                "Подход № " + setsList.size
+                            repWeightItemView.findViewById<TextInputEditText>(R.id.repweight_reps_edit_text)
+                                .addTextChangedListener { text ->
+                                    onRepsEntered?.invoke(setsList.size - 1, text.toString())
+                                }
+                            repWeightItemView.findViewById<TextInputEditText>(R.id.repweight_reps_edit_text)
+                                .addTextChangedListener { text ->
+                                    onWeightEntered?.invoke(setsList.size - 1, text.toString())
+                                }
+                            setsLayout.addView(repWeightItemView)
+                            //Remove last view when sets count was decreased
+                        } else if (setsList.size < setsLayout.childCount) {
+                            setsLayout.removeViewAt(setsLayout.childCount - 1)
                         }
                     }
                 }
             }
-            if(setsLayout.childCount != 0) validateItems(validateSetsList, currentExerciseType)
         }
+        if(setsLayout.childCount != 0) validateItems(validateSetsList, currentExerciseType)
     }
 
     private fun initiateWeightAndRepsItems(count: Int, setsList: List<ParameterizedSet>) {

@@ -39,7 +39,6 @@ class InsertTrainingBlock(
                         setOrder = it.setOrder,
                         trainingParametersId = newParametersId.toInt(),
                         trainingBlockId = trainingBlockId.toInt()
-
                     )
                 )
             } else{

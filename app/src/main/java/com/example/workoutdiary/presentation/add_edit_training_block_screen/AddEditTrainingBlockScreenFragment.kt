@@ -1,6 +1,7 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
@@ -24,9 +25,9 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = AddEditTrainingBlockScreenBinding.bind(view)
-        binding.scrollView2.visibility = View.INVISIBLE
+        binding.scrollView.visibility = View.INVISIBLE
 
-        // binding.scrollView2.visibility = View.INVISIBLE
+
         binding.apply {
             if (viewModel.currentTrainingBlockId != 0) {
                 deleteTrainingBlockButton.visibility = View.VISIBLE
@@ -59,14 +60,17 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                     viewModel.currentExercise.collectLatest { exercise ->
                         viewModel.validateSets.collectLatest { parametersList ->
                             binding.numberTextView.text = parametersList.size.toString()
-                            if(parametersList.isNotEmpty()) {
+                            if (viewModel.isDataLoadingFinished) {
+                                binding.scrollView.visibility = View.VISIBLE
+                                binding.progressBar.visibility = View.INVISIBLE
+                            }
+                            exercise?.let {
                                 binding.setsListView.submitSetsList(
                                     parametersList,
-                                    exercise?.exerciseType ?: "NOT SELECTED"
+                                    exercise.exerciseType
                                 )
                             }
-                            binding.scrollView2.visibility = View.VISIBLE
-                            binding.progressBar.visibility = View.INVISIBLE
+
                         }
                     }
                 }
