@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-        <com.example.workoutdiary.presentation.custom_views.SideDatePicker
+        <com.example.workoutdiary.presentation.home_screen.custom_views.SideDatePicker
             android:id="@+id/month_date_picker"
             android:layout_width="match_parent"
             android:layout_margin="4dp"

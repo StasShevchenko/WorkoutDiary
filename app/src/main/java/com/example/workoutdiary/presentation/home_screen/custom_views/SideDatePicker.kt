@@ -1,20 +1,16 @@
-package com.example.workoutdiary.presentation.custom_views
+package com.example.workoutdiary.presentation.home_screen.custom_views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.os.ConfigurationCompat
 import com.example.workoutdiary.R
 import java.time.LocalDate
-import java.time.format.TextStyle
 import java.util.*
 
 class SideDatePicker(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {

@@ -106,7 +106,7 @@
 
             </LinearLayout>
 
-            <com.example.workoutdiary.presentation.custom_views.SetsListView
+            <com.example.workoutdiary.presentation.add_edit_training_block_screen.custom_views.SetsListView
                 android:id="@+id/sets_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
