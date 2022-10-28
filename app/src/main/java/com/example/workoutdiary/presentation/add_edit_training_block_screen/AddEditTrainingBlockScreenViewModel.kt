@@ -10,6 +10,7 @@ import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -168,7 +169,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
         val newList = _validateSets.value.toMutableList()
         var dataIsCorrect = true
         when (currentExercise.value?.exerciseType) {
-            "REPS" -> {
+            ExerciseType.REPS -> {
                 for (i in newList.indices) {
                     if (newList[i].setData.repeats == null) {
                         dataIsCorrect = false
@@ -176,7 +177,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                     }
                 }
             }
-            "WEIGHT AND REPS" -> {
+            ExerciseType.WEIGHT_AND_REPS -> {
                 for (i in newList.indices) {
                     if (newList[i].setData.repeats == null) {
                         dataIsCorrect = false

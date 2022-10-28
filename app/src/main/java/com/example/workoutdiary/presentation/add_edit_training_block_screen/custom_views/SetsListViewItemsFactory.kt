@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.add_edit_training_block_screen.cus
 
 import android.content.Context
 import android.view.ViewGroup
+import com.example.workoutdiary.utils.ExerciseType
 
 class SetsListViewItemsFactory(
     private val context: Context,
@@ -10,16 +11,16 @@ class SetsListViewItemsFactory(
     private var onRepsEntered: ((Int, String) -> Unit)? = null
     private var onWeightEntered: ((Int, String) -> Unit)? = null
 
-    fun getItem(itemType: String) : SetsListViewItemViewHolder {
+    fun getItem(itemType: ExerciseType) : SetsListViewItemViewHolder {
         when (itemType) {
-            "REPS" -> {
+            ExerciseType.REPS -> {
                 return RepsItemViewHolder(
                     onRepsEntered,
                     context,
                     root
                 )
             }
-            "WEIGHT AND REPS" -> {
+            ExerciseType.WEIGHT_AND_REPS -> {
                 return RepWeightItemViewHolder(
                     onRepsEntered,
                     onWeightEntered,

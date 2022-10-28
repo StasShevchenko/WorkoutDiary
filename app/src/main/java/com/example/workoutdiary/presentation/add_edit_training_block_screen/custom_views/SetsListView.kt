@@ -9,11 +9,12 @@ import androidx.core.widget.addTextChangedListener
 import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.presentation.add_edit_training_block_screen.ValidateSet
+import com.example.workoutdiary.utils.ExerciseType
 import com.google.android.material.textfield.TextInputEditText
 
 
 class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
-    private var currentExerciseType = ""
+    private var currentExerciseType: ExerciseType? = null
     private lateinit var setsLayout: LinearLayout
     private var onRepsEntered: ((Int, String) -> Unit)? = null
     private var onWeightEntered: ((Int, String) -> Unit)? = null
@@ -45,7 +46,7 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
         setsLayout = findViewById(R.id.sets_linear_layout)
     }
 
-    fun submitSetsList(validateSetsList: List<ValidateSet>, exerciseType: String) {
+    fun submitSetsList(validateSetsList: List<ValidateSet>, exerciseType: ExerciseType) {
         val setsList = validateSetsList.map { it.setData }
         if (setsList.size - setsLayout.childCount >= 0) {
             if(currentExerciseType != exerciseType) {
@@ -61,7 +62,7 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
         validateItems(validateSetsList)
     }
 
-    private fun addItems(itemsCount: Int, itemsData: List<ParameterizedSet>, itemsType: String) {
+    private fun addItems(itemsCount: Int, itemsData: List<ParameterizedSet>, itemsType: ExerciseType) {
         val viewsToAddCount = itemsCount - setsLayout.childCount
         var i = 0
         while (i < viewsToAddCount) {

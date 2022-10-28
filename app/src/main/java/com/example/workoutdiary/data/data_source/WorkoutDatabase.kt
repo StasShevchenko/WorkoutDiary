@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.workoutdiary.data.model.entities.*
+import com.example.workoutdiary.utils.ExerciseTypeConverter
 import com.example.workoutdiary.utils.LocalDateConverter
 
 
@@ -15,7 +16,7 @@ import com.example.workoutdiary.utils.LocalDateConverter
     version = 1,
     exportSchema = false
 )
-@TypeConverters(LocalDateConverter::class)
+@TypeConverters(LocalDateConverter::class, ExerciseTypeConverter::class)
 abstract class WorkoutDatabase : RoomDatabase() {
 
     abstract val trainingDao: TrainingDao

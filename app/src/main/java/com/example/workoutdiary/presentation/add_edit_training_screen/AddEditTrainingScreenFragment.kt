@@ -20,6 +20,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingScreenBinding
+import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -117,7 +118,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                                 findNavController().navigate(action)
                             }
                             when (trainingBlock.key.exerciseType) {
-                                "WEIGHT AND REPS" -> {
+                                ExerciseType.WEIGHT_AND_REPS -> {
                                     trainingBlock.value.forEach {
                                         val textView = TextView(requireContext())
                                         textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
@@ -127,7 +128,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                                             .addView(textView)
                                     }
                                 }
-                                "REPS" -> {
+                                ExerciseType.REPS -> {
                                     trainingBlock.value.forEach {
                                         val textView = TextView(requireContext())
                                         textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
