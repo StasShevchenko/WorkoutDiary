@@ -4,11 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
@@ -18,19 +14,22 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingScreenBinding
-import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
-class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen) {
+class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen),
+    TrainingBlocksAdapter.OnTrainingBlockClickListener,
+    TrainingBlocksAdapter.OnBlocksSwapListener,
+        TrainingBlocksMoveCallback.ItemTouchHelperSwapFinishedCallback
+{
     private val viewModel: AddEditTrainingScreenViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -38,8 +37,8 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = AddEditTrainingScreenBinding.bind(view)
+        val trainingBlocksAdapter = TrainingBlocksAdapter(this, this)
         binding.root.visibility = View.INVISIBLE
-
         binding.apply {
             if (viewModel.date == LocalDate.now()) {
                 dateTextView.text =
@@ -49,7 +48,14 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             } else {
                 dateTextView.text = viewModel.date.format(DateTimeFormatter.ofPattern("dd.MM.yy"))
             }
-
+            trainingBlocksRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = trainingBlocksAdapter
+                val callback: ItemTouchHelper.Callback =
+                    TrainingBlocksMoveCallback(trainingBlocksAdapter, this@AddEditTrainingScreenFragment)
+                val touchHelper = ItemTouchHelper(callback)
+                touchHelper.attachToRecyclerView(this)
+            }
             trainingNameEditText.setText(viewModel.trainingName)
             trainingNameEditText.addTextChangedListener {
                 viewModel.onEvent(AddEditTrainingScreenEvent.NameEntered(it.toString()))
@@ -59,7 +65,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                 val action = AddEditTrainingScreenFragmentDirections
                     .actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
                         trainingId = viewModel.currentTrainingId,
-                        setOrder = viewModel.trainingDetails.value.keys.size
+                        setOrder = viewModel.trainingDetails.value.size
                     )
                 findNavController().navigate(action)
             }
@@ -97,57 +103,45 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.trainingDetails.collectLatest { trainingDetails ->
                     if ((viewModel.isCurrentItemReceived) || viewModel.isNewEntryReceived) {
-                        binding.trainingBlocksList.removeAllViews()
-                        trainingDetails.forEach { trainingBlock ->
-                            val trainingDetailsItemBinding = LayoutInflater.from(requireContext())
-                                .inflate(
-                                    R.layout.training_details_item,
-                                    binding.trainingBlocksList,
-                                    false
-                                )
-                            trainingDetailsItemBinding.findViewById<TextView>(R.id.training_block_name_text_view).text =
-                                trainingBlock.key.exerciseName
-                            trainingDetailsItemBinding.setOnClickListener {
-                                val action =
-                                    AddEditTrainingScreenFragmentDirections.actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
-                                        viewModel.currentTrainingId,
-                                        trainingBlock.key.trainingBlockId,
-                                        trainingBlock.key.trainingBlockOrder,
-                                        trainingBlock.key.exerciseId
-                                    )
-                                findNavController().navigate(action)
-                            }
-                            when (trainingBlock.key.exerciseType) {
-                                ExerciseType.WEIGHT_AND_REPS -> {
-                                    trainingBlock.value.forEach {
-                                        val textView = TextView(requireContext())
-                                        textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
-                                        textView.text =
-                                            "Подход ${it.setOrder}: ${it.repeats} повторений ${it.weight} кг"
-                                        trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list)
-                                            .addView(textView)
-                                    }
-                                }
-                                ExerciseType.REPS -> {
-                                    trainingBlock.value.forEach {
-                                        val textView = TextView(requireContext())
-                                        textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
-                                        textView.text =
-                                            "Подход ${it.setOrder}: ${it.repeats} повторений"
-                                        trainingDetailsItemBinding.findViewById<LinearLayout>(R.id.set_list)
-                                            .addView(textView)
-                                    }
-                                }
-                            }
-                            binding.trainingBlocksList.addView(trainingDetailsItemBinding)
-                        }
+                        trainingBlocksAdapter.submitList(trainingDetails)
                         binding.root.visibility = View.VISIBLE
                     }
                 }
             }
         }
     }
+
+    override fun onTrainingBlockClick(
+        trainingBlockId: Int,
+        trainingBlockOrder: Int,
+        exerciseId: Int
+    ) {
+        val action =
+            AddEditTrainingScreenFragmentDirections.actionAddEditTrainingScreenFragmentToAddEditTrainingBlockScreenFragment(
+                viewModel.currentTrainingId,
+                trainingBlockId,
+                trainingBlockOrder,
+                exerciseId
+            )
+        findNavController().navigate(action)
+    }
+
+    override fun onBlockSwapListener(fromPosition: Int, toPosition: Int) {
+        viewModel.onEvent(
+            AddEditTrainingScreenEvent.TrainingBlockSwapped(
+                fromPosition,
+                toPosition
+            )
+        )
+    }
+
+    override fun rowSwapFinished() {
+        viewModel.onEvent(
+            AddEditTrainingScreenEvent.SwapFinished
+        )
+    }
 }
+
 
 fun Fragment.onBackPressedCustomAction(action: () -> Unit) {
     requireActivity().onBackPressedDispatcher.addCallback(

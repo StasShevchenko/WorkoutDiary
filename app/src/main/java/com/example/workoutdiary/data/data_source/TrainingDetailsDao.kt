@@ -44,7 +44,7 @@ interface TrainingDetailsDao {
 
 
 
-    @Query("SELECT trainingBlockId, trainingBlockOrder, exerciseName," +
+    @Query("SELECT trainingId, trainingBlockId, trainingBlockOrder, exerciseName," +
             "exerciseType, exerciseId, setOrder, repeats, weight, time, distance " +
             "FROM TrainingBlock JOIN Exercise USING(exerciseId)" +
             "JOIN" +

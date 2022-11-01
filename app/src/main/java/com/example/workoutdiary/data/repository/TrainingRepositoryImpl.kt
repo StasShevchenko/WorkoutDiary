@@ -2,6 +2,7 @@ package com.example.workoutdiary.data.repository
 
 import com.example.workoutdiary.data.data_source.TrainingDao
 import com.example.workoutdiary.data.model.entities.Training
+import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.domain.repository.TrainingRepository
@@ -22,5 +23,9 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
 
     override suspend fun deleteTraining(trainingId: Int) {
         trainingDao.deleteTraining(trainingId)
+    }
+
+    override suspend fun updateTrainingBlocks(trainingBlocks: List<TrainingBlock>) {
+        trainingDao.updateTrainingBlocks(trainingBlocks)
     }
 }

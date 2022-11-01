@@ -128,4 +128,10 @@ object AppModule {
         return GetTrainingBlockWithDetailsByTrainingBlockId(repository)
     }
 
+    @Provides
+    @Singleton
+    fun provideUpdateTrainingBlocks(repository: TrainingRepository): UpdateTrainingBlocks {
+        return UpdateTrainingBlocks(repository)
+    }
+
 }
