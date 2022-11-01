@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.home_screen
 
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.ConfigurationCompat
@@ -41,8 +42,8 @@ class TrainingDaysAdapter(private val clickListener: OnTrainingClickListener) : 
                 val position = absoluteAdapterPosition
                 if(position != RecyclerView.NO_POSITION){
                     val currentItem = getItem(position)
-                    if(currentItem.trainingList.isNotEmpty())
-                    clickListener.onTrainingClick(getItem(position).trainingList[0], currentItem.date)
+                    if(currentItem.training != null)
+                    clickListener.onTrainingClick(getItem(position).training, currentItem.date)
                     else clickListener.onTrainingClick(null, currentItem.date)
                 }
             }
@@ -50,22 +51,25 @@ class TrainingDaysAdapter(private val clickListener: OnTrainingClickListener) : 
 
         @SuppressLint("SetTextI18n")
         fun bind(trainingDay: TrainingDay) {
-            if (trainingDay.trainingList.isEmpty()) {
+            if(trainingDay.training != null){
+                binding.apply {
+                    dayTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnPrimarySurface))
+                    trainingInfoTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnPrimarySurface))
+                    trainingItem.setCardBackgroundColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorPrimary))
+                    dayTextView.text = (trainingDay.date.dayOfWeek.getDisplayName(TextStyle.FULL, currentLocale)  + "\n" + trainingDay.date.dayOfMonth)
+                    if (trainingDay.training.trainingName.isNotBlank()) {
+                        trainingInfoTextView.text = trainingDay.training.trainingName
+                    } else {
+                        trainingInfoTextView.text = "Без названия"
+                    }
+                }
+            } else {
                 binding.apply {
                     trainingItem.setCardBackgroundColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorSurface))
                     dayTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnSurface))
                     trainingInfoTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnSurface))
                     dayTextView.text = (trainingDay.date.dayOfWeek.getDisplayName(TextStyle.FULL, currentLocale) + "\n" + trainingDay.date.dayOfMonth)
                     trainingInfoTextView.text = binding.root.context.getString(R.string.no_trainings)
-                }
-            }
-            if(trainingDay.trainingList.size == 1){
-                binding.apply {
-                    dayTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnPrimarySurface))
-                    trainingInfoTextView.setTextColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorOnPrimarySurface))
-                    trainingItem.setCardBackgroundColor(resolveColorAttr(binding.root.context, com.google.android.material.R.attr.colorPrimary))
-                    dayTextView.text = (trainingDay.date.dayOfWeek.getDisplayName(TextStyle.FULL, currentLocale)  + "\n" + trainingDay.date.dayOfMonth)
-                    trainingInfoTextView.text = trainingDay.trainingList[0].trainingName
                 }
             }
         }

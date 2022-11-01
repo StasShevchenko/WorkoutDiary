@@ -32,7 +32,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/training_name_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="66dp" />
+            android:inputType="textCapSentences"
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView

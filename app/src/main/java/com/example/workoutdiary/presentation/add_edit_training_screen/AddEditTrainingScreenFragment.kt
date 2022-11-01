@@ -38,7 +38,6 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
         super.onViewCreated(view, savedInstanceState)
         val binding = AddEditTrainingScreenBinding.bind(view)
         val trainingBlocksAdapter = TrainingBlocksAdapter(this, this)
-        binding.root.visibility = View.INVISIBLE
         binding.apply {
             if (viewModel.date == LocalDate.now()) {
                 dateTextView.text =
@@ -102,10 +101,7 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.trainingDetails.collectLatest { trainingDetails ->
-                    if ((viewModel.isCurrentItemReceived) || viewModel.isNewEntryReceived) {
                         trainingBlocksAdapter.submitList(trainingDetails)
-                        binding.root.visibility = View.VISIBLE
-                    }
                 }
             }
         }

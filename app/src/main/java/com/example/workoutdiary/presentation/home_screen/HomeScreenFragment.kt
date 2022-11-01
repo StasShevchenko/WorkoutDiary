@@ -1,10 +1,7 @@
 package com.example.workoutdiary.presentation.home_screen
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,9 +15,7 @@ import com.example.workoutdiary.databinding.HomeScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -80,8 +75,8 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             HomeScreenFragmentDirections
                 .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
                     trainingDate = LocalDate.now(),
-                    trainingId = viewModel.currentItem?.trainingId ?: -1,
-                    trainingName = viewModel.currentItem?.trainingName ?: ""
+                    trainingId = viewModel.todayTraining?.trainingId ?: -1,
+                    trainingName = viewModel.todayTraining?.trainingName ?: ""
                 )
         findNavController().navigate(action)
     }

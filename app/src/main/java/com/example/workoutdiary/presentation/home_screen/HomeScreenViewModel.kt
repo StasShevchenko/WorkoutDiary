@@ -1,6 +1,5 @@
 package com.example.workoutdiary.presentation.home_screen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
@@ -22,7 +21,7 @@ class HomeScreenViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val trainingDaysList: StateFlow<List<TrainingDay>> = _trainingDaysList
 
-    var currentItem: Training? = null
+    var todayTraining: Training? = null
 
     private var trainingDaysJob: Job? = null
 
@@ -33,7 +32,6 @@ class HomeScreenViewModel @Inject constructor(
                 if(it > 0) {
                     trainingUseCase(date)
                         .collectLatest { trainings ->
-                            currentItem = null
                             val cacheList = mutableListOf<TrainingDay>()
                             var i = 1
                             while (i <= date.lengthOfMonth()) {
@@ -49,14 +47,12 @@ class HomeScreenViewModel @Inject constructor(
                                 i++
                             }
                             for (training: Training in trainings) {
-                                if (training.trainingDate == LocalDate.now())
-                                    currentItem = training
                                 val index = cacheList.indexOf(cacheList.find { trainingDay ->
                                     trainingDay.date.year == training.trainingDate.year && trainingDay.date.month == training.trainingDate.month
                                             && trainingDay.date.dayOfMonth == training.trainingDate.dayOfMonth
                                 })
                                 if (index != -1) {
-                                    cacheList[index].trainingList.add(training)
+                                    cacheList[index] = cacheList[index].copy(training = training)
                                 }
                             }
                             _trainingDaysList.value = cacheList
@@ -67,9 +63,19 @@ class HomeScreenViewModel @Inject constructor(
 
     }
 
-
     init {
         getTrainingDaysByMonth(LocalDate.now())
+        viewModelScope.launch {
+            trainingUseCase(LocalDate.now()).collectLatest{ trainings ->
+                val currentDate = LocalDate.now()
+                trainings.find { training ->
+                    currentDate.year == training.trainingDate.year && currentDate.month == training.trainingDate.month
+                            && currentDate.dayOfMonth == training.trainingDate.dayOfMonth
+                }?.let { training ->
+                    todayTraining = training
+                }
+            }
+        }
     }
 
     fun onEvent(event: HomeScreenEvent) {

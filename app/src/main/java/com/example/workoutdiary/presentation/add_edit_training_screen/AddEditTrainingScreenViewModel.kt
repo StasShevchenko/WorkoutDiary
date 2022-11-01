@@ -36,14 +36,6 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     // this var is used to know can user navigate back, or he need to wait new entry inserting
     private var isInserted = false
 
-    //this var is used to know can we display details when we insert new entry
-    var isNewEntryReceived = false
-        private set
-
-    //this var is used to know can we display details for existing entry
-    var isCurrentItemReceived = false
-        private set
-
     var trainingName = ""
         private set
 
@@ -64,7 +56,6 @@ class AddEditTrainingScreenViewModel @Inject constructor(
         trainingName = state.get<String>("trainingName") ?: ""
         unchangedTrainingName = trainingName
         if (currentTrainingId == -1) {
-            isNewEntryReceived = true
             viewModelScope.launch {
                 currentTrainingId = insertTrainingUseCase(
                     Training(
@@ -91,7 +82,6 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     .distinctUntilChanged()
                     .collectLatest { trainingDetails ->
                         swappedBlocks.clear()
-                        isCurrentItemReceived = true
                         _trainingDetails.value = trainingDetails.toList()
                         trainingDetails.toList().forEach{
                             swappedBlocks.add(it.first.mapToTrainingBlock())

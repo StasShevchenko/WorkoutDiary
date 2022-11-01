@@ -32,8 +32,9 @@
             android:padding="8dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            app:autoSizeMinTextSize="12sp"
             app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeMaxTextSize="30sp"
             app:autoSizeStepGranularity="2sp"
             tools:text="Трицепс" />
     </LinearLayout>
