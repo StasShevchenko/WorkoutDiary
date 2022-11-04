@@ -19,6 +19,7 @@ import com.example.workoutdiary.data.data_source.WorkoutDatabase
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         val bottomBar: BottomAppBar = findViewById(R.id.bottomAppBar)
         navView.background = null
         val fab = findViewById<FloatingActionButton>(R.id.training_fab)
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeScreenFragment -> {
+                    fab.show()
                     bottomBar.visibility = View.VISIBLE
                     navView.visibility = View.VISIBLE
                     fab.visibility = View.VISIBLE
@@ -58,11 +61,19 @@ class MainActivity : AppCompatActivity() {
                     fab.isEnabled = true
                 }
                 R.id.calendarScreenFragment ->{
+                    fab.show()
                     bottomBar.visibility = View.VISIBLE
                     navView.visibility = View.VISIBLE
                     fab.visibility = View.VISIBLE
                     bottomBar.fabCradleMargin = 24f
                     fab.isEnabled = true
+                }
+                R.id.exercisesAndMusclesScreenFragment -> {
+                    bottomBar.visibility = View.VISIBLE
+                    navView.visibility = View.VISIBLE
+                    fab.hide()
+                    bottomBar.fabCradleMargin = 24f
+                    fab.isEnabled = false
                 }
                 else -> {
                     fab.visibility = View.GONE

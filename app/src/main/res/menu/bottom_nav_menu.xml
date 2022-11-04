@@ -8,7 +8,18 @@
         android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/page_3"
+        android:id="@+id/exercisesAndMusclesScreenFragment"
+        android:enabled="true"
+        android:title=""
+        android:icon="@drawable/ic_exercise"
+        />
+
+    <item
+        android:enabled="false"
+        android:title=""
+        />
+
+    <item
         android:enabled="false"
         android:title=""
         />
