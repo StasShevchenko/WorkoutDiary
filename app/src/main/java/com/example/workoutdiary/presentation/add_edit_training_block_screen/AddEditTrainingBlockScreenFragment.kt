@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingBlockScreenBinding
+import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +34,12 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             if (viewModel.currentTrainingBlockId != 0) {
                 deleteTrainingBlockButton.visibility = View.VISIBLE
             }
-
+            exerciseChoiceView.doOnTextChanged { text, _, _, _ ->
+                viewModel.onEvent(AddEditTrainingBlockScreenEvent.ExerciseEntered(text.toString()))
+            }
+            muscleChoiceView.doOnTextChanged{text, _, _, _ ->
+                viewModel.onEvent(AddEditTrainingBlockScreenEvent.MuscleEntered(text.toString()))
+            }
             deleteTrainingBlockButton.setOnClickListener {
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.DeleteChosen)
             }
@@ -70,7 +77,12 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                                     exercise.exerciseType
                                 )
                             }
-
+                            if (exercise == null) {
+                                binding.setsListView.submitSetsList(
+                                    listOf(),
+                                    ExerciseType.REPS
+                                )
+                            }
                         }
                     }
                 }
@@ -81,6 +93,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                     viewModel.muscles.collect { muscles ->
                         viewModel.currentMuscle.value?.let { currentMuscle ->
                             binding.muscleChoiceView.setText(currentMuscle.muscleName)
+                            binding.exerciseChoiceView.isEnabled = true
                         }
                         val muscleAdapter =
                             ArrayAdapter(
@@ -96,6 +109,19 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                 }
             }
 
+            viewLifecycleOwner.lifecycleScope.launch{
+                viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED){
+                    viewModel.currentMuscle.collectLatest { currentMuscle ->
+                        if(currentMuscle == null){
+                            binding.exerciseChoiceView.isEnabled = false
+                            binding.exerciseChoiceView.setText("")
+                        }
+                        else{
+                            binding.exerciseChoiceView.isEnabled = true
+                        }
+                    }
+                }
+            }
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 viewModel.eventFlow.collectLatest { event ->
                     when (event) {

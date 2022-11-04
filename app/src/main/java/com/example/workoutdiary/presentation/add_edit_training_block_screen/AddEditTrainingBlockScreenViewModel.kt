@@ -108,6 +108,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
             is AddEditTrainingBlockScreenEvent.MuscleSelected -> {
                 viewModelScope.launch {
                     _exercises.value = getExercisesByMuscleId(event.muscle.muscleId)
+                    _currentMuscle.value = event.muscle
                     _currentExercise.value = null
                 }
             }
@@ -161,11 +162,24 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                     _eventFlow.emit(UiEvent.DeletePressed)
                 }
             }
+            is AddEditTrainingBlockScreenEvent.ExerciseEntered -> {
+                if (event.exerciseName.isBlank()) {
+                    _currentExercise.value = null
+                }
+            }
+            is AddEditTrainingBlockScreenEvent.MuscleEntered -> {
+                if (event.muscleName.isBlank()) {
+                    _currentMuscle.value = null
+                    _currentExercise.value = null
+                    _exercises.value = listOf()
+                }
+            }
         }
     }
 
     private fun validateList(): Boolean {
         if(_validateSets.value.isEmpty()) return false
+        if(currentMuscle.value == null || currentExercise.value == null) return false
         val newList = _validateSets.value.toMutableList()
         var dataIsCorrect = true
         when (currentExercise.value?.exerciseType) {

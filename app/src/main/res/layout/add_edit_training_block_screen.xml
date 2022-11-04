@@ -40,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:dropDownHeight="250dp"
                     android:hint="@string/muscle_type"
-                    android:inputType="none"
+                    android:inputType="textCapSentences"
                     tools:text="Бицепс" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,9 +55,10 @@
                     android:id="@+id/exerciseChoiceView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:dropDownHeight="250dp"
                     android:layout_weight="1"
                     android:hint="@string/exercise_name"
-                    android:inputType="none"
+                    android:inputType="textCapSentences"
                     tools:text="Сгибания на бицепс" />
             </com.google.android.material.textfield.TextInputLayout>
 

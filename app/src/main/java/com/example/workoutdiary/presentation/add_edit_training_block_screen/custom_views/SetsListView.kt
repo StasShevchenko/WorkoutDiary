@@ -55,9 +55,12 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
             }
             currentExerciseType = exerciseType
             addItems(setsList.size, setsList, exerciseType)
-        } else{
+        } else if(setsList.size - setsLayout.childCount == 1){
             setsLayout.removeViewAt(setsLayout.childCount - 1)
             holdersList.removeLast()
+        } else{
+            setsLayout.removeAllViews()
+            holdersList.clear()
         }
         validateItems(validateSetsList)
     }
