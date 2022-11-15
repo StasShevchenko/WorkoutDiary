@@ -1,6 +1,6 @@
 package com.example.workoutdiary.utils
 
-enum class ExerciseType (val value: String) {
+enum class ExerciseType constructor (val value: String) {
     REPS("REPS"),
     WEIGHT_AND_REPS ("WEIGHT AND REPS"),
     TIME("TIME"),

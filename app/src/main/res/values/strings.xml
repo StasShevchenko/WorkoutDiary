@@ -2,15 +2,19 @@
     <string name="app_name">WorkoutDiary</string>
     <string name="no_trainings">Тренировок нет</string>
     <string name="training_name">Название тренировки</string>
-    <string name="add_training_block">Добавить упражнение</string>
+    <string name="add_exercise">Добавить упражнение</string>
     <string name="delete_training">Удалить тренировку</string>
     <string name="today">(сегодня)</string>
     <string name="muscle_type">Мышечная группа</string>
-    <string name="exercise_name">Упражнение</string>
+    <string name="exercise">Упражнение</string>
     <string name="training_block_header">Тренировочный блок</string>
     <string name="sets_count">Число подходов:</string>
     <string name="save_text">Сохранить</string>
     <string name="reps">Повторения</string>
     <string name="weight">Вес (кг)</string>
     <string name="delete">Удалить</string>
+    <string name="exercise_name">Название упражнения</string>
+    <string name="exercise_description">Описание упражнения (опционально)</string>
+    <string name="add_exercise_header">Добавление упражнения</string>
+    <string name="exercise_type">Тип упражнения</string>
 </resources>

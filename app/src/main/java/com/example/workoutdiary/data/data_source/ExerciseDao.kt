@@ -11,7 +11,7 @@ interface ExerciseDao {
     @Query("SELECT * FROM Exercise WHERE muscleId = :muscleId")
     suspend fun getExercisesByMuscleId(muscleId: Int): List<Exercise>
 
-    @Query("SELECT * FROM Exercise")
+    @Query("SELECT * FROM Exercise ORDER BY exerciseName")
     fun getAllExercises(): Flow<List<Exercise>>
 
     @Query("SELECT * FROM Exercise WHERE exerciseId = :exerciseId")
@@ -22,4 +22,7 @@ interface ExerciseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercise(exercise: Exercise)
+
+    @Query("SELECT * FROM Exercise WHERE exerciseName = :exerciseName")
+    suspend fun getExerciseByName(exerciseName: String): Exercise?
 }

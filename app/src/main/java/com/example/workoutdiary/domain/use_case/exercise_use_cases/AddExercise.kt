@@ -1,12 +1,12 @@
-package com.example.workoutdiary.domain.use_case
+package com.example.workoutdiary.domain.use_case.exercise_use_cases
 
 import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.domain.repository.ExerciseRepository
 
-class DeleteExercise(
+class AddExercise(
     private val repository: ExerciseRepository
 ) {
     suspend operator fun invoke(exercise: Exercise) {
-        repository.deleteExercise(exercise)
+        repository.insertExercise(exercise)
     }
 }

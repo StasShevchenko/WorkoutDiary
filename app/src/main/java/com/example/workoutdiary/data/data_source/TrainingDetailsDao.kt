@@ -43,6 +43,9 @@ interface TrainingDetailsDao {
     suspend fun insertTrainingParameters(trainingParameters: TrainingParameters): Long
 
 
+    @Query("SELECT * FROM TrainingBlock WHERE exerciseId = :exerciseId")
+    suspend fun getTrainingBlocksByExerciseId(exerciseId: Int): List<TrainingBlock>
+
 
     @Query("SELECT trainingId, trainingBlockId, trainingBlockOrder, exerciseName," +
             "exerciseType, exerciseId, setOrder, repeats, weight, time, distance " +
@@ -52,5 +55,7 @@ interface TrainingDetailsDao {
             "OrderedSet JOIN TrainingParameters USING(trainingParametersId))" +
             "USING (trainingBlockId) WHERE trainingBlockId = :trainingBlockId")
     fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>>
+
+
 
 }

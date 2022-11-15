@@ -3,10 +3,14 @@ package com.example.workoutdiary.presentation.add_exercises_and_muscles_screen
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddExercisesAndMusclesScreenBinding
+import com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen.ExercisesScreenFragment
+import com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen.ExercisesScreenViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
 class ExercisesAndMusclesScreenFragment : Fragment(R.layout.add_exercises_and_muscles_screen) {
     private lateinit var tabsAdapter: ExerciseMuscleAdapter
@@ -19,9 +23,9 @@ class ExercisesAndMusclesScreenFragment : Fragment(R.layout.add_exercises_and_mu
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager){ tab, position ->
             if (position == 0) {
-                tab.text = "Exercises"
+                tab.text = "Упражнения"
             } else {
-                tab.text = "Muscles"
+                tab.text = "Мышцы"
             }
         }.attach()
 
@@ -32,10 +36,10 @@ class ExercisesAndMusclesScreenFragment : Fragment(R.layout.add_exercises_and_mu
 
 class ExerciseMuscleAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun createFragment(position: Int): Fragment {
-        if (position == 0) {
-            return ExercisesFragment()
+        return if (position == 0) {
+            ExercisesScreenFragment()
         } else {
-            return MusclesFragment()
+            MusclesFragment()
         }
     }
 

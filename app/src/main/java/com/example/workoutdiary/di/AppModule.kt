@@ -12,6 +12,7 @@ import com.example.workoutdiary.domain.repository.MuscleRepository
 import com.example.workoutdiary.domain.repository.TrainingDetailsRepository
 import com.example.workoutdiary.domain.repository.TrainingRepository
 import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.domain.use_case.exercise_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,19 +54,16 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideTrainingDetailsRepository(db: WorkoutDatabase): TrainingDetailsRepository {
         return TrainingDetailsRepositoryImpl(db.trainingDetailsDao)
     }
 
     @Provides
-    @Singleton
     fun provideGetTrainingsByMonthUseCase(repository: TrainingRepository): GetTrainingsByMonth {
         return GetTrainingsByMonth(repository)
     }
 
     @Provides
-    @Singleton
     fun provideDeleteTrainingUseCase(
         trainingRepository: TrainingRepository,
         trainingDetailsRepository: TrainingDetailsRepository
@@ -74,64 +72,76 @@ object AppModule {
     }
 
     @Provides
-    @Singleton
     fun provideInsertTrainingUseCase(repository: TrainingRepository): InsertTraining {
         return InsertTraining(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetTrainingDetailsByTrainingIdUseCase(repository: TrainingRepository): GetTrainingDetailsByTrainingID {
         return GetTrainingDetailsByTrainingID(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetMusclesUseCase(repository: MuscleRepository): GetMuscles {
         return GetMuscles(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetExerciseByIdUseCase(repository: ExerciseRepository): GetExercisesByMuscleId {
         return GetExercisesByMuscleId(repository)
     }
 
     @Provides
-    @Singleton
-    fun provideGetExercise(repository: ExerciseRepository): GetExercise{
+    fun provideGetExercise(repository: ExerciseRepository): GetExercise {
         return GetExercise(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetMuscle(repository: MuscleRepository): GetMuscle{
         return GetMuscle(repository)
     }
 
     @Provides
-    @Singleton
     fun provideDeleteTrainingBlock(repository: TrainingDetailsRepository): DeleteTrainingBlock {
         return DeleteTrainingBlock(repository)
     }
 
     @Provides
-    @Singleton
     fun provideInsertTrainingBlock(repository: TrainingDetailsRepository): InsertTrainingBlock {
         return InsertTrainingBlock(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetTrainingBlockWithDetailsByTrainingBlockId(repository: TrainingDetailsRepository):
             GetTrainingBlockWithDetailsByTrainingBlockId {
         return GetTrainingBlockWithDetailsByTrainingBlockId(repository)
     }
 
     @Provides
-    @Singleton
     fun provideUpdateTrainingBlocks(repository: TrainingRepository): UpdateTrainingBlocks {
         return UpdateTrainingBlocks(repository)
     }
 
+    @Provides
+    fun provideGetExercisesByName(repository: ExerciseRepository): GetExercisesByName {
+        return GetExercisesByName(repository)
+    }
+
+    @Provides
+    fun provideAddExercise(repository: ExerciseRepository): AddExercise {
+        return AddExercise(repository)
+    }
+
+    @Provides
+    fun provideGetExerciseByName(repository: ExerciseRepository): GetExerciseByName{
+        return GetExerciseByName(repository)
+    }
+
+    @Provides
+    fun provideDeleteExercise(
+        exerciseRepository: ExerciseRepository,
+        trainingDetailsRepository: TrainingDetailsRepository
+    ) : DeleteExercise {
+        return DeleteExercise(exerciseRepository, trainingDetailsRepository)
+    }
 }

@@ -57,4 +57,8 @@ class TrainingDetailsRepositoryImpl(
     override fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> {
        return dao.getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId)
     }
+
+    override suspend fun getTrainingBlocksByExerciseId(exerciseId: Int): List<TrainingBlock> {
+        return dao.getTrainingBlocksByExerciseId(exerciseId)
+    }
 }

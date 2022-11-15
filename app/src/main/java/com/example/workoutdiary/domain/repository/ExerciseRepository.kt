@@ -13,4 +13,6 @@ interface ExerciseRepository {
     suspend fun insertExercise(exercise: Exercise)
 
     suspend fun getExerciseById(exerciseId: Int): Exercise
+
+    suspend fun getExerciseByName(exerciseName: String): Exercise?
 }

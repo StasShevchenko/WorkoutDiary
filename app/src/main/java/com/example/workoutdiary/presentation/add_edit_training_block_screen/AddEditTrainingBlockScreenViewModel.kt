@@ -1,6 +1,5 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
-import android.util.Log
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,8 @@ import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercise
+import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercisesByMuscleId
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

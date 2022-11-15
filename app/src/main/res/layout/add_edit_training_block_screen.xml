@@ -52,12 +52,12 @@
                 app:layout_constraintBottom_toBottomOf="@id/muscleChoiceView">
 
                 <AutoCompleteTextView
-                    android:id="@+id/exerciseChoiceView"
+                    android:id="@+id/exercise_choice_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:dropDownHeight="250dp"
                     android:layout_weight="1"
-                    android:hint="@string/exercise_name"
+                    android:hint="@string/exercise"
                     android:inputType="textCapSentences"
                     tools:text="Сгибания на бицепс" />
             </com.google.android.material.textfield.TextInputLayout>
