@@ -13,6 +13,7 @@ import com.example.workoutdiary.domain.repository.TrainingDetailsRepository
 import com.example.workoutdiary.domain.repository.TrainingRepository
 import com.example.workoutdiary.domain.use_case.*
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.*
+import com.example.workoutdiary.domain.use_case.muscles_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -97,7 +98,7 @@ object AppModule {
     }
 
     @Provides
-    fun provideGetMuscle(repository: MuscleRepository): GetMuscle{
+    fun provideGetMuscle(repository: MuscleRepository): GetMuscle {
         return GetMuscle(repository)
     }
 
@@ -133,7 +134,7 @@ object AppModule {
     }
 
     @Provides
-    fun provideGetExerciseByName(repository: ExerciseRepository): GetExerciseByName{
+    fun provideGetExerciseByName(repository: ExerciseRepository): GetExerciseByName {
         return GetExerciseByName(repository)
     }
 
@@ -141,7 +142,42 @@ object AppModule {
     fun provideDeleteExercise(
         exerciseRepository: ExerciseRepository,
         trainingDetailsRepository: TrainingDetailsRepository
-    ) : DeleteExercise {
+    ): DeleteExercise {
         return DeleteExercise(exerciseRepository, trainingDetailsRepository)
+    }
+
+    @Provides
+    fun provideDeleteMuscle(
+        muscleRepository: MuscleRepository,
+        exerciseRepository: ExerciseRepository,
+        trainingDetailsRepository: TrainingDetailsRepository
+    ): DeleteMuscle {
+        return DeleteMuscle(
+            muscleRepository,
+            exerciseRepository,
+            trainingDetailsRepository
+        )
+    }
+
+    @Provides
+    fun provideAddMuscle(
+        repository: MuscleRepository
+    ): AddMuscle {
+        return AddMuscle(repository)
+    }
+
+
+    @Provides
+    fun provideGetMuscleByName(
+        repository: MuscleRepository
+    ): GetMuscleByName {
+        return GetMuscleByName(repository)
+    }
+
+    @Provides
+    fun provideGetMusclesByName(
+        repository: MuscleRepository
+    ) : GetMusclesByName {
+        return GetMusclesByName(repository)
     }
 }

@@ -17,6 +17,9 @@ interface MuscleDao {
     @Query("SELECT * FROM Muscle WHERE muscleId = :muscleId")
     suspend fun getMuscleById(muscleId: Int): Muscle
 
+    @Query("SELECT * FROM Muscle WHERE muscleName = :muscleName")
+    suspend fun getMuscleByName(muscleName: String): Muscle?
+
     @Delete
     suspend fun deleteMuscle(muscle: Muscle)
 }

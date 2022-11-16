@@ -7,8 +7,8 @@ import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.AddExercise
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercise
-import com.example.workoutdiary.domain.use_case.GetMuscle
-import com.example.workoutdiary.domain.use_case.GetMuscles
+import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscle
+import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscles
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExerciseByName
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel

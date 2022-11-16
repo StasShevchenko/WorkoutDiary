@@ -11,6 +11,8 @@ import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.domain.use_case.*
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercise
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercisesByMuscleId
+import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscle
+import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscles
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

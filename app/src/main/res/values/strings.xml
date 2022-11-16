@@ -17,4 +17,7 @@
     <string name="exercise_description">Описание упражнения (опционально)</string>
     <string name="add_exercise_header">Добавление упражнения</string>
     <string name="exercise_type">Тип упражнения</string>
+    <string name="muscle_name">Название мышечной группы</string>
+    <string name="add_muscle">Добавить мышечную группу</string>
+    <string name="add_muscle_group">Добавление мышечной группы</string>
 </resources>

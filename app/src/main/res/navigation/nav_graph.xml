@@ -69,4 +69,8 @@
         android:id="@+id/addExerciseScreenFragment"
         android:name="com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen.add_exercise_screen.AddExerciseScreenFragment"
         android:label="AddExerciseScreenFragment" />
+    <fragment
+        android:id="@+id/addMuscleScreenFragment"
+        android:name="com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.muscles_screen.add_muscle_screen.AddMuscleScreenFragment"
+        android:label="AddMuscleScreenFragment" />
 </navigation>

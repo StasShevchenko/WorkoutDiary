@@ -23,4 +23,8 @@ class MuscleRepositoryImpl(
     override suspend fun getMuscleById(muscleId: Int): Muscle {
        return dao.getMuscleById(muscleId)
     }
+
+    override suspend fun getMuscleByName(muscleName: String): Muscle? {
+        return dao.getMuscleByName(muscleName)
+    }
 }
