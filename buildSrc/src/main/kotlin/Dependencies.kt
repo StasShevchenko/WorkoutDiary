@@ -14,7 +14,7 @@ object Dependencies {
     }
 
     object CoreLibraryDesugaring{
-        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
+        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.8"
     }
 
     object Testing{
@@ -78,11 +78,17 @@ object Dependencies {
 
     object ProjectConfig{
         const val appId = "com.example.workoutdiary"
-        const val compileSdk = 32
+        const val compileSdk = 33
         const val minSdk = 21
         const val targetSdk = 32
         const val versionCode = 1
         const val versionName = "1.0"
+    }
+
+
+    object Calendar{
+        private const val calendarVersion = "2.0.4"
+        const val calendar = "com.kizitonwose.calendar:view:$calendarVersion"
     }
 
 

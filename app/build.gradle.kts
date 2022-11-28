@@ -70,6 +70,8 @@ dependencies {
 
     implementation(Dependencies.LiveData.liveDataLifecycle)
 
+    implementation(Dependencies.Calendar.calendar)
+
     testImplementation (Dependencies.Testing.junit4)
     androidTestImplementation (Dependencies.Testing.junitAndroidExt)
     androidTestImplementation (Dependencies.Testing.espresso)

@@ -24,7 +24,7 @@ class TrainingDaysAdapter(private val clickListener: OnTrainingClickListener) : 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingDaysViewHolder {
         val binding =
            TrainingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TrainingDaysViewHolder(binding, ConfigurationCompat.getLocales(parent.context.resources.configuration)[0])
+        return TrainingDaysViewHolder(binding, ConfigurationCompat.getLocales(parent.context.resources.configuration)[0]!!)
     }
 
     override fun onBindViewHolder(holder: TrainingDaysViewHolder, position: Int) {
