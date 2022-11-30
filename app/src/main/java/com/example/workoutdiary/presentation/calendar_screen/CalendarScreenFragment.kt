@@ -2,7 +2,6 @@ package com.example.workoutdiary.presentation.calendar_screen
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.view.children
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.RecyclerView.OnFlingListener
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.CalendarScreenFragmentBinding
 import com.example.workoutdiary.presentation.calendar_screen.calendar.DayViewContainer
@@ -20,7 +18,6 @@ import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -49,8 +46,8 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment) {
             }
             //calendar setup
             val currentMonth = YearMonth.now()
-            val startMonth = currentMonth.minusMonths(50)
-            val endMonth = currentMonth.plusMonths(50)
+            val startMonth = currentMonth.minusMonths(120)
+            val endMonth = currentMonth.plusMonths(120)
             val firstDayOfWeek = DayOfWeek.MONDAY
             val daysOfWeek = daysOfWeek(firstDayOfWeek = firstDayOfWeek)
             trainingsCalendar.setup(startMonth, endMonth, DayOfWeek.SUNDAY)
@@ -63,8 +60,9 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment) {
                     container.textView.setBackgroundResource(R.color.white)
                     container.dotView.visibility = View.INVISIBLE
                     if (viewModel.trainingsList.value.isNotEmpty()) {
-                        if (viewModel.trainingsList.value[(data.date.dayOfMonth - 1)] != null
-                            && viewModel.trainingsList.value[(data.date.dayOfMonth - 1)]!!.trainingDate.monthValue == data.date.monthValue) {
+                        val index = data.date.dayOfMonth - 1
+                        if (viewModel.currentMonth == data.date.month && viewModel.trainingsList.value[index] != null
+                            && viewModel.trainingsList.value[index]!!.trainingDate.monthValue == data.date.monthValue) {
                             container.dotView.visibility = View.VISIBLE
                         }
                     }

@@ -1,6 +1,6 @@
 package com.example.workoutdiary.presentation.calendar_screen
 
-import android.util.Log
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.Month
 import java.time.YearMonth
 import javax.inject.Inject
 
@@ -27,17 +28,21 @@ class CalendarScreenViewModel @Inject constructor(
     private val _trainingsList: MutableStateFlow<List<Training?>> = MutableStateFlow(
         mutableListOf()
     )
+
+    var currentMonth: Month = LocalDate.now().month
+    private set
+
     val trainingsList: StateFlow<List<Training?>> = _trainingsList
 
     private var getTrainingsJob: Job? = null
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             trainings(LocalDate.now()).collectLatest { trainingsList ->
                 val mutableTrainingsList: MutableList<Training?> = mutableListOf()
                 val yearMonth = YearMonth.of(LocalDate.now().year, LocalDate.now().monthValue)
                 val currentMonthDaysCount = yearMonth.lengthOfMonth()
-                for (i in 1..currentMonthDaysCount + 1) {
+                for (i in 1..currentMonthDaysCount) {
                     val currentTraining: Training? = trainingsList.find { training ->
                         training.trainingDate.dayOfMonth == i
                     }
@@ -54,13 +59,14 @@ class CalendarScreenViewModel @Inject constructor(
                 selectedDate = event.day.date
             }
             is CalendarScreenEvent.MonthChanged -> {
+                currentMonth = event.date.month
                 getTrainingsJob?.cancel()
-                getTrainingsJob = viewModelScope.launch(Dispatchers.IO) {
+                getTrainingsJob = viewModelScope.launch {
                     trainings(event.date).collectLatest { trainingsList ->
                         val mutableTrainingsList: MutableList<Training?> = mutableListOf()
                         val yearMonth = YearMonth.of(event.date.year, event.date.monthValue)
                         val currentMonthDaysCount = yearMonth.lengthOfMonth()
-                        for (i in 1..currentMonthDaysCount + 1) {
+                        for (i in 1..currentMonthDaysCount) {
                             val currentTraining: Training? = trainingsList.find { training ->
                                 training.trainingDate.dayOfMonth == i
                             }
