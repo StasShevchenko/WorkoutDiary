@@ -20,4 +20,5 @@
     <string name="muscle_name">Название мышечной группы</string>
     <string name="add_muscle">Добавить мышечную группу</string>
     <string name="add_muscle_group">Добавление мышечной группы</string>
+    <string name="no_training">Нет тренировки</string>
 </resources>

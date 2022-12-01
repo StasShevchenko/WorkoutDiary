@@ -18,7 +18,11 @@
         android:id="@+id/calendarScreenFragment"
         android:name="com.example.workoutdiary.presentation.calendar_screen.CalendarScreenFragment"
         android:label="Calendar screen"
-        tools:layout="@layout/calendar_screen_fragment" />
+        tools:layout="@layout/calendar_screen_fragment" >
+        <action
+            android:id="@+id/action_calendarScreenFragment_to_addEditTrainingScreenFragment"
+            app:destination="@id/addEditTrainingScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addEditTrainingScreenFragment"
         android:name="com.example.workoutdiary.presentation.add_edit_training_screen.AddEditTrainingScreenFragment"

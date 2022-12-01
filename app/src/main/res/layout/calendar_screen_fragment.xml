@@ -1,67 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.calendar_screen.CalendarScreenFragment"
     android:layout_width="match_parent"
+    android:paddingBottom="48dp"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
+        android:id="@+id/materialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        android:layout_height="wrap_content">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                    <com.kizitonwose.calendar.view.CalendarView
-                        android:id="@+id/trainings_calendar"
-                        android:paddingStart="32dp"
-                        android:paddingEnd="32dp"
-                        android:paddingBottom="16dp"
-                        android:paddingTop="4dp"
-                        app:cv_dayViewResource="@layout/calendar_day_layout"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        app:cv_outDateStyle="endOfGrid"
-                        app:cv_monthHeaderResource="@layout/calendar_day_titles_container"
-                        android:layout_height="wrap_content"/>
+            <com.kizitonwose.calendar.view.CalendarView
+                android:id="@+id/trainings_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="32dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="32dp"
+                android:paddingBottom="16dp"
+                app:cv_dayViewResource="@layout/calendar_day_layout"
+                app:cv_monthHeaderResource="@layout/calendar_day_titles_container"
+                app:cv_outDateStyle="endOfGrid" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/previous_month_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="32dp"
-                    android:padding="8dp"
-                    android:background="?actionBarItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_previous" />
-
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/next_month_button"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:padding="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_gravity="end"
-                    android:background="?actionBarItemBackground"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_next" />
-
-            </FrameLayout>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/previous_month_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:background="?actionBarItemBackground"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_previous" />
 
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/next_month_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:background="?actionBarItemBackground"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_next" />
 
-
+        </FrameLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView" >
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/training_details_container"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

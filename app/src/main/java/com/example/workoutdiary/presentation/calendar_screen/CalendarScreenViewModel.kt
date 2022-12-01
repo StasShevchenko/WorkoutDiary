@@ -4,6 +4,9 @@ package com.example.workoutdiary.presentation.calendar_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
+import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
+import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
+import com.example.workoutdiary.domain.use_case.GetTrainingDetailsByTrainingID
 import com.example.workoutdiary.domain.use_case.GetTrainingsByMonth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,20 +22,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalendarScreenViewModel @Inject constructor(
-    private val trainings: GetTrainingsByMonth
+    private val trainings: GetTrainingsByMonth,
+    private val trainingDetails: GetTrainingDetailsByTrainingID
 ) : ViewModel() {
 
     var selectedDate: LocalDate = LocalDate.now()
         private set
 
-    private val _trainingsList: MutableStateFlow<List<Training?>> = MutableStateFlow(
-        mutableListOf()
-    )
-
-    var currentMonth: Month = LocalDate.now().month
-    private set
-
+    private val _trainingsList: MutableStateFlow<List<Training?>> = MutableStateFlow(listOf())
     val trainingsList: StateFlow<List<Training?>> = _trainingsList
+
+    private val _currentTraining: MutableStateFlow<Training?> = MutableStateFlow(null)
+    val currentTraining: StateFlow<Training?> = _currentTraining
+
+    private val _currentTrainingDetails: MutableStateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> =
+        MutableStateFlow(
+            mapOf()
+        )
+    val currentTrainingDetails: StateFlow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>> = _currentTrainingDetails
+
+
+    var currentMonth: YearMonth = YearMonth.now()
+        private set
+
 
     private var getTrainingsJob: Job? = null
 
@@ -49,6 +61,8 @@ class CalendarScreenViewModel @Inject constructor(
                     mutableTrainingsList.add(currentTraining)
                 }
                 _trainingsList.value = mutableTrainingsList
+                _currentTraining.value = getCurrentTraining(LocalDate.now())
+                getCurrentDetails()
             }
         }
     }
@@ -57,9 +71,11 @@ class CalendarScreenViewModel @Inject constructor(
         when (event) {
             is CalendarScreenEvent.DaySelected -> {
                 selectedDate = event.day.date
+                _currentTraining.value = getCurrentTraining(event.day.date)
+                getCurrentDetails()
             }
             is CalendarScreenEvent.MonthChanged -> {
-                currentMonth = event.date.month
+                currentMonth = YearMonth.of(event.date.year, event.date.monthValue)
                 getTrainingsJob?.cancel()
                 getTrainingsJob = viewModelScope.launch {
                     trainings(event.date).collectLatest { trainingsList ->
@@ -74,6 +90,24 @@ class CalendarScreenViewModel @Inject constructor(
                         }
                         _trainingsList.value = mutableTrainingsList
                     }
+                }
+            }
+        }
+    }
+
+
+    private fun getCurrentTraining(date: LocalDate): Training? {
+        val trainingToFind: Training? = trainingsList.value.find { training ->
+            training?.trainingDate == date
+        }
+        return trainingToFind
+    }
+
+    private fun getCurrentDetails(){
+        viewModelScope.launch {
+            currentTraining.value?.let {
+                trainingDetails(it.trainingId).collectLatest { trainingDetails ->
+                    _currentTrainingDetails.value = trainingDetails
                 }
             }
         }
