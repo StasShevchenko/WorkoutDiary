@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.calendar_screen.CalendarScreenFragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingBottom="48dp"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:paddingBottom="48dp"
+    tools:context=".presentation.calendar_screen.CalendarScreenFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -24,13 +24,12 @@
 
             <com.kizitonwose.calendar.view.CalendarView
                 android:id="@+id/trainings_calendar"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:paddingStart="32dp"
                 android:paddingTop="4dp"
-                android:paddingEnd="32dp"
-                android:paddingBottom="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 app:cv_dayViewResource="@layout/calendar_day_layout"
                 app:cv_monthHeaderResource="@layout/calendar_day_titles_container"
                 app:cv_outDateStyle="endOfGrid" />
@@ -67,14 +66,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" >
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
         <LinearLayout
             android:id="@+id/training_details_container"
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
         </LinearLayout>
 

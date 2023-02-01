@@ -1,6 +1,5 @@
 package com.example.workoutdiary.presentation.calendar_screen
 
-import android.app.ActionBar.LayoutParams
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
@@ -170,7 +169,7 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
                                 val trainingBlockNameTextView = TextView(requireContext())
                                 trainingBlockNameTextView.text = i.toString() + " " + trainingBlock.exerciseName
                                 trainingBlockNameTextView.gravity = Gravity.START
-                                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+                                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                                 params.setMargins(0, 0, 0, 8);
                                 trainingBlockNameTextView.layoutParams = params
                                 binding.trainingDetailsContainer.addView(trainingBlockNameTextView)
