@@ -3,17 +3,15 @@ package com.example.workoutdiary.di
 import android.app.Application
 import androidx.room.Room
 import com.example.workoutdiary.data.data_source.WorkoutDatabase
-import com.example.workoutdiary.data.repository.ExerciseRepositoryImpl
-import com.example.workoutdiary.data.repository.MuscleRepositoryImpl
-import com.example.workoutdiary.data.repository.TrainingDetailsRepositoryImpl
-import com.example.workoutdiary.data.repository.TrainingRepositoryImpl
-import com.example.workoutdiary.domain.repository.ExerciseRepository
-import com.example.workoutdiary.domain.repository.MuscleRepository
-import com.example.workoutdiary.domain.repository.TrainingDetailsRepository
-import com.example.workoutdiary.domain.repository.TrainingRepository
+import com.example.workoutdiary.data.repository.*
+import com.example.workoutdiary.domain.repository.*
 import com.example.workoutdiary.domain.use_case.*
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.*
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.*
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalRepsCount
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalSetsCount
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalTrainingsCount
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalWeightCount
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,6 +50,12 @@ object AppModule {
     @Singleton
     fun provideExerciseRepository(db: WorkoutDatabase): ExerciseRepository {
         return ExerciseRepositoryImpl(db.exerciseDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatisticsRepository(db: WorkoutDatabase): StatisticsRepository {
+        return StatisticsRepositoryImpl(db.statisticsDao)
     }
 
     @Provides
@@ -177,7 +181,35 @@ object AppModule {
     @Provides
     fun provideGetMusclesByName(
         repository: MuscleRepository
-    ) : GetMusclesByName {
+    ): GetMusclesByName {
         return GetMusclesByName(repository)
+    }
+
+    @Provides
+    fun provideGetTotalTrainingsCount(
+        repository: StatisticsRepository
+    ): GetTotalTrainingsCount {
+        return GetTotalTrainingsCount(repository)
+    }
+
+    @Provides
+    fun provideGetTotalSetsCount(
+        repository: StatisticsRepository
+    ): GetTotalSetsCount {
+        return GetTotalSetsCount(repository)
+    }
+
+    @Provides
+    fun provideGetTotalWeightCount(
+        repository: StatisticsRepository
+    ): GetTotalWeightCount{
+        return GetTotalWeightCount(repository)
+    }
+
+    @Provides
+    fun provideGetTotalRepsCount(
+        repository: StatisticsRepository
+    ): GetTotalRepsCount {
+        return GetTotalRepsCount(repository)
     }
 }

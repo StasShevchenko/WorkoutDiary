@@ -7,13 +7,15 @@ import com.example.workoutdiary.domain.model.TrainingDay
 import com.example.workoutdiary.domain.use_case.GetTrainingsByMonth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(
+class TrainingsViewModel @Inject constructor(
     val trainingUseCase: GetTrainingsByMonth
 ) : ViewModel() {
 

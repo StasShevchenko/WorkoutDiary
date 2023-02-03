@@ -21,7 +21,8 @@ import java.time.LocalDate
 
 @AndroidEntryPoint
 class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick, TrainingDaysAdapter.OnTrainingClickListener {
-    private val viewModel: HomeScreenViewModel by viewModels()
+    private val trainingsViewModel: TrainingsViewModel by viewModels()
+    private val statisticsViewModel: StatisticsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +39,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             }
 
             monthDatePicker.setOnDateChangedListener {
-                viewModel.onEvent(HomeScreenEvent.ChangeDate(it))
+                trainingsViewModel.onEvent(HomeScreenEvent.ChangeDate(it))
             }
 
             monthDatePicker.setOnTextClickedAction {
@@ -48,9 +49,31 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         }
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.trainingDaysList
-                    .collectLatest {
-                        trainingDaysAdapter.submitList(it)
+                launch {
+                    trainingsViewModel.trainingDaysList
+                        .collectLatest {
+                            trainingDaysAdapter.submitList(it)
+                        }
+                }
+               launch {
+                   statisticsViewModel.totalTrainingsCount.collectLatest { totalTrainingsCount ->
+                       binding.totalTrainingsCountTextView.text = "Всего тренировок: ${totalTrainingsCount}"
+                   }
+               }
+                launch {
+                    statisticsViewModel.totalSetsCount.collectLatest { totalSetsCount ->
+                        binding.totalSetsCountTextView.text = "Всего выполнено подходов: ${totalSetsCount}"
+                    }
+                }
+                launch {
+                    statisticsViewModel.totalRepsCount.collectLatest { totalRepsCount ->
+                        binding.totalRepsCountTextView.text = "Всего повторений в упражнениях: ${totalRepsCount}"
+                    }
+                }
+                launch {
+                    statisticsViewModel.totalWeightCount.collectLatest { totalWeightCount ->
+                        binding.totalWeightCountTextView.text = "Всего поднято: ${totalWeightCount} кг веса"
+                    }
                 }
             }
         }
@@ -75,8 +98,8 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             HomeScreenFragmentDirections
                 .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
                     trainingDate = LocalDate.now(),
-                    trainingId = viewModel.todayTraining?.trainingId ?: -1,
-                    trainingName = viewModel.todayTraining?.trainingName ?: ""
+                    trainingId = trainingsViewModel.todayTraining?.trainingId ?: -1,
+                    trainingName = trainingsViewModel.todayTraining?.trainingName ?: ""
                 )
         findNavController().navigate(action)
     }

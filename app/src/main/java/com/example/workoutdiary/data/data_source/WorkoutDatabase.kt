@@ -23,6 +23,7 @@ abstract class WorkoutDatabase : RoomDatabase() {
     abstract val trainingDetailsDao: TrainingDetailsDao
     abstract val exerciseDao: ExerciseDao
     abstract val muscleDao: MuscleDao
+    abstract val statisticsDao: StatisticsDao
 
     companion object{
         const val DATABASE_NAME = "workout_db"
