@@ -37,7 +37,7 @@ object Dependencies {
     }
 
     object DaggerHilt{
-        private const val hiltVersion = "2.41"
+        private const val hiltVersion = "2.43.2"
         const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
@@ -45,7 +45,7 @@ object Dependencies {
     }
 
     object Navigation{
-        private const val navigationVersion = "2.4.2"
+        private const val navigationVersion = "2.5.3"
 
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
@@ -91,6 +91,10 @@ object Dependencies {
         const val calendar = "com.kizitonwose.calendar:view:$calendarVersion"
     }
 
+    object Charts{
+        private const val chartsVersion = "1.6.3"
+        const val chartsViews = "com.patrykandpatrick.vico:views:$chartsVersion"
+    }
 
 }
 

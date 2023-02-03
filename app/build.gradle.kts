@@ -1,6 +1,6 @@
 plugins {
-    id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
@@ -21,14 +21,17 @@ android {
     kapt {
         correctErrorTypes = true
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -40,16 +43,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
+
 
 dependencies {
 
-    implementation (Dependencies.AndroidX.coreKtx)
-    implementation (Dependencies.AndroidX.appCompat)
-    implementation (Dependencies.AndroidX.constraintLayout)
-    implementation (Dependencies.AndroidX.recyclerView)
+    constraints{
+        implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1") {
+            because("transitive dependencies conflict between two libraries")
+        }
+    }
 
-    implementation (Dependencies.Material.material)
+    implementation(Dependencies.AndroidX.coreKtx)
+    implementation(Dependencies.AndroidX.appCompat)
+    implementation(Dependencies.AndroidX.constraintLayout)
+    implementation(Dependencies.AndroidX.recyclerView)
+
+    implementation(Dependencies.Material.material)
 
     implementation(Dependencies.Navigation.navigationUi)
     implementation(Dependencies.Navigation.navigationFragment)
@@ -72,7 +83,9 @@ dependencies {
 
     implementation(Dependencies.Calendar.calendar)
 
-    testImplementation (Dependencies.Testing.junit4)
-    androidTestImplementation (Dependencies.Testing.junitAndroidExt)
-    androidTestImplementation (Dependencies.Testing.espresso)
+    implementation(Dependencies.Charts.chartsViews)
+
+    testImplementation(Dependencies.Testing.junit4)
+    androidTestImplementation(Dependencies.Testing.junitAndroidExt)
+    androidTestImplementation(Dependencies.Testing.espresso)
 }

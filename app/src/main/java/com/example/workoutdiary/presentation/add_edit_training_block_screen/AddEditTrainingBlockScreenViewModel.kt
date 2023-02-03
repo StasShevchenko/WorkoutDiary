@@ -8,7 +8,9 @@ import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
-import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.domain.use_case.DeleteTrainingBlock
+import com.example.workoutdiary.domain.use_case.GetTrainingBlockWithDetailsByTrainingBlockId
+import com.example.workoutdiary.domain.use_case.InsertTrainingBlock
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercise
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercisesByMuscleId
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscle
@@ -206,6 +208,9 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                     }
                 }
             }
+            ExerciseType.TIME -> TODO()
+            ExerciseType.DISTANCE -> TODO()
+            null -> TODO()
         }
         _validateSets.value = newList
         return dataIsCorrect
