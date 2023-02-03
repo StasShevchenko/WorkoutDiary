@@ -4,13 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.presentation.add_edit_training_block_screen.ValidateSet
 import com.example.workoutdiary.utils.ExerciseType
-import com.google.android.material.textfield.TextInputEditText
 
 
 class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -55,7 +52,7 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
             }
             currentExerciseType = exerciseType
             addItems(setsList.size, setsList, exerciseType)
-        } else if(setsList.size - setsLayout.childCount == 1){
+        } else if((setsLayout.childCount - setsList.size) == 1){
             setsLayout.removeViewAt(setsLayout.childCount - 1)
             holdersList.removeLast()
         } else{

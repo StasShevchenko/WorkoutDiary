@@ -1,7 +1,6 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
@@ -15,7 +14,6 @@ import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingBlockScreenBinding
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
