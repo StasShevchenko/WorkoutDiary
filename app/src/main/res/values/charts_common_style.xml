@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RepsChartAxisStyle">
+        <item name="showTitle">true</item>
+    </style>
+
+    <style name="RepsChartAxisTitleStyle">
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="typeface">monospace</item>
+    </style>
+
+    <style name="RepsChartAxisTitleBackgroundShapeStyle">
+        <item name="cornerSize">100%</item>
+        <item name="cornerTreatment">rounded</item>
+    </style>
+
+    <style name="RepsChartAxisTitleBackgroundStyle">
+        <item name="shapeStyle">@style/RepsChartAxisTitleBackgroundShapeStyle</item>
+    </style>
+
+    <style name="RepsChartBottomAxisTitleBackgroundStyle" parent="RepsChartAxisTitleBackgroundStyle">
+        <item name="color">?attr/colorPrimary</item>
+    </style>
+
+    <style name="RepsChartBottomAxisTitleStyle" parent="RepsChartAxisTitleStyle">
+        <item name="labelColor">@android:color/white</item>
+        <item name="backgroundStyle">@style/RepsChartBottomAxisTitleBackgroundStyle</item>
+        <item name="marginTop">4dp</item>
+    </style>
+
+    <style name="RepsChartLine1Style">
+        <item name="color">?attr/colorPrimary</item>
+        <item name="cubicStrength">0%</item>
+    </style>
+
+    <style name="RepsChartStartAxisTitleBackgroundStyle" parent="RepsChartAxisTitleBackgroundStyle">
+        <item name="color">?attr/colorPrimary</item>
+    </style>
+
+    <style name="RepsChartStartAxisTitleStyle" parent="RepsChartAxisTitleStyle">
+        <item name="labelColor">@android:color/white</item>
+        <item name="backgroundStyle">@style/RepsChartStartAxisTitleBackgroundStyle</item>
+        <item name="marginEnd">4dp</item>
+    </style>
+
+    <style name="RepsChartBottomAxisStyle" parent="RepsChartAxisStyle">
+        <item name="titleStyle">@style/RepsChartBottomAxisTitleStyle</item>
+        <item name="title">@string/date_axis</item>
+        <item name="horizontalAxisTickPosition">center</item>
+    </style>
+
+    <style name="RepsChartLineChartStyle">
+        <item name="line1Spec">@style/RepsChartLine1Style</item>
+        <item name="spacing">100dp</item>
+    </style>
+
+    <style name="RepsChartStartAxisStyle" parent="RepsChartAxisStyle">
+        <item name="showGuideline">false</item>
+        <item name="verticalAxisHorizontalLabelPosition">inside</item>
+        <item name="titleStyle">@style/RepsChartStartAxisTitleStyle</item>
+        <item name="title">@string/reps_axis</item>
+    </style>
+
+
+
+</resources>

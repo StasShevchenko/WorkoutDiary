@@ -22,4 +22,6 @@
     <string name="add_muscle_group">Добавление мышечной группы</string>
     <string name="no_training">Нет тренировки</string>
     <string name="statistics">Общая статистика</string>
+    <string name="date_axis">Дата</string>
+    <string name="reps_axis">Повторения</string>
 </resources>

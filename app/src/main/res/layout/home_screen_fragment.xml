@@ -87,18 +87,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:padding="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp">
 
         <com.patrykandpatrick.vico.views.chart.ChartView
             android:id="@+id/chart"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
             android:layout_height="wrap_content"
-            app:chart="column"
+            app:chart="line"
+            app:fadingEdgeVisibilityInterpolator="androidx.interpolator.view.animation.FastOutSlowInInterpolator"
+            app:fadingEdgeWidth="32dp"
             app:showBottomAxis="true"
+            app:bottomAxisStyle="@style/RepsChartBottomAxisStyle"
+            app:lineChartStyle="@style/RepsChartLineChartStyle"
+            app:startAxisStyle="@style/RepsChartStartAxisStyle"
+            app:chartZoomEnabled="true"
             app:showStartAxis="true" />
 
 
