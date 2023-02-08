@@ -3,12 +3,14 @@ package com.example.workoutdiary.presentation.home_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.domain.use_case.statistic_use_cases.*
+import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +37,7 @@ class StatisticsViewModel @Inject constructor(
     private val _statisticsInfo: MutableStateFlow<Pair<String, Map<LocalDate, Int>>?> = MutableStateFlow(null)
     val statisticsInfo: StateFlow<Pair<String, Map<LocalDate, Int>>?> = _statisticsInfo
 
+    val statisticsEntryProducer = ChartEntryModelProducer(getStatisticsEntries())
 
     init {
         viewModelScope.launch {
@@ -64,7 +67,23 @@ class StatisticsViewModel @Inject constructor(
         viewModelScope.launch {
             getExerciseStatisticsInfo()?.collectLatest { statisticsInfo ->
                 _statisticsInfo.value = statisticsInfo
+                statisticsEntryProducer.setEntries(getStatisticsEntries())
             }
         }
+    }
+
+    private fun getStatisticsEntries(): List<DateEntry> {
+        val dateEntryList: MutableList<DateEntry> = mutableListOf()
+        val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy")
+        var x = 0
+        statisticsInfo.value?.second?.forEach { statisticsEntry ->
+            dateEntryList.add(DateEntry(
+                date = statisticsEntry.key.format(dateFormatter),
+                x = x.toFloat(),
+                y = statisticsEntry.value.toFloat()
+            ))
+            x++
+        }
+        return dateEntryList
     }
 }

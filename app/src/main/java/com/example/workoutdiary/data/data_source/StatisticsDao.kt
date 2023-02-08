@@ -25,27 +25,27 @@ interface StatisticsDao {
     @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
         "SELECT trainingDate, MAX(repeats) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
-                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
+                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName  GROUP BY trainingDate ORDER BY trainingDate"
     )
     fun getExerciseRepsStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
     @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
         "SELECT trainingDate, MAX(weight) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
-                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
+                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName GROUP BY trainingDate ORDER BY trainingDate"
     )
     fun getExerciseWeightStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
     @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
         "SELECT trainingDate, MAX(time) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
-                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
+                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName GROUP BY trainingDate ORDER BY trainingDate"
     )
     fun getExerciseTimeStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
     @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
         "SELECT trainingDate, MAX(distance) as max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
-                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
+                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName GROUP BY trainingDate ORDER BY trainingDate"
     )
     fun getExerciseDistanceStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
