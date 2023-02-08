@@ -53,7 +53,7 @@ class StatisticsRepositoryImpl(
          dao.insertExerciseStatisticsParameters(exerciseStatisticsParameters)
     }
 
-    override suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters? {
+    override fun getExerciseStatisticsParameters(): Flow<ExerciseStatisticsParameters?> {
         return dao.getExerciseStatisticsParameters()
     }
 }

@@ -123,7 +123,6 @@ object AppModule {
     fun provideUpdateTrainingBlocks(repository: TrainingRepository): UpdateTrainingBlocks {
         return UpdateTrainingBlocks(repository)
     }
-
     @Provides
     fun provideGetExercisesByName(repository: ExerciseRepository): GetExercisesByName {
         return GetExercisesByName(repository)
@@ -222,5 +221,12 @@ object AppModule {
         repository: StatisticsRepository
     ): UpdateExerciseStatisticsInfo {
         return UpdateExerciseStatisticsInfo(repository)
+    }
+
+    @Provides
+    fun provideGetExerciseParametersInfo(
+        repository: StatisticsRepository
+    ): GetExerciseStatisticsParameters{
+        return GetExerciseStatisticsParameters(repository)
     }
 }

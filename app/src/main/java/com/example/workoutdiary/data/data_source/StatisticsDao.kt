@@ -53,6 +53,6 @@ interface StatisticsDao {
     suspend fun insertExerciseStatisticsParameters(statisticsInfo: ExerciseStatisticsParameters)
 
     @Query("SELECT * FROM ExerciseStatisticsParameters")
-    suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters?
+    fun getExerciseStatisticsParameters(): Flow<ExerciseStatisticsParameters?>
 
 }

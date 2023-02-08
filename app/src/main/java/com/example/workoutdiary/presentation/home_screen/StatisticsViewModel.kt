@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.workoutdiary.data.model.entities.ExerciseStatisticsParameters
 import com.example.workoutdiary.domain.use_case.statistic_use_cases.*
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ class StatisticsViewModel @Inject constructor(
     private val getTotalSetsCount: GetTotalSetsCount,
     private val getTotalRepsCount: GetTotalRepsCount,
     private val getTotalWeightCount: GetTotalWeightCount,
-    private val getExerciseStatisticsInfo: GetExerciseStatisticsInfo
+    private val getExerciseStatisticsInfo: GetExerciseStatisticsInfo,
+    private val getExerciseStatisticsParameters: GetExerciseStatisticsParameters
 ) : ViewModel() {
 
     private val _totalTrainingsCount: MutableStateFlow<Int?> = MutableStateFlow(0)
@@ -36,6 +38,9 @@ class StatisticsViewModel @Inject constructor(
 
     private val _statisticsInfo: MutableStateFlow<Pair<String, Map<LocalDate, Int>>?> = MutableStateFlow(null)
     val statisticsInfo: StateFlow<Pair<String, Map<LocalDate, Int>>?> = _statisticsInfo
+
+    private val _statisticsParameters: MutableStateFlow<ExerciseStatisticsParameters?> = MutableStateFlow(null)
+    val statisticsParameters: StateFlow<ExerciseStatisticsParameters?> = _statisticsParameters
 
     val statisticsEntryProducer = ChartEntryModelProducer(getStatisticsEntries())
 
@@ -65,9 +70,14 @@ class StatisticsViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            getExerciseStatisticsInfo()?.collectLatest { statisticsInfo ->
+            getExerciseStatisticsInfo().collectLatest { statisticsInfo ->
                 _statisticsInfo.value = statisticsInfo
                 statisticsEntryProducer.setEntries(getStatisticsEntries())
+            }
+        }
+        viewModelScope.launch {
+            getExerciseStatisticsParameters().collectLatest { parameters ->
+                _statisticsParameters.value = parameters
             }
         }
     }

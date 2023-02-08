@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.model.entities.ExerciseStatisticsParameters
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.HomeScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
@@ -39,12 +40,13 @@ import java.time.LocalDate
 class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick, TrainingDaysAdapter.OnTrainingClickListener {
     private val trainingsViewModel: TrainingsViewModel by viewModels()
     private val statisticsViewModel: StatisticsViewModel by viewModels()
+    private lateinit var binding: HomeScreenFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = activity as MainActivity
         activity.setFabListener(this)
-        val binding = HomeScreenFragmentBinding.bind(view)
+        binding = HomeScreenFragmentBinding.bind(view)
 
         val trainingDaysAdapter = TrainingDaysAdapter(this)
 
@@ -62,6 +64,16 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 trainingRecyclerView.smoothScrollToPosition(LocalDate.now().dayOfMonth-1)
             }
 
+            emptyParametersMessageTextView.setOnClickListener {
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                findNavController().navigate(action)
+            }
+
+            emptyDataMessageTextView.setOnClickListener {
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                findNavController().navigate(action)
+            }
+
             with(chart) {
                 entryProducer = statisticsViewModel.statisticsEntryProducer
                 (bottomAxis as HorizontalAxis).valueFormatter =
@@ -74,9 +86,6 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                         }
                         else "There is no any data"
                     }
-//                with(startAxis as VerticalAxis) {
-//                    maxLabelCount = 5
-//                }
                 val labelBackgroundShape = MarkerCorneredShape(all = Corner.FullyRounded)
                 val label = textComponent {
                     this.color = -1
@@ -172,9 +181,40 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                     statisticsViewModel.statisticsInfo.collectLatest { statisticsValue ->
                         statisticsValue?.let {
                             binding.exerciseNameTextView.text = statisticsValue.first
+                            updateStaticsVisibility(statisticsValue.second, statisticsViewModel.statisticsParameters.value)
                         }
                     }
                 }
+                launch {
+                    statisticsViewModel.statisticsParameters.collectLatest { parameters ->
+                        updateStaticsVisibility(statisticsViewModel.statisticsInfo.value?.second, parameters)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateStaticsVisibility(
+        statisticsData: Map<LocalDate, Int>?,
+        statisticsParameters: ExerciseStatisticsParameters?
+    ) {
+        if (statisticsParameters == null) {
+            with(binding) {
+                statisticsCardView.visibility = View.VISIBLE
+                emptyParametersMessageTextView.visibility = View.VISIBLE
+            }
+        } else if (statisticsData == null || statisticsData.isEmpty()) {
+            with(binding){
+                statisticsCardView.visibility = View.VISIBLE
+                emptyParametersMessageTextView.visibility = View.GONE
+                emptyDataMessageTextView.visibility = View.VISIBLE
+            }
+        } else {
+            with(binding){
+                statisticsCardView.visibility = View.VISIBLE
+                emptyParametersMessageTextView.visibility = View.GONE
+                emptyDataMessageTextView.visibility = View.GONE
+                statisticsChartContainer.visibility = View.VISIBLE
             }
         }
     }

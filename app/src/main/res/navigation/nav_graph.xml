@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_addEditTrainingScreenFragment"
             app:destination="@id/addEditTrainingScreenFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_editStatisticsScreenFragment"
+            app:destination="@id/editStatisticsScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarScreenFragment"
@@ -77,4 +80,8 @@
         android:id="@+id/addMuscleScreenFragment"
         android:name="com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.muscles_screen.add_muscle_screen.AddMuscleScreenFragment"
         android:label="AddMuscleScreenFragment" />
+    <fragment
+        android:id="@+id/editStatisticsScreenFragment"
+        android:name="com.example.workoutdiary.presentation.edit_statistics_screen.EditStatisticsScreenFragment"
+        android:label="EditStatisticsScreenFragment" />
 </navigation>

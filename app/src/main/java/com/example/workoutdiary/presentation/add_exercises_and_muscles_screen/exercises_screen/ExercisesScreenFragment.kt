@@ -1,10 +1,9 @@
 package com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +16,6 @@ import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.databinding.ExercisesScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
-import com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen.add_exercise_screen.AddExercisesScreenEvent
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +30,7 @@ ExercisesAdapter.ExerciseClick{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = ExercisesScreenFragmentBinding.bind(requireView())
-        rootView = getView()!!.findViewById(R.id.root_layout)
+        rootView = requireView().findViewById(R.id.root_layout)
         val exercisesAdapter = ExercisesAdapter(this)
         binding.apply {
             exerciseRecyclerView.apply {
@@ -61,6 +59,7 @@ ExercisesAdapter.ExerciseClick{
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onDeleteClickListener() {
         val snackbar = Snackbar.make(
             rootView,

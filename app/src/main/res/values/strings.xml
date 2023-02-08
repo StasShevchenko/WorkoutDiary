@@ -24,4 +24,15 @@
     <string name="statistics">Общая статистика</string>
     <string name="date_axis">Дата</string>
     <string name="reps_axis">Повторения</string>
+    <string name="edit">Редактировать</string>
+    <string name="statistics_settings">Настройки статистики</string>
+    <string name="statistics_settings_hint">Выберите упражнение для вывода лучших результатов его выполнения для каждой из тренировок</string>
+    <string name="statistics_parameter">Показатель статистики:</string>
+    <string name="time">Время</string>
+    <string name="distance">Дистанция</string>
+    <string name="empty_statistics_data_message">Недостаточно данных для отображения статистики по упражнению :(\n
+        Нажмите на карточку для настройки параметров.
+        \nДанная статистика отображает лучшие результаты выполнения упражнения в каждом из тренировочных дней.
+    </string>
+    <string name="empty_statistics_parameters_message">Параметры для отображения статистики по упражнению не настроены!\nНажмите на карточку для настройки параметров.</string>
 </resources>
