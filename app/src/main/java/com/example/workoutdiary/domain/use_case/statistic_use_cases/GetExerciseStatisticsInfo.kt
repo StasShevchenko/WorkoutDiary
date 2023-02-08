@@ -8,8 +8,9 @@ import java.time.LocalDate
 class GetExerciseStatisticsInfo(
     private val statisticsRepository: StatisticsRepository
 ) {
-    suspend operator fun invoke(): Flow<Pair<String, Map<LocalDate, List<Int>>>> {
+    suspend operator fun invoke(): Flow<Pair<String, Map<LocalDate, Int>>>? {
         val exerciseStatisticsParameters = statisticsRepository.getExerciseStatisticsParameters()
+            ?: return null
         return statisticsRepository.getExerciseStatisticsInfo(
             exerciseStatisticsParameters.exerciseName,
             exerciseStatisticsParameters.statisticsParameter

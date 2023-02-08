@@ -1,9 +1,6 @@
 package com.example.workoutdiary.data.data_source
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.workoutdiary.data.model.entities.ExerciseStatisticsParameters
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
@@ -25,34 +22,37 @@ interface StatisticsDao {
     @Query("SELECT SUM(weight * repeats) FROM TrainingParameters JOIN OrderedSet USING(trainingParametersId)")
     fun getTotalWeightCount(): Flow<Int?>
 
+    @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
-        "SELECT trainingDate, MAX(repeats) FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
+        "SELECT trainingDate, MAX(repeats) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
                 "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
     )
-    fun getExerciseRepsStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, List<Int>>>
+    fun getExerciseRepsStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
+    @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
-        "SELECT trainingDate, MAX(weight) FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
+        "SELECT trainingDate, MAX(weight) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
                 "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
     )
-    fun getExerciseWeightStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, List<Int>>>
+    fun getExerciseWeightStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
+    @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
+    @Query(
+        "SELECT trainingDate, MAX(time) AS max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
+                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
+    )
+    fun getExerciseTimeStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
+    @MapInfo(keyColumn = "trainingDate", valueColumn = "max")
     @Query(
-        "SELECT trainingDate, MAX(time) FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
+        "SELECT trainingDate, MAX(distance) as max FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
                 "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
     )
-    fun getExerciseTimeStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, List<Int>>>
-
-    @Query(
-        "SELECT trainingDate, MAX(distance) FROM Training JOIN TrainingBlock USING(trainingId) JOIN Exercise USING (exerciseId)" +
-                "JOIN OrderedSet USING(trainingBlockId) JOIN TrainingParameters USING(trainingParametersId) WHERE exerciseName =:exerciseName ORDER BY trainingDate"
-    )
-    fun getExerciseDistanceStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, List<Int>>>
+    fun getExerciseDistanceStatisticsInfo(exerciseName: String): Flow<Map<LocalDate, Int>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExerciseStatisticsParameters(statisticsInfo: ExerciseStatisticsParameters)
 
     @Query("SELECT * FROM ExerciseStatisticsParameters")
-    suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters
+    suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters?
 
 }

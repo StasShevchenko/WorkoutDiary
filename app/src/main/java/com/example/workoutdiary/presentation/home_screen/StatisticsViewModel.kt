@@ -2,15 +2,13 @@ package com.example.workoutdiary.presentation.home_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalRepsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalSetsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalTrainingsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalWeightCount
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +16,8 @@ class StatisticsViewModel @Inject constructor(
     private val getTotalTrainingsCount: GetTotalTrainingsCount,
     private val getTotalSetsCount: GetTotalSetsCount,
     private val getTotalRepsCount: GetTotalRepsCount,
-    private val getTotalWeightCount: GetTotalWeightCount
+    private val getTotalWeightCount: GetTotalWeightCount,
+    private val getExerciseStatisticsInfo: GetExerciseStatisticsInfo
 ) : ViewModel() {
 
     private val _totalTrainingsCount: MutableStateFlow<Int?> = MutableStateFlow(0)
@@ -32,6 +31,9 @@ class StatisticsViewModel @Inject constructor(
 
     private val _totalWeightCount: MutableStateFlow<Int?> = MutableStateFlow(0)
     val totalWeightCount: StateFlow<Int?> = _totalWeightCount
+
+    private val _statisticsInfo: MutableStateFlow<Pair<String, Map<LocalDate, Int>>?> = MutableStateFlow(null)
+    val statisticsInfo: StateFlow<Pair<String, Map<LocalDate, Int>>?> = _statisticsInfo
 
 
     init {
@@ -57,6 +59,11 @@ class StatisticsViewModel @Inject constructor(
                 totalWeightCount?.let {
                     _totalWeightCount.value = totalWeightCount
                 }
+            }
+        }
+        viewModelScope.launch {
+            getExerciseStatisticsInfo()?.collectLatest { statisticsInfo ->
+                _statisticsInfo.value = statisticsInfo
             }
         }
     }

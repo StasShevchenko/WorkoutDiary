@@ -29,7 +29,7 @@ class StatisticsRepositoryImpl(
     override fun getExerciseStatisticsInfo(
         exerciseName: String,
         statisticsParameter: String
-    ): Flow<Map<LocalDate, List<Int>>> {
+    ): Flow<Map<LocalDate, Int>> {
         when (statisticsParameter) {
             "repeats" -> {
                 return dao.getExerciseRepsStatisticsInfo(exerciseName)
@@ -53,7 +53,7 @@ class StatisticsRepositoryImpl(
          dao.insertExerciseStatisticsParameters(exerciseStatisticsParameters)
     }
 
-    override suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters {
+    override suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters? {
         return dao.getExerciseStatisticsParameters()
     }
 }

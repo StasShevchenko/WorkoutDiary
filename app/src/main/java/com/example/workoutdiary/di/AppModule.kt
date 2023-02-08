@@ -8,10 +8,7 @@ import com.example.workoutdiary.domain.repository.*
 import com.example.workoutdiary.domain.use_case.*
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.*
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.*
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalRepsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalSetsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalTrainingsCount
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetTotalWeightCount
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -211,5 +208,19 @@ object AppModule {
         repository: StatisticsRepository
     ): GetTotalRepsCount {
         return GetTotalRepsCount(repository)
+    }
+
+    @Provides
+    fun provideGetExerciseStatisticsInfo(
+        repository: StatisticsRepository
+    ): GetExerciseStatisticsInfo {
+        return GetExerciseStatisticsInfo(repository)
+    }
+
+    @Provides
+    fun provideUpdateExerciseStatisticsInfo(
+        repository: StatisticsRepository
+    ): UpdateExerciseStatisticsInfo {
+        return UpdateExerciseStatisticsInfo(repository)
     }
 }

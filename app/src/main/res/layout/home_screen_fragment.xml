@@ -92,6 +92,14 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="6dp">
 
+        <TextView
+            android:id="@+id/exerciseNameTextView"
+            android:layout_width="match_parent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textAlignment="center"
+            android:text="Отжимания"
+            android:layout_height="wrap_content"/>
+
         <com.patrykandpatrick.vico.views.chart.ChartView
             android:id="@+id/chart"
             android:layout_width="match_parent"
@@ -106,7 +114,6 @@
             app:startAxisStyle="@style/RepsChartStartAxisStyle"
             app:chartZoomEnabled="true"
             app:showStartAxis="true" />
-
 
     </androidx.cardview.widget.CardView>
 

@@ -14,9 +14,9 @@ interface StatisticsRepository {
 
     fun getTotalWeightCount(): Flow<Int?>
 
-    fun getExerciseStatisticsInfo(exerciseName: String, statisticsParameter: String): Flow<Map<LocalDate, List<Int>>>
+    fun getExerciseStatisticsInfo(exerciseName: String, statisticsParameter: String): Flow<Map<LocalDate, Int>>
 
     suspend fun insertExerciseStatisticsParameters(exerciseStatisticsParameters: ExerciseStatisticsParameters)
 
-    suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters
+    suspend fun getExerciseStatisticsParameters(): ExerciseStatisticsParameters?
 }
