@@ -74,6 +74,12 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 findNavController().navigate(action)
             }
 
+            openStatisticsParametersButton.setOnClickListener {
+                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                findNavController().navigate(action)
+            }
+
+
             with(chart) {
                 entryProducer = statisticsViewModel.statisticsEntryProducer
                 (bottomAxis as HorizontalAxis).valueFormatter =

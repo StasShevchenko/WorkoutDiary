@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
         <com.example.workoutdiary.presentation.home_screen.custom_views.SideDatePicker
             android:id="@+id/month_date_picker"
@@ -89,13 +89,13 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/statisticsCardView"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="128dp"
+            android:visibility="gone"
             app:cardCornerRadius="8dp"
             app:cardElevation="6dp">
 
@@ -104,50 +104,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:visibility="gone"
                 android:text="@string/empty_statistics_data_message"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/emptyParametersMessageTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:visibility="gone"
                 android:text="@string/empty_statistics_parameters_message"
                 android:textAlignment="center"
-                />
+                android:visibility="gone" />
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/statisticsChartContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/exerciseNameTextView"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/openStatisticsParametersButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="center"
+                    android:padding="8dp"
+                    android:background="?actionBarItemBackground"
+                    android:layout_gravity="end|top"
+                    android:src="@drawable/ic_open" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <com.patrykandpatrick.vico.views.chart.ChartView
-                    android:id="@+id/chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    app:bottomAxisStyle="@style/RepsChartBottomAxisStyle"
-                    app:chart="line"
-                    app:chartZoomEnabled="true"
-                    app:fadingEdgeVisibilityInterpolator="androidx.interpolator.view.animation.FastOutSlowInInterpolator"
-                    app:fadingEdgeWidth="32dp"
-                    app:lineChartStyle="@style/RepsChartLineChartStyle"
-                    app:showBottomAxis="true"
-                    app:showStartAxis="true"
-                    app:startAxisStyle="@style/RepsChartStartAxisStyle" />
+                    <TextView
+                        android:id="@+id/exerciseNameTextView"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-            </LinearLayout>
+                    <com.patrykandpatrick.vico.views.chart.ChartView
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:bottomAxisStyle="@style/RepsChartBottomAxisStyle"
+                        app:chart="line"
+                        app:chartZoomEnabled="true"
+                        app:fadingEdgeVisibilityInterpolator="androidx.interpolator.view.animation.FastOutSlowInInterpolator"
+                        app:fadingEdgeWidth="32dp"
+                        app:lineChartStyle="@style/RepsChartLineChartStyle"
+                        app:showBottomAxis="true"
+                        app:showStartAxis="true"
+                        app:startAxisStyle="@style/RepsChartStartAxisStyle" />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
 
         </androidx.cardview.widget.CardView>
