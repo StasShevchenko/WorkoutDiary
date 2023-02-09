@@ -104,6 +104,7 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                         }
                         snackbar.show()
                     }
+                    else -> {}
                 }
             }
         }
@@ -126,7 +127,15 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                 with(binding) {
                     radioGroup.clearCheck()
                     repsRadioButton.visibility = View.VISIBLE
-                    repsRadioButton.isChecked = true
+                    if (viewModel.currentExerciseStatisticsParameters.value != null) {
+                        if (viewModel.currentExerciseStatisticsParameters.value!!.statisticsParameter == "weight") {
+                            weightRadioButton.isChecked = true
+                        } else{
+                            repsRadioButton.isChecked = true
+                        }
+                    }else{
+                        repsRadioButton.isChecked = true
+                    }
                     weightRadioButton.visibility = View.VISIBLE
                     timeRadioButton.visibility = View.GONE
                     distanceRadioButton.visibility = View.GONE

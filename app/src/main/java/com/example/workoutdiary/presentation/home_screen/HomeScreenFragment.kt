@@ -17,6 +17,7 @@ import com.example.workoutdiary.presentation.MainActivity
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
 import com.patrykandpatrick.vico.core.axis.horizontal.HorizontalAxis
+import com.patrykandpatrick.vico.core.axis.vertical.VerticalAxis
 import com.patrykandpatrick.vico.core.chart.insets.Insets
 import com.patrykandpatrick.vico.core.chart.segment.SegmentProperties
 import com.patrykandpatrick.vico.core.component.OverlayingComponent
@@ -30,7 +31,9 @@ import com.patrykandpatrick.vico.core.component.shape.cornered.MarkerCorneredSha
 import com.patrykandpatrick.vico.core.component.text.textComponent
 import com.patrykandpatrick.vico.core.context.MeasureContext
 import com.patrykandpatrick.vico.core.extension.copyColor
+import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.patrykandpatrick.vico.views.dimensions.dimensionsOf
+import com.patrykandpatrick.vico.views.scroll.copy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -82,6 +85,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
 
             with(chart) {
                 entryProducer = statisticsViewModel.statisticsEntryProducer
+                chartScrollSpec = chartScrollSpec.copy(initialScroll = InitialScroll.End)
                 (bottomAxis as HorizontalAxis).valueFormatter =
                     AxisValueFormatter { value, chartValues ->
                         if(chartValues.chartEntryModel.entries.isNotEmpty()){
@@ -194,6 +198,13 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 launch {
                     statisticsViewModel.statisticsParameters.collectLatest { parameters ->
                         updateStaticsVisibility(statisticsViewModel.statisticsInfo.value?.second, parameters)
+                        (binding.chart.startAxis as VerticalAxis).title = when (parameters?.statisticsParameter) {
+                            "repeats" -> "Повторения"
+                            "weight" -> "Вес (кг)"
+                            "time" -> "Время"
+                            "distance" -> "Дистанция"
+                            else -> "Повторения"
+                        }
                     }
                 }
             }

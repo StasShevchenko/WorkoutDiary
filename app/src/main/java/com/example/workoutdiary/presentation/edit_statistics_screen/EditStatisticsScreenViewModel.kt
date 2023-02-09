@@ -49,7 +49,7 @@ class EditStatisticsScreenViewModel @Inject constructor(
 
     fun resetCurrentParameters(){
         viewModelScope.launch {
-            if (currentExerciseStatisticsParameters != null) {
+            if (currentExerciseStatisticsParameters.value != null) {
                 deleteExerciseStatisticsParameters(currentExerciseStatisticsParameters.value!!)
                 _eventFlow.emit(UiEvent.SavePressed)
             }
