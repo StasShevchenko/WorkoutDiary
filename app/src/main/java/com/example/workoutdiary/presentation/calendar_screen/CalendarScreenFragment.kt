@@ -163,7 +163,8 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
                                     .actionCalendarScreenFragmentToAddEditTrainingScreenFragment(
                                         trainingDate = currentTraining.trainingDate,
                                         trainingId = currentTraining.trainingId,
-                                        trainingName = currentTraining.trainingName
+                                        trainingName = currentTraining.trainingName,
+                                        isFromFavourites = false
                                     )
                                 findNavController().navigate(action)
                             }
@@ -202,7 +203,8 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
             val action = CalendarScreenFragmentDirections.actionCalendarScreenFragmentToAddEditTrainingScreenFragment(
                 trainingDate = viewModel.currentTraining.value!!.trainingDate,
                 trainingId = viewModel.currentTraining.value!!.trainingId,
-                trainingName = viewModel.currentTraining.value!!.trainingName
+                trainingName = viewModel.currentTraining.value!!.trainingName,
+                isFromFavourites = false
             )
             findNavController().navigate(action)
         }

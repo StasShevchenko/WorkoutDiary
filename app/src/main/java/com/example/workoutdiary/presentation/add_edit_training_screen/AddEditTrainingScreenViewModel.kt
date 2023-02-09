@@ -1,6 +1,5 @@
 package com.example.workoutdiary.presentation.add_edit_training_screen
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +7,15 @@ import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
-import com.example.workoutdiary.domain.use_case.*
+import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.GetTrainingDetailsByTrainingID
+import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.InsertTrainingBlock
+import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.UpdateTrainingBlocks
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.DeleteTraining
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.InsertTraining
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,18 +24,19 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     private val insertTrainingUseCase: InsertTraining,
     private val trainingDetailsUseCase: GetTrainingDetailsByTrainingID,
     private val updateTrainingBlocks: UpdateTrainingBlocks,
+    private val insertTrainingBlock: InsertTrainingBlock,
     private val state: SavedStateHandle
 ) : ViewModel() {
 
 
-    val _trainingDetails: MutableStateFlow<List<Pair<ExerciseTrainingBlock, List<ParameterizedSet>>>> =
+    private val _trainingDetails: MutableStateFlow<List<Pair<ExerciseTrainingBlock, List<ParameterizedSet>>>> =
         MutableStateFlow(listOf())
     val trainingDetails: StateFlow<List<Pair<ExerciseTrainingBlock, List<ParameterizedSet>>>> =
         _trainingDetails
 
     private val swappedBlocks: MutableList<TrainingBlock> = mutableListOf()
 
-    // this var is used to know can user navigate back, or he need to wait new entry inserting
+    // this var is used to know can user navigate back, or he needs to wait new entry inserting
     private var isInserted = false
 
     var trainingName = ""
@@ -54,16 +57,22 @@ class AddEditTrainingScreenViewModel @Inject constructor(
         date = state.get<LocalDate>("trainingDate")!!
         currentTrainingId = state.get<Int>("trainingId")!!
         trainingName = state.get<String>("trainingName") ?: ""
+        val isFromFavourite: Boolean = state.get<Boolean>("isFromFavourites")!!
         unchangedTrainingName = trainingName
-        if (currentTrainingId == -1) {
+        if (isFromFavourite) {
             viewModelScope.launch {
+                val trainingBlocks = trainingDetailsUseCase(currentTrainingId).first()
                 currentTrainingId = insertTrainingUseCase(
                     Training(
                         0,
                         trainingName = trainingName,
-                        trainingDate = date
+                        trainingDate = date,
+                        isFavourite = true
                     )
                 ).toInt()
+                trainingBlocks.forEach { entry ->
+                    insertTrainingBlock(entry.key.mapToTrainingBlock().copy(trainingId = currentTrainingId), entry.value)
+                }
                 isInserted = true
                 trainingDetailsUseCase(currentTrainingId)
                     .distinctUntilChanged()
@@ -76,17 +85,39 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     }
             }
         } else {
-            isInserted = true
-            viewModelScope.launch {
-                trainingDetailsUseCase(currentTrainingId)
-                    .distinctUntilChanged()
-                    .collectLatest { trainingDetails ->
-                        swappedBlocks.clear()
-                        _trainingDetails.value = trainingDetails.toList()
-                        trainingDetails.toList().forEach{
-                            swappedBlocks.add(it.first.mapToTrainingBlock())
+            if (currentTrainingId == -1) {
+                viewModelScope.launch {
+                    currentTrainingId = insertTrainingUseCase(
+                        Training(
+                            0,
+                            trainingName = trainingName,
+                            trainingDate = date
+                        )
+                    ).toInt()
+                    isInserted = true
+                    trainingDetailsUseCase(currentTrainingId)
+                        .distinctUntilChanged()
+                        .collectLatest { trainingDetails ->
+                            swappedBlocks.clear()
+                            _trainingDetails.value = trainingDetails.toList()
+                            trainingDetails.toList().forEach{
+                                swappedBlocks.add(it.first.mapToTrainingBlock())
+                            }
                         }
-                    }
+                }
+            } else {
+                isInserted = true
+                viewModelScope.launch {
+                    trainingDetailsUseCase(currentTrainingId)
+                        .distinctUntilChanged()
+                        .collectLatest { trainingDetails ->
+                            swappedBlocks.clear()
+                            _trainingDetails.value = trainingDetails.toList()
+                            trainingDetails.toList().forEach{
+                                swappedBlocks.add(it.first.mapToTrainingBlock())
+                            }
+                        }
+                }
             }
         }
     }

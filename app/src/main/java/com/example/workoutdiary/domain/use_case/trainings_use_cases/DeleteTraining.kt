@@ -1,4 +1,4 @@
-package com.example.workoutdiary.domain.use_case
+package com.example.workoutdiary.domain.use_case.trainings_use_cases
 
 import com.example.workoutdiary.domain.repository.TrainingDetailsRepository
 import com.example.workoutdiary.domain.repository.TrainingRepository

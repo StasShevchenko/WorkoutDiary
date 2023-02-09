@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_addEditTrainingScreenFragment_to_addEditTrainingBlockScreenFragment"
             app:destination="@id/addEditTrainingBlockScreenFragment" />
+        <argument
+            android:name="isFromFavourites"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/addEditTrainingBlockScreenFragment"
@@ -96,7 +99,24 @@
         android:label="NewTrainingVariantsFragment" >
         <action
             android:id="@+id/action_newTrainingVariantsFragment_to_addEditTrainingScreenFragment"
-            app:destination="@id/addEditTrainingScreenFragment" />
+            app:destination="@id/addEditTrainingScreenFragment"
+            app:popUpTo="@id/homeScreenFragment" />
+        <argument
+            android:name="trainingDate"
+            app:argType="java.time.LocalDate" />
+        <action
+            android:id="@+id/action_newTrainingVariantsFragment_to_favouriteTrainingsFragment"
+            app:destination="@id/favouriteTrainingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteTrainingsFragment"
+        android:name="com.example.workoutdiary.presentation.templates_screen.FavouriteTrainingsFragment"
+        android:label="FavouriteTrainingsFragment" >
+        <action
+            android:id="@+id/action_favouriteTrainingsFragment_to_addEditTrainingScreenFragment"
+            app:destination="@id/addEditTrainingScreenFragment"
+            app:popUpTo="@id/homeScreenFragment"
+            app:popUpToInclusive="false" />
         <argument
             android:name="trainingDate"
             app:argType="java.time.LocalDate" />

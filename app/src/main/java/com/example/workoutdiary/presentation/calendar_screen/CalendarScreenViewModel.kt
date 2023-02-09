@@ -6,17 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
-import com.example.workoutdiary.domain.use_case.GetTrainingDetailsByTrainingID
-import com.example.workoutdiary.domain.use_case.GetTrainingsByMonth
+import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.GetTrainingDetailsByTrainingID
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.GetTrainingsByMonth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.Month
 import java.time.YearMonth
 import javax.inject.Inject
 

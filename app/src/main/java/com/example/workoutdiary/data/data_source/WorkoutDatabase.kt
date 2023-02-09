@@ -12,7 +12,7 @@ import com.example.workoutdiary.utils.LocalDateConverter
     entities =
     [Exercise::class, Muscle::class, OrderedSet::class,
         Training::class, TrainingBlock::class, TrainingParameters::class,
-        TrainingTemplate::class, ExerciseStatisticsParameters::class],
+        ExerciseStatisticsParameters::class],
     version = 1,
     exportSchema = false
 )

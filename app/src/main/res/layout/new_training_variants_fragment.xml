@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/createFromTemplateTextView"
+            android:id="@+id/createFromFavouritesTextView"
             android:text="@string/create_training_from_template"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"

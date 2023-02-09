@@ -268,7 +268,8 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                     .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
                         trainingDate = training.trainingDate,
                         trainingId = training.trainingId,
-                        trainingName = training.trainingName
+                        trainingName = training.trainingName,
+                        isFromFavourites = false
                     )
             findNavController().navigate(action)
         }

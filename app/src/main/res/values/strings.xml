@@ -37,6 +37,8 @@
     <string name="empty_statistics_parameters_message">Параметры для отображения статистики по упражнению не настроены!\nНажмите на карточку для настройки параметров.</string>
     <string name="reset_parameters">Сбросить параметры</string>
     <string name="new_training">Новая тренировка</string>
-    <string name="create_training_from_template">Создать тренировку из шаблона</string>
+    <string name="create_training_from_template">Выбрать из избранных</string>
     <string name="create_new_training">Создать новую тренировку</string>
+    <string name="empty_templates_message">У вас пока еще нет избранных тренировок :(\nДля добавление тренировки в избранные перейдите на экран редактирования любой тренировки и нажмите на кнопку-сердечко.</string>
+    <string name="favourite_trainings">Избранные тренировки</string>
 </resources>

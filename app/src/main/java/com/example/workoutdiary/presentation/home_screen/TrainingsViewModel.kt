@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.domain.model.TrainingDay
-import com.example.workoutdiary.domain.use_case.GetTrainingsByMonth
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.GetTrainingsByMonth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -28,4 +28,12 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
     override suspend fun updateTrainingBlocks(trainingBlocks: List<TrainingBlock>) {
         trainingDao.updateTrainingBlocks(trainingBlocks)
     }
+
+    override suspend fun getAllFavouritesTrainings(): List<Training> {
+        return trainingDao.getAllFavouritesTrainings()
+    }
+
+    override suspend fun clearFavouriteTrainingsByName(trainingName: String) {
+        trainingDao.clearFavouriteTrainingsByTrainingName(trainingName)
+    }
 }

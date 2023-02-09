@@ -17,4 +17,8 @@ interface TrainingRepository {
     suspend fun deleteTraining(trainingId: Int)
 
     suspend fun updateTrainingBlocks(trainingBlocks: List<TrainingBlock>)
+
+    suspend fun getAllFavouritesTrainings(): List<Training>
+
+    suspend fun clearFavouriteTrainingsByName(trainingName: String)
 }

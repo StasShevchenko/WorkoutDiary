@@ -1,4 +1,4 @@
-package com.example.workoutdiary.domain.use_case
+package com.example.workoutdiary.domain.use_case.training_detailse_use_cases
 
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet

@@ -1,6 +1,5 @@
-package com.example.workoutdiary.domain.use_case
+package com.example.workoutdiary.domain.use_case.training_detailse_use_cases
 
-import androidx.room.Index
 import com.example.workoutdiary.data.model.entities.OrderedSet
 import com.example.workoutdiary.data.model.entities.TrainingBlock
 import com.example.workoutdiary.data.model.entities.TrainingParameters

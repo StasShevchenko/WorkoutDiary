@@ -9,6 +9,8 @@ import com.example.workoutdiary.domain.use_case.*
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.*
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.*
 import com.example.workoutdiary.domain.use_case.statistic_use_cases.*
+import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.*
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -235,5 +237,19 @@ object AppModule {
         repository: StatisticsRepository
     ): DeleteExerciseStatisticsParameters {
         return DeleteExerciseStatisticsParameters(repository)
+    }
+
+    @Provides
+    fun provideGetAllFavouriteTrainings(
+        repository: TrainingRepository
+    ): GetAllFavouriteTrainings {
+        return GetAllFavouriteTrainings(repository)
+    }
+
+    @Provides
+    fun provideClearFavouriteTrainingsByName(
+        repository: TrainingRepository
+    ): ClearFavouriteTrainingsByName {
+        return ClearFavouriteTrainingsByName(repository)
     }
 }
