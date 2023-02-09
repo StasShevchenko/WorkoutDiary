@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeScreenFragment_to_editStatisticsScreenFragment"
             app:destination="@id/editStatisticsScreenFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_newTrainingVariantsFragment"
+            app:destination="@id/newTrainingVariantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarScreenFragment"
@@ -25,6 +28,9 @@
         <action
             android:id="@+id/action_calendarScreenFragment_to_addEditTrainingScreenFragment"
             app:destination="@id/addEditTrainingScreenFragment" />
+        <action
+            android:id="@+id/action_calendarScreenFragment_to_newTrainingVariantsFragment"
+            app:destination="@id/newTrainingVariantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditTrainingScreenFragment"
@@ -84,4 +90,15 @@
         android:id="@+id/editStatisticsScreenFragment"
         android:name="com.example.workoutdiary.presentation.edit_statistics_screen.EditStatisticsScreenFragment"
         android:label="EditStatisticsScreenFragment" />
+    <fragment
+        android:id="@+id/newTrainingVariantsFragment"
+        android:name="com.example.workoutdiary.presentation.new_trainings_variants_screen.NewTrainingVariantsFragment"
+        android:label="NewTrainingVariantsFragment" >
+        <action
+            android:id="@+id/action_newTrainingVariantsFragment_to_addEditTrainingScreenFragment"
+            app:destination="@id/addEditTrainingScreenFragment" />
+        <argument
+            android:name="trainingDate"
+            app:argType="java.time.LocalDate" />
+    </fragment>
 </navigation>

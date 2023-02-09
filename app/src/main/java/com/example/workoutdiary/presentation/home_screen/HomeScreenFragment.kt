@@ -40,7 +40,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick, TrainingDaysAdapter.OnTrainingClickListener {
+class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonClick,
+    TrainingDaysAdapter.OnTrainingClickListener {
     private val trainingsViewModel: TrainingsViewModel by viewModels()
     private val statisticsViewModel: StatisticsViewModel by viewModels()
     private lateinit var binding: HomeScreenFragmentBinding
@@ -56,7 +57,8 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         binding.apply {
             trainingRecyclerView.apply {
                 adapter = trainingDaysAdapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             }
 
             monthDatePicker.setOnDateChangedListener {
@@ -64,21 +66,24 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             }
 
             monthDatePicker.setOnTextClickedAction {
-                trainingRecyclerView.smoothScrollToPosition(LocalDate.now().dayOfMonth-1)
+                trainingRecyclerView.smoothScrollToPosition(LocalDate.now().dayOfMonth - 1)
             }
 
             emptyParametersMessageTextView.setOnClickListener {
-                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                val action =
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
                 findNavController().navigate(action)
             }
 
             emptyDataMessageTextView.setOnClickListener {
-                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                val action =
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
                 findNavController().navigate(action)
             }
 
             openStatisticsParametersButton.setOnClickListener {
-                val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
+                val action =
+                    HomeScreenFragmentDirections.actionHomeScreenFragmentToEditStatisticsScreenFragment()
                 findNavController().navigate(action)
             }
 
@@ -88,13 +93,12 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 chartScrollSpec = chartScrollSpec.copy(initialScroll = InitialScroll.End)
                 (bottomAxis as HorizontalAxis).valueFormatter =
                     AxisValueFormatter { value, chartValues ->
-                        if(chartValues.chartEntryModel.entries.isNotEmpty()){
+                        if (chartValues.chartEntryModel.entries.isNotEmpty()) {
                             (chartValues.chartEntryModel.entries[0].getOrNull(value.toInt()) as DateEntry?)
                                 ?.date
                                 ?.run { this }
                                 .orEmpty()
-                        }
-                        else "There is no any data"
+                        } else "There is no any data"
                     }
                 val labelBackgroundShape = MarkerCorneredShape(all = Corner.FullyRounded)
                 val label = textComponent {
@@ -112,7 +116,8 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 }
                 val indicatorInner =
                     ShapeComponent(shape = Shapes.pillShape, color = R.color.purple_500)
-                val indicatorCenter = ShapeComponent(shape = Shapes.pillShape, color = R.color.white)
+                val indicatorCenter =
+                    ShapeComponent(shape = Shapes.pillShape, color = R.color.white)
                 val indicatorOuter = ShapeComponent(shape = Shapes.pillShape, color = R.color.white)
 
                 val indicator = OverlayingComponent(
@@ -140,7 +145,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 ) {
                     init {
                         indicatorSizeDp = 30f
-                        onApplyEntryColor = {entryColor ->
+                        onApplyEntryColor = { entryColor ->
                             indicatorOuter.color = entryColor.copyColor(alpha = 32)
                             with(indicatorCenter) {
                                 color = entryColor
@@ -148,63 +153,76 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                             }
                         }
                     }
+
                     override fun getInsets(
                         context: MeasureContext,
                         outInsets: Insets,
                         segmentProperties: SegmentProperties
                     ) = with(context) {
-                        outInsets.top = label.getHeight(this) + labelBackgroundShape.tickSizeDp.pixels +
-                                4f.pixels * 1.3f - 2f.pixels
+                        outInsets.top =
+                            label.getHeight(this) + labelBackgroundShape.tickSizeDp.pixels +
+                                    4f.pixels * 1.3f - 2f.pixels
                     }
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch{
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     trainingsViewModel.trainingDaysList
                         .collectLatest {
                             trainingDaysAdapter.submitList(it)
                         }
                 }
-               launch {
-                   statisticsViewModel.totalTrainingsCount.collectLatest { totalTrainingsCount ->
-                       binding.totalTrainingsCountTextView.text = "Всего тренировок: ${totalTrainingsCount}"
-                   }
-               }
+                launch {
+                    statisticsViewModel.totalTrainingsCount.collectLatest { totalTrainingsCount ->
+                        binding.totalTrainingsCountTextView.text =
+                            "Всего тренировок: ${totalTrainingsCount}"
+                    }
+                }
                 launch {
                     statisticsViewModel.totalSetsCount.collectLatest { totalSetsCount ->
-                        binding.totalSetsCountTextView.text = "Всего выполнено подходов: ${totalSetsCount}"
+                        binding.totalSetsCountTextView.text =
+                            "Всего выполнено подходов: ${totalSetsCount}"
                     }
                 }
                 launch {
                     statisticsViewModel.totalRepsCount.collectLatest { totalRepsCount ->
-                        binding.totalRepsCountTextView.text = "Всего повторений в упражнениях: ${totalRepsCount}"
+                        binding.totalRepsCountTextView.text =
+                            "Всего повторений в упражнениях: ${totalRepsCount}"
                     }
                 }
                 launch {
                     statisticsViewModel.totalWeightCount.collectLatest { totalWeightCount ->
-                        binding.totalWeightCountTextView.text = "Всего поднято: ${totalWeightCount} кг веса"
+                        binding.totalWeightCountTextView.text =
+                            "Всего поднято: ${totalWeightCount} кг веса"
                     }
                 }
                 launch {
                     statisticsViewModel.statisticsInfo.collectLatest { statisticsValue ->
                         statisticsValue?.let {
                             binding.exerciseNameTextView.text = statisticsValue.first
-                            updateStaticsVisibility(statisticsValue.second, statisticsViewModel.statisticsParameters.value)
+                            updateStaticsVisibility(
+                                statisticsValue.second,
+                                statisticsViewModel.statisticsParameters.value
+                            )
                         }
                     }
                 }
                 launch {
                     statisticsViewModel.statisticsParameters.collectLatest { parameters ->
-                        updateStaticsVisibility(statisticsViewModel.statisticsInfo.value?.second, parameters)
-                        (binding.chart.startAxis as VerticalAxis).title = when (parameters?.statisticsParameter) {
-                            "repeats" -> "Повторения"
-                            "weight" -> "Вес (кг)"
-                            "time" -> "Время"
-                            "distance" -> "Дистанция"
-                            else -> "Повторения"
-                        }
+                        updateStaticsVisibility(
+                            statisticsViewModel.statisticsInfo.value?.second,
+                            parameters
+                        )
+                        (binding.chart.startAxis as VerticalAxis).title =
+                            when (parameters?.statisticsParameter) {
+                                "repeats" -> "Повторения"
+                                "weight" -> "Вес (кг)"
+                                "time" -> "Время"
+                                "distance" -> "Дистанция"
+                                else -> "Повторения"
+                            }
                     }
                 }
             }
@@ -222,13 +240,13 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 emptyDataMessageTextView.visibility = View.GONE
             }
         } else if (statisticsData == null || statisticsData.isEmpty()) {
-            with(binding){
+            with(binding) {
                 statisticsCardView.visibility = View.VISIBLE
                 emptyParametersMessageTextView.visibility = View.GONE
                 emptyDataMessageTextView.visibility = View.VISIBLE
             }
         } else {
-            with(binding){
+            with(binding) {
                 statisticsCardView.visibility = View.VISIBLE
                 emptyParametersMessageTextView.visibility = View.GONE
                 emptyDataMessageTextView.visibility = View.GONE
@@ -238,25 +256,30 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
     }
 
     override fun onTrainingClick(training: Training?, date: LocalDate) {
-        val action =
-            HomeScreenFragmentDirections
-                .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
-                    trainingDate = training?.trainingDate ?: date,
-                    trainingId = training?.trainingId ?: -1,
-                    trainingName = training?.trainingName ?: ""
+        if (training == null) {
+            val action =
+                HomeScreenFragmentDirections.actionHomeScreenFragmentToNewTrainingVariantsFragment(
+                    trainingDate = date
                 )
-        findNavController().navigate(action)
+            findNavController().navigate(action)
+        } else {
+            val action =
+                HomeScreenFragmentDirections
+                    .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
+                        trainingDate = training.trainingDate,
+                        trainingId = training.trainingId,
+                        trainingName = training.trainingName
+                    )
+            findNavController().navigate(action)
+        }
     }
 
 
     override fun onFabClicked() {
         val action =
-            HomeScreenFragmentDirections
-                .actionHomeScreenFragmentToAddEditTrainingScreenFragment(
-                    trainingDate = LocalDate.now(),
-                    trainingId = trainingsViewModel.todayTraining?.trainingId ?: -1,
-                    trainingName = trainingsViewModel.todayTraining?.trainingName ?: ""
-                )
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToNewTrainingVariantsFragment(
+                trainingDate = LocalDate.now()
+            )
         findNavController().navigate(action)
     }
 }

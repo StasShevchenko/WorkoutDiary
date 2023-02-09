@@ -1,12 +1,14 @@
 package com.example.workoutdiary.presentation.calendar_screen
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -35,6 +37,7 @@ import java.util.*
 @AndroidEntryPoint
 class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabButtonClick {
     private val viewModel: CalendarScreenViewModel by viewModels()
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = CalendarScreenFragmentBinding.bind(view)
@@ -189,11 +192,19 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
     }
 
     override fun onFabClicked() {
-        val action = CalendarScreenFragmentDirections.actionCalendarScreenFragmentToAddEditTrainingScreenFragment(
-            trainingDate = viewModel.currentTraining.value?.trainingDate ?: viewModel.selectedDate,
-            trainingId = viewModel.currentTraining.value?.trainingId ?: -1,
-            trainingName = viewModel.currentTraining.value?.trainingName ?: ""
-        )
-        findNavController().navigate(action)
+        if (viewModel.currentTraining.value == null) {
+            val action = CalendarScreenFragmentDirections.actionCalendarScreenFragmentToNewTrainingVariantsFragment(
+                trainingDate = viewModel.selectedDate
+            )
+            findNavController().navigate(action)
+        }
+        else{
+            val action = CalendarScreenFragmentDirections.actionCalendarScreenFragmentToAddEditTrainingScreenFragment(
+                trainingDate = viewModel.currentTraining.value!!.trainingDate,
+                trainingId = viewModel.currentTraining.value!!.trainingId,
+                trainingName = viewModel.currentTraining.value!!.trainingName
+            )
+            findNavController().navigate(action)
+        }
     }
 }
