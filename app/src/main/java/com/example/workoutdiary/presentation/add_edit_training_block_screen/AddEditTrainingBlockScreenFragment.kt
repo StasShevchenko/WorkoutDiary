@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.model.entities.Exercise
+import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.databinding.AddEditTrainingBlockScreenBinding
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,8 +102,8 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                                 muscles
                             )
                         binding.muscleChoiceView.setAdapter(muscleAdapter)
-                        binding.muscleChoiceView.setOnItemClickListener { _, _, i, _ ->
-                            viewModel.onEvent(AddEditTrainingBlockScreenEvent.MuscleSelected(muscles[i]))
+                        binding.muscleChoiceView.setOnItemClickListener { parent, _, i, _ ->
+                            viewModel.onEvent(AddEditTrainingBlockScreenEvent.MuscleSelected(parent.getItemAtPosition(i) as Muscle))
                         }
                     }
                 }
@@ -160,10 +162,10 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                             exercises
                         )
                         binding.exerciseChoiceView.setAdapter(exercisesAdapter)
-                        binding.exerciseChoiceView.setOnItemClickListener { _, _, i, _ ->
+                        binding.exerciseChoiceView.setOnItemClickListener { parent, _, i, _ ->
                             viewModel.onEvent(
                                 AddEditTrainingBlockScreenEvent.ExerciseSelected(
-                                    exercises[i]
+                                    parent.getItemAtPosition(i) as Exercise
                                 )
                             )
                         }

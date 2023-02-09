@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.databinding.EditStatisticsScreenBinding
 import com.example.workoutdiary.utils.ExerciseType
 import com.google.android.material.snackbar.Snackbar
@@ -60,8 +61,8 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                             exercises
                         )
                         binding.exerciseChoiceView.setAdapter(exercisesAdapter)
-                        binding.exerciseChoiceView.setOnItemClickListener { _, _, i, _ ->
-                            viewModel.exerciseSelected(exercises[i])
+                        binding.exerciseChoiceView.setOnItemClickListener { parent, _, i, _ ->
+                            viewModel.exerciseSelected(parent.getItemAtPosition(i) as Exercise)
                         }
                     }
                 }
