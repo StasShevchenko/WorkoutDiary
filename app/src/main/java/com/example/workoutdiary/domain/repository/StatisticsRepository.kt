@@ -19,4 +19,7 @@ interface StatisticsRepository {
     suspend fun insertExerciseStatisticsParameters(exerciseStatisticsParameters: ExerciseStatisticsParameters)
 
     fun getExerciseStatisticsParameters(): Flow<ExerciseStatisticsParameters?>
+
+    suspend fun deleteExerciseStatisticsParameters(statisticsParameters: ExerciseStatisticsParameters)
+
 }

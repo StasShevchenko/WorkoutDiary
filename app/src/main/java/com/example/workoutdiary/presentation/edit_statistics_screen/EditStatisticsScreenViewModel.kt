@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.data.model.entities.ExerciseStatisticsParameters
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercisesByName
-import com.example.workoutdiary.domain.use_case.statistic_use_cases.UpdateExerciseStatisticsInfo
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.DeleteExerciseStatisticsParameters
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.GetExerciseStatisticsParameters
+import com.example.workoutdiary.domain.use_case.statistic_use_cases.UpdateExerciseStatisticsParameters
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -15,7 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class EditStatisticsScreenViewModel @Inject constructor(
     private val getExercises: GetExercisesByName,
-    private val updateExerciseStatisticsInfo: UpdateExerciseStatisticsInfo
+    private val updateExerciseStatisticsParameters: UpdateExerciseStatisticsParameters,
+    private val getExerciseStatisticsParameters: GetExerciseStatisticsParameters,
+    private val deleteExerciseStatisticsParameters: DeleteExerciseStatisticsParameters
 ) : ViewModel(){
 
     private val _exercises: MutableStateFlow<List<Exercise>> = MutableStateFlow(listOf())
@@ -26,6 +30,10 @@ class EditStatisticsScreenViewModel @Inject constructor(
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private val _currentExerciseStatisticsParameters: MutableStateFlow<ExerciseStatisticsParameters?> = MutableStateFlow(null)
+    val currentExerciseStatisticsParameters: StateFlow<ExerciseStatisticsParameters?> = _currentExerciseStatisticsParameters
+
 
     var statisticsParameter = ""
 
@@ -39,12 +47,21 @@ class EditStatisticsScreenViewModel @Inject constructor(
         }
     }
 
+    fun resetCurrentParameters(){
+        viewModelScope.launch {
+            if (currentExerciseStatisticsParameters != null) {
+                deleteExerciseStatisticsParameters(currentExerciseStatisticsParameters.value!!)
+                _eventFlow.emit(UiEvent.SavePressed)
+            }
+        }
+    }
+
     fun savePressed(){
         viewModelScope.launch {
             if (currentExercise.value == null) {
                 _eventFlow.emit(UiEvent.ValidationFailed)
             } else {
-                updateExerciseStatisticsInfo(
+                updateExerciseStatisticsParameters(
                     ExerciseStatisticsParameters(
                         exerciseName = currentExercise.value!!.exerciseName,
                         statisticsParameter = statisticsParameter
@@ -59,6 +76,15 @@ class EditStatisticsScreenViewModel @Inject constructor(
         viewModelScope.launch {
             getExercises("").collectLatest { exercises ->
                 _exercises.value = exercises
+                getExerciseStatisticsParameters().collectLatest {parameters ->
+                    _currentExerciseStatisticsParameters.value = parameters
+                    val chosenExercise = exercises.find {exercise ->
+                        exercise.exerciseName == parameters?.exerciseName
+                    }
+                    if (chosenExercise != null) {
+                        _currentExercise.value = chosenExercise
+                    }
+                }
             }
         }
     }

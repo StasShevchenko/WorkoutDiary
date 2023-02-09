@@ -55,4 +55,7 @@ interface StatisticsDao {
     @Query("SELECT * FROM ExerciseStatisticsParameters")
     fun getExerciseStatisticsParameters(): Flow<ExerciseStatisticsParameters?>
 
+    @Delete
+    suspend fun deleteExerciseStatisticsParameters(statisticsParameters: ExerciseStatisticsParameters)
+
 }

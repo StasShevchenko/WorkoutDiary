@@ -208,6 +208,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             with(binding) {
                 statisticsCardView.visibility = View.VISIBLE
                 emptyParametersMessageTextView.visibility = View.VISIBLE
+                emptyDataMessageTextView.visibility = View.GONE
             }
         } else if (statisticsData == null || statisticsData.isEmpty()) {
             with(binding){

@@ -30,6 +30,9 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
             saveButton.setOnClickListener {
                 viewModel.savePressed()
             }
+            resetButton.setOnClickListener {
+                viewModel.resetCurrentParameters()
+            }
             repsRadioButton.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     viewModel.statisticsParameter = "repeats"
@@ -70,6 +73,14 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                     viewModel.currentExercise.collectLatest { exercise ->
                         exercise?.let {
                             showRadioButtonsByExerciseType(exercise.exerciseType)
+                            binding.exerciseChoiceView.setText(exercise.exerciseName)
+                        }
+                    }
+                }
+                launch {
+                    viewModel.currentExerciseStatisticsParameters.collectLatest {parameters ->
+                        if(parameters != null){
+                            binding.resetButton.visibility = View.VISIBLE
                         }
                     }
                 }

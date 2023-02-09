@@ -56,4 +56,8 @@ class StatisticsRepositoryImpl(
     override fun getExerciseStatisticsParameters(): Flow<ExerciseStatisticsParameters?> {
         return dao.getExerciseStatisticsParameters()
     }
+
+    override suspend fun deleteExerciseStatisticsParameters(statisticsParameters: ExerciseStatisticsParameters) {
+        dao.deleteExerciseStatisticsParameters(statisticsParameters)
+    }
 }

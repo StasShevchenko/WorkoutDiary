@@ -219,8 +219,8 @@ object AppModule {
     @Provides
     fun provideUpdateExerciseStatisticsInfo(
         repository: StatisticsRepository
-    ): UpdateExerciseStatisticsInfo {
-        return UpdateExerciseStatisticsInfo(repository)
+    ): UpdateExerciseStatisticsParameters {
+        return UpdateExerciseStatisticsParameters(repository)
     }
 
     @Provides
@@ -228,5 +228,12 @@ object AppModule {
         repository: StatisticsRepository
     ): GetExerciseStatisticsParameters{
         return GetExerciseStatisticsParameters(repository)
+    }
+
+    @Provides
+    fun provideDeleteExerciseParametersInfo(
+        repository: StatisticsRepository
+    ): DeleteExerciseStatisticsParameters {
+        return DeleteExerciseStatisticsParameters(repository)
     }
 }
