@@ -20,7 +20,9 @@ interface TrainingRepository {
 
     suspend fun updateTrainingBlocks(trainingBlocks: List<TrainingBlock>)
 
-    suspend fun getAllFavouritesTrainings(): List<Training>
+    suspend fun getAllFavouritesTrainings(): Flow<List<Training>>
 
     suspend fun clearFavouriteTrainingsByName(trainingName: String)
+
+    suspend fun restoreFavouriteTrainingByName(trainingName: String)
 }

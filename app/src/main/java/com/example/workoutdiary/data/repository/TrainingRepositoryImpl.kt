@@ -29,7 +29,7 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
         trainingDao.updateTrainingBlocks(trainingBlocks)
     }
 
-    override suspend fun getAllFavouritesTrainings(): List<Training> {
+    override suspend fun getAllFavouritesTrainings(): Flow<List<Training>> {
         return trainingDao.getAllFavouritesTrainings()
     }
 
@@ -39,5 +39,9 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
 
     override suspend fun getTrainingById(trainingId: Int): Training {
         return trainingDao.getTrainingById(trainingId)
+    }
+
+    override suspend fun restoreFavouriteTrainingByName(trainingName: String) {
+        trainingDao.restoreFavouriteTrainingsByTrainingName(trainingName)
     }
 }

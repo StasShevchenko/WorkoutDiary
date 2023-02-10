@@ -259,4 +259,11 @@ object AppModule {
     ): GetTrainingById {
         return GetTrainingById(repository)
     }
+
+    @Provides
+    fun provideRestoreFavouriteTrainingsByName(
+        repository: TrainingRepository
+    ): RestoreFavouriteTrainingsByName {
+        return RestoreFavouriteTrainingsByName(repository)
+    }
 }

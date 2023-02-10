@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.FavouriteItemBinding
+import java.time.format.DateTimeFormatter
 
 class FavouriteTrainingsAdapter(
     private val clickListener: OnFavouriteTrainingClickListener
@@ -42,11 +43,11 @@ class FavouriteTrainingsAdapter(
                 }
             }
         }
-
         fun bind(training: Training) {
             binding.apply {
                 favouriteTrainingNameTextView.text = training.trainingName
-                favouriteTrainingDateTextView.text = "Последняя тренировка: ${training.trainingDate}"
+                val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+                favouriteTrainingDateTextView.text = "Последняя тренировка: ${training.trainingDate.format(dateFormatter)}"
             }
         }
     }

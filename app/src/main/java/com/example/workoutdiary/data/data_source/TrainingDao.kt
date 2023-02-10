@@ -40,8 +40,11 @@ interface TrainingDao {
     suspend fun deleteTraining(trainingId: Int)
 
     @Query("SELECT * FROM Training WHERE isFavourite GROUP BY trainingName HAVING MAX(trainingDate)")
-    suspend fun getAllFavouritesTrainings(): List<Training>
+    fun getAllFavouritesTrainings(): Flow<List<Training>>
 
     @Query("UPDATE Training SET isFavourite = 0 WHERE trainingName = :trainingName")
     suspend fun clearFavouriteTrainingsByTrainingName(trainingName: String)
+
+    @Query("UPDATE TRAINING SET isFavourite = 1 WHERE trainingName = :trainingName")
+    suspend fun restoreFavouriteTrainingsByTrainingName(trainingName: String)
 }

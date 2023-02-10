@@ -9,10 +9,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.FavouritesScreenBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,7 +26,7 @@ class FavouriteTrainingsFragment : Fragment(R.layout.favourites_screen),
     FavouriteTrainingsAdapter.OnFavouriteTrainingClickListener {
 
     private val args: FavouriteTrainingsFragmentArgs by navArgs()
-    private val viewModel: FavouriteTrainingsViewModel by viewModels()
+     val viewModel: FavouriteTrainingsViewModel by viewModels()
     private lateinit var date: LocalDate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +38,38 @@ class FavouriteTrainingsFragment : Fragment(R.layout.favourites_screen),
             favouriteTrainingsRecyclerView.adapter = adapter
             favouriteTrainingsRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedFavouriteTrainingName = viewModel.favouriteTrainings.value?.get(viewHolder.absoluteAdapterPosition)?.trainingName
+                deletedFavouriteTrainingName?.let {
+                    viewModel.deleteFavouriteTrainings(it)
+                }
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(binding.favouriteTrainingsRecyclerView)
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.eventFlow.collectLatest { event ->
+                when (event) {
+                    is FavouriteTrainingsViewModel.UiEvent.TrainingsDeleted -> {
+                        val snackbar = Snackbar.make(requireView(), "Тренировка была удалена из избранных!", Snackbar.LENGTH_SHORT)
+                        snackbar.setAction("Отменить") {
+                            viewModel.restoreFavouriteTrainings(event.trainingsName)
+                        }
+                        snackbar.show()
+                    }
+                }
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
