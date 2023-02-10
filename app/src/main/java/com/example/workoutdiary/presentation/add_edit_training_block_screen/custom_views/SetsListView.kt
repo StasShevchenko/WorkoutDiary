@@ -15,6 +15,7 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private lateinit var setsLayout: LinearLayout
     private var onRepsEntered: ((Int, String) -> Unit)? = null
     private var onWeightEntered: ((Int, String) -> Unit)? = null
+    private var onTimeEntered: ((Int, String) -> Unit)? = null
     private val itemsFactory: SetsListViewItemsFactory = SetsListViewItemsFactory(
         context,
         this
@@ -30,6 +31,11 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
     fun setOnWeightEntered(listener: (Int, String) -> Unit) {
         onWeightEntered = listener
         itemsFactory.setOnWeightEntered(listener)
+    }
+
+    fun setOnTimeEntered(listener: (Int, String) -> Unit) {
+        onTimeEntered = listener
+        itemsFactory.setOnTimeEntered(listener)
     }
 
     init {

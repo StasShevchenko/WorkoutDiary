@@ -59,6 +59,9 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                 setOnWeightEntered{ index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.WeightEntered(index, value))
                 }
+                setOnTimeEntered{ index, value ->
+                    viewModel.onEvent(AddEditTrainingBlockScreenEvent.TimeEntered(index, value))
+                }
             }
 
 

@@ -21,7 +21,8 @@ class TrainingBlocksAdapter(
 
     private enum class ViewType {
         REPS_ITEM,
-        WEIGHT_REPS_ITEM
+        WEIGHT_REPS_ITEM,
+        TIME_ITEM
     }
 
     override fun getItemCount(): Int {
@@ -39,6 +40,12 @@ class TrainingBlocksAdapter(
                 val binding =
                     TrainingDetailsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                  WeightAndRepsViewHolder(binding)
+            }
+            ViewType.TIME_ITEM -> {
+                val binding =
+                    TrainingDetailsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                TimeViewHolder(binding)
+
             }
         }
     }
@@ -67,6 +74,17 @@ class TrainingBlocksAdapter(
                 }
                 (holder as WeightAndRepsViewHolder).bind(data)
             }
+            ViewType.TIME_ITEM -> {
+                val data = list[position]
+                holder.itemView.setOnClickListener {
+                    onClickListener.onTrainingBlockClick(
+                        data.first.trainingBlockId,
+                        data.first.trainingBlockOrder,
+                        data.first.exerciseId
+                    )
+                }
+                (holder as TimeViewHolder).bind(data)
+            }
         }
     }
 
@@ -74,6 +92,8 @@ class TrainingBlocksAdapter(
         when (list[position].first.exerciseType) {
             ExerciseType.REPS -> return ViewType.REPS_ITEM.ordinal
             ExerciseType.WEIGHT_AND_REPS -> return ViewType.WEIGHT_REPS_ITEM.ordinal
+            ExerciseType.TIME -> return ViewType.TIME_ITEM.ordinal
+            ExerciseType.DISTANCE -> TODO()
             else -> return ViewType.REPS_ITEM.ordinal
         }
     }

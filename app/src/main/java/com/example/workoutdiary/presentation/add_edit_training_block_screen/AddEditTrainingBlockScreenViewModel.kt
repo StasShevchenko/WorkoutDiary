@@ -144,6 +144,18 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                 )
                 _validateSets.value = newList
             }
+            is AddEditTrainingBlockScreenEvent.TimeEntered -> {
+                val newList = _validateSets.value.toMutableList()
+                newList[event.index] = newList[event.index].copy(
+                    setData = newList[event.index].setData.copy(
+                        time = if (event.value.isNotEmpty() && event.value.isDigitsOnly()) event.value.toInt() else null
+                    )
+                )
+                newList[event.index] = newList[event.index].copy(
+                    timeError = false
+                )
+                _validateSets.value = newList
+            }
             is AddEditTrainingBlockScreenEvent.SaveChosen -> {
                 if (validateList()) {
                     viewModelScope.launch {
@@ -208,7 +220,14 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                     }
                 }
             }
-            ExerciseType.TIME -> TODO()
+            ExerciseType.TIME -> {
+                for (i in newList.indices) {
+                    if (newList[i].setData.time == null) {
+                        dataIsCorrect = false
+                        newList[i] = newList[i].copy(timeError = true)
+                    }
+                }
+            }
             ExerciseType.DISTANCE -> TODO()
             null -> TODO()
         }

@@ -47,4 +47,6 @@
     <string name="deleteFavouritesInfoMessage">При удалении тренировки из списка избранных изменяется только
         лишь статус всех тренировок с соответствующим названием.Сами тренировки при этом не удаляются.
         \nСмахните карточку вправо для удаления.</string>
+    <string name="minutes">Минуты</string>
+    <string name="seconds">Секунды</string>
 </resources>
