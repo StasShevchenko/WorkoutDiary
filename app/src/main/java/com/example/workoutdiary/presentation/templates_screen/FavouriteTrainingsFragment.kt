@@ -42,11 +42,12 @@ class FavouriteTrainingsFragment : Fragment(R.layout.favourites_screen),
                 viewModel.favouriteTrainings.collectLatest {trainings ->
                     if (trainings != null) {
                         if (trainings.isEmpty()) {
-                            binding.emptyTemplatesMessageTextView.visibility = View.VISIBLE
+                            binding.emptyFavouritesMessageTextView.visibility = View.VISIBLE
                         }
                         else{
-                            binding.emptyTemplatesMessageTextView.visibility = View.GONE
+                            binding.emptyFavouritesMessageTextView.visibility = View.GONE
                             binding.favouriteTrainingsRecyclerView.visibility = View.VISIBLE
+                            binding.favouritesDeleteMessageTextView.visibility = View.VISIBLE
                             binding.titleTextView.visibility = View.VISIBLE
                             adapter.submitList(trainings)
                         }

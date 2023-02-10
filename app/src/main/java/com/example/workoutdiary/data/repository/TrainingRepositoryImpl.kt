@@ -36,4 +36,8 @@ class TrainingRepositoryImpl(private val trainingDao: TrainingDao) : TrainingRep
     override suspend fun clearFavouriteTrainingsByName(trainingName: String) {
         trainingDao.clearFavouriteTrainingsByTrainingName(trainingName)
     }
+
+    override suspend fun getTrainingById(trainingId: Int): Training {
+        return trainingDao.getTrainingById(trainingId)
+    }
 }

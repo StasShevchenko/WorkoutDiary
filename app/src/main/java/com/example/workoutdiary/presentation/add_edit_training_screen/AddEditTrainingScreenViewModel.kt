@@ -11,6 +11,7 @@ import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.GetT
 import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.InsertTrainingBlock
 import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.UpdateTrainingBlocks
 import com.example.workoutdiary.domain.use_case.trainings_use_cases.DeleteTraining
+import com.example.workoutdiary.domain.use_case.trainings_use_cases.GetTrainingById
 import com.example.workoutdiary.domain.use_case.trainings_use_cases.InsertTraining
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -25,6 +26,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
     private val trainingDetailsUseCase: GetTrainingDetailsByTrainingID,
     private val updateTrainingBlocks: UpdateTrainingBlocks,
     private val insertTrainingBlock: InsertTrainingBlock,
+    private val getTrainingById: GetTrainingById,
     private val state: SavedStateHandle
 ) : ViewModel() {
 
@@ -41,6 +43,9 @@ class AddEditTrainingScreenViewModel @Inject constructor(
 
     var trainingName = ""
         private set
+
+    private val _currentTraining: MutableStateFlow<Training?> = MutableStateFlow(null)
+    val currentTraining: StateFlow<Training?> = _currentTraining
 
     private var unchangedTrainingName: String
 
@@ -73,6 +78,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                 trainingBlocks.forEach { entry ->
                     insertTrainingBlock(entry.key.mapToTrainingBlock().copy(trainingId = currentTrainingId, trainingBlockId = 0), entry.value)
                 }
+                _currentTraining.value = getTrainingById(currentTrainingId)
                 isInserted = true
                 trainingDetailsUseCase(currentTrainingId)
                     .distinctUntilChanged()
@@ -94,6 +100,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                             trainingDate = date
                         )
                     ).toInt()
+                    _currentTraining.value = getTrainingById(currentTrainingId)
                     isInserted = true
                     trainingDetailsUseCase(currentTrainingId)
                         .distinctUntilChanged()
@@ -108,6 +115,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
             } else {
                 isInserted = true
                 viewModelScope.launch {
+                    _currentTraining.value = getTrainingById(currentTrainingId)
                     trainingDetailsUseCase(currentTrainingId)
                         .distinctUntilChanged()
                         .collectLatest { trainingDetails ->
@@ -164,10 +172,26 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     updateTrainingBlocks(swappedBlocks)
                 }
             }
+            AddEditTrainingScreenEvent.FavouriteButtonPressed -> {
+                if (currentTraining.value!!.isFavourite) {
+                    viewModelScope.launch {
+                        _currentTraining.value = _currentTraining.value!!.copy(isFavourite = false)
+                        insertTrainingUseCase(_currentTraining.value!!)
+                        _eventFlow.emit(UiEvent.FavouriteChanged(false))
+                    }
+                } else{
+                    viewModelScope.launch {
+                        _currentTraining.value = _currentTraining.value!!.copy(isFavourite = true)
+                        insertTrainingUseCase(_currentTraining.value!!)
+                        _eventFlow.emit(UiEvent.FavouriteChanged(true))
+                    }
+                }
+            }
         }
     }
 
     sealed class UiEvent {
+        data class FavouriteChanged(val isFavourite: Boolean) : UiEvent()
         object OnBackPressed : UiEvent()
         object OnDeletePressed : UiEvent()
     }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddEditTrainingScreenBinding
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,8 +29,7 @@ import java.time.format.DateTimeFormatter
 class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen),
     TrainingBlocksAdapter.OnTrainingBlockClickListener,
     TrainingBlocksAdapter.OnBlocksSwapListener,
-        TrainingBlocksMoveCallback.ItemTouchHelperSwapFinishedCallback
-{
+    TrainingBlocksMoveCallback.ItemTouchHelperSwapFinishedCallback {
     private val viewModel: AddEditTrainingScreenViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -47,11 +47,17 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             } else {
                 dateTextView.text = viewModel.date.format(DateTimeFormatter.ofPattern("dd.MM.yy"))
             }
+            favouriteImageButton.setOnClickListener {
+                viewModel.onEvent(AddEditTrainingScreenEvent.FavouriteButtonPressed)
+            }
             trainingBlocksRecyclerView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = trainingBlocksAdapter
                 val callback: ItemTouchHelper.Callback =
-                    TrainingBlocksMoveCallback(trainingBlocksAdapter, this@AddEditTrainingScreenFragment)
+                    TrainingBlocksMoveCallback(
+                        trainingBlocksAdapter,
+                        this@AddEditTrainingScreenFragment
+                    )
                 val touchHelper = ItemTouchHelper(callback)
                 touchHelper.attachToRecyclerView(this)
             }
@@ -90,6 +96,11 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                     AddEditTrainingScreenViewModel.UiEvent.OnDeletePressed -> {
                         findNavController().popBackStack()
                     }
+                    is AddEditTrainingScreenViewModel.UiEvent.FavouriteChanged -> {
+                        val message =
+                            if (event.isFavourite) "Тренировка добавлена в избранные!" else "Тренировка удалена из избранных!"
+                        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -100,8 +111,21 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.trainingDetails.collectLatest { trainingDetails ->
+                launch {
+                    viewModel.trainingDetails.collectLatest { trainingDetails ->
                         trainingBlocksAdapter.submitList(trainingDetails)
+                    }
+                }
+                launch {
+                    viewModel.currentTraining.collectLatest { currentTraining ->
+                        currentTraining?.let {
+                            if (currentTraining.isFavourite) {
+                                binding.favouriteImageButton.setImageResource(R.drawable.ic_favourite_fill)
+                            } else {
+                                binding.favouriteImageButton.setImageResource(R.drawable.ic_favourite_border)
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -6,4 +6,5 @@ sealed class AddEditTrainingScreenEvent{
     object SwapFinished: AddEditTrainingScreenEvent()
     object OnBackPressed : AddEditTrainingScreenEvent()
     object DeletePressed : AddEditTrainingScreenEvent()
+    object FavouriteButtonPressed: AddEditTrainingScreenEvent()
 }

@@ -14,6 +14,8 @@ interface TrainingRepository {
 
     suspend fun insertTraining(training: Training): Long
 
+    suspend fun getTrainingById(trainingId: Int): Training
+
     suspend fun deleteTraining(trainingId: Int)
 
     suspend fun updateTrainingBlocks(trainingBlocks: List<TrainingBlock>)
