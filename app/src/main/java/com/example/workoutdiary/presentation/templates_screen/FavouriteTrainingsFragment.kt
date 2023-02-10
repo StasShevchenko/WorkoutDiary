@@ -40,11 +40,16 @@ class FavouriteTrainingsFragment : Fragment(R.layout.favourites_screen),
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.favouriteTrainings.collectLatest {trainings ->
-                    if (trainings.isNotEmpty()) {
-                        binding.emptyTemplatesMessageTextView.visibility = View.GONE
-                        binding.favouriteTrainingsRecyclerView.visibility = View.VISIBLE
-                        binding.titleTextView.visibility = View.VISIBLE
-                        adapter.submitList(trainings)
+                    if (trainings != null) {
+                        if (trainings.isEmpty()) {
+                            binding.emptyTemplatesMessageTextView.visibility = View.VISIBLE
+                        }
+                        else{
+                            binding.emptyTemplatesMessageTextView.visibility = View.GONE
+                            binding.favouriteTrainingsRecyclerView.visibility = View.VISIBLE
+                            binding.titleTextView.visibility = View.VISIBLE
+                            adapter.submitList(trainings)
+                        }
                     }
                 }
             }

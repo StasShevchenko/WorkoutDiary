@@ -71,7 +71,7 @@ class AddEditTrainingScreenViewModel @Inject constructor(
                     )
                 ).toInt()
                 trainingBlocks.forEach { entry ->
-                    insertTrainingBlock(entry.key.mapToTrainingBlock().copy(trainingId = currentTrainingId), entry.value)
+                    insertTrainingBlock(entry.key.mapToTrainingBlock().copy(trainingId = currentTrainingId, trainingBlockId = 0), entry.value)
                 }
                 isInserted = true
                 trainingDetailsUseCase(currentTrainingId)

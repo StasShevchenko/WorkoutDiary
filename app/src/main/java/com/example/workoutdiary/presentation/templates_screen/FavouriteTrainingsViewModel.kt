@@ -16,15 +16,12 @@ class FavouriteTrainingsViewModel @Inject constructor(
     private val getAllFavouriteTrainings: GetAllFavouriteTrainings,
     private val clearFavouriteTrainingsByName: ClearFavouriteTrainingsByName
 ) : ViewModel(){
-    private val _favouriteTrainings: MutableStateFlow<List<Training>> = MutableStateFlow(emptyList())
-    val favouriteTrainings: StateFlow<List<Training>> = _favouriteTrainings
+    private val _favouriteTrainings: MutableStateFlow<List<Training>?> = MutableStateFlow(null)
+    val favouriteTrainings: StateFlow<List<Training>?> = _favouriteTrainings
 
     init {
         viewModelScope.launch {
             _favouriteTrainings.value = getAllFavouriteTrainings()
         }
     }
-
-
-
 }

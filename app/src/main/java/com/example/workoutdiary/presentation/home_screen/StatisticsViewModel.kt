@@ -57,16 +57,12 @@ class StatisticsViewModel @Inject constructor(
         }
         viewModelScope.launch {
             getTotalRepsCount().collectLatest { totalRepsCount ->
-                totalRepsCount?.let {
-                    _totalRepsCount.value = totalRepsCount
-                }
+                _totalRepsCount.value = totalRepsCount ?: 0
             }
         }
         viewModelScope.launch {
             getTotalWeightCount().collectLatest { totalWeightCount ->
-                totalWeightCount?.let {
-                    _totalWeightCount.value = totalWeightCount
-                }
+                _totalWeightCount.value = totalWeightCount ?: 0
             }
         }
         viewModelScope.launch {
