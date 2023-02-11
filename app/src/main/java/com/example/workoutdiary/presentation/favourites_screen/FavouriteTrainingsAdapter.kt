@@ -1,4 +1,4 @@
-package com.example.workoutdiary.presentation.templates_screen
+package com.example.workoutdiary.presentation.favourites_screen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

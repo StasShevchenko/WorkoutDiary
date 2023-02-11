@@ -110,7 +110,7 @@
     </fragment>
     <fragment
         android:id="@+id/favouriteTrainingsFragment"
-        android:name="com.example.workoutdiary.presentation.templates_screen.FavouriteTrainingsFragment"
+        android:name="com.example.workoutdiary.presentation.favourites_screen.FavouriteTrainingsFragment"
         android:label="FavouriteTrainingsFragment" >
         <action
             android:id="@+id/action_favouriteTrainingsFragment_to_addEditTrainingScreenFragment"

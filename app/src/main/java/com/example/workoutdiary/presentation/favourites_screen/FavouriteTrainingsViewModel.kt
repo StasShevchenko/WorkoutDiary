@@ -1,4 +1,4 @@
-package com.example.workoutdiary.presentation.templates_screen
+package com.example.workoutdiary.presentation.favourites_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

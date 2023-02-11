@@ -62,6 +62,9 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                 setOnTimeEntered{ index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.TimeEntered(index, value))
                 }
+                setOnDistanceEntered { index, value ->
+                    viewModel.onEvent(AddEditTrainingBlockScreenEvent.DistanceEntered(index, value))
+                }
             }
 
 

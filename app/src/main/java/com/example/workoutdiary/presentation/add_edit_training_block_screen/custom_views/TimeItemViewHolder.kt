@@ -39,7 +39,7 @@ class TimeItemViewHolder(
             val secondsAmount =
                 if (secondsEditText.text.toString().isNotEmpty()) secondsEditText.text.toString()
                     .toInt() else 0
-            val minutesAmount = if(text.toString().isNotEmpty()) text.toString().toInt() else 0
+            val minutesAmount = if (text.toString().isNotEmpty()) text.toString().toInt() else 0
             val resultTime = secondsAmount + minutesAmount * 60
             onTimeEntered?.invoke(itemPosition - 1, resultTime.toString())
         }

@@ -49,4 +49,6 @@
         \nСмахните карточку вправо для удаления.</string>
     <string name="minutes">Минуты</string>
     <string name="seconds">Секунды</string>
+    <string name="kilometers">Километры</string>
+    <string name="meteres">Метры</string>
 </resources>

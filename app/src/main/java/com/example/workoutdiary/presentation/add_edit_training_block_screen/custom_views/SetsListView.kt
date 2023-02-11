@@ -13,9 +13,7 @@ import com.example.workoutdiary.utils.ExerciseType
 class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private var currentExerciseType: ExerciseType? = null
     private lateinit var setsLayout: LinearLayout
-    private var onRepsEntered: ((Int, String) -> Unit)? = null
-    private var onWeightEntered: ((Int, String) -> Unit)? = null
-    private var onTimeEntered: ((Int, String) -> Unit)? = null
+
     private val itemsFactory: SetsListViewItemsFactory = SetsListViewItemsFactory(
         context,
         this
@@ -24,18 +22,19 @@ class SetsListView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private val holdersList: MutableList<SetsListViewItemViewHolder> = mutableListOf()
 
     fun setOnRepsEntered(listener: (Int, String) -> Unit) {
-        onRepsEntered = listener
         itemsFactory.setOnRepsEntered(listener)
     }
 
     fun setOnWeightEntered(listener: (Int, String) -> Unit) {
-        onWeightEntered = listener
         itemsFactory.setOnWeightEntered(listener)
     }
 
     fun setOnTimeEntered(listener: (Int, String) -> Unit) {
-        onTimeEntered = listener
         itemsFactory.setOnTimeEntered(listener)
+    }
+
+    fun setOnDistanceEntered(listener: (Int, String) -> Unit) {
+        itemsFactory.setOnDistanceEntered(listener)
     }
 
     init {

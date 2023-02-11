@@ -10,7 +10,6 @@ import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.databinding.TrainingDetailsItemBinding
 import com.example.workoutdiary.utils.ExerciseType
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TrainingBlocksAdapter(
     private val onClickListener: OnTrainingBlockClickListener,
@@ -22,7 +21,8 @@ class TrainingBlocksAdapter(
     private enum class ViewType {
         REPS_ITEM,
         WEIGHT_REPS_ITEM,
-        TIME_ITEM
+        TIME_ITEM,
+        DISTANCE_ITEM
     }
 
     override fun getItemCount(): Int {
@@ -46,6 +46,11 @@ class TrainingBlocksAdapter(
                     TrainingDetailsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 TimeViewHolder(binding)
 
+            }
+            ViewType.DISTANCE_ITEM -> {
+                val binding =
+                    TrainingDetailsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DistanceViewHolder(binding)
             }
         }
     }
@@ -85,16 +90,26 @@ class TrainingBlocksAdapter(
                 }
                 (holder as TimeViewHolder).bind(data)
             }
+            ViewType.DISTANCE_ITEM -> {
+                val data = list[position]
+                holder.itemView.setOnClickListener {
+                    onClickListener.onTrainingBlockClick(
+                        data.first.trainingBlockId,
+                        data.first.trainingBlockOrder,
+                        data.first.exerciseId
+                    )
+                }
+                (holder as DistanceViewHolder).bind(data)
+            }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        when (list[position].first.exerciseType) {
-            ExerciseType.REPS -> return ViewType.REPS_ITEM.ordinal
-            ExerciseType.WEIGHT_AND_REPS -> return ViewType.WEIGHT_REPS_ITEM.ordinal
-            ExerciseType.TIME -> return ViewType.TIME_ITEM.ordinal
-            ExerciseType.DISTANCE -> TODO()
-            else -> return ViewType.REPS_ITEM.ordinal
+        return when (list[position].first.exerciseType) {
+            ExerciseType.REPS -> ViewType.REPS_ITEM.ordinal
+            ExerciseType.WEIGHT_AND_REPS -> ViewType.WEIGHT_REPS_ITEM.ordinal
+            ExerciseType.TIME -> ViewType.TIME_ITEM.ordinal
+            ExerciseType.DISTANCE -> ViewType.DISTANCE_ITEM.ordinal
         }
     }
 

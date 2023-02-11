@@ -11,6 +11,7 @@ class SetsListViewItemsFactory(
     private var onRepsEntered: ((Int, String) -> Unit)? = null
     private var onWeightEntered: ((Int, String) -> Unit)? = null
     private var onTimeEntered: ((Int, String) -> Unit)? = null
+    private var onDistanceEntered: ((Int, String) -> Unit)? = null
 
     fun getItem(itemType: ExerciseType) : SetsListViewItemViewHolder {
         when (itemType) {
@@ -36,9 +37,9 @@ class SetsListViewItemsFactory(
                     root
                 )
             }
-            else -> {
-                return RepsItemViewHolder(
-                    onRepsEntered,
+            ExerciseType.DISTANCE -> {
+                return DistanceItemViewHolder(
+                    onDistanceEntered,
                     context,
                     root
                 )
@@ -57,6 +58,10 @@ class SetsListViewItemsFactory(
 
     fun setOnWeightEntered(listener: (Int, String) -> Unit) {
         onWeightEntered = listener
+    }
+
+    fun setOnDistanceEntered(listener: (Int, String) -> Unit) {
+        onDistanceEntered = listener
     }
 
 }
