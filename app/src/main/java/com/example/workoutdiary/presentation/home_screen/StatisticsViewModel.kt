@@ -36,10 +36,12 @@ class StatisticsViewModel @Inject constructor(
     private val _totalWeightCount: MutableStateFlow<Int?> = MutableStateFlow(0)
     val totalWeightCount: StateFlow<Int?> = _totalWeightCount
 
-    private val _statisticsInfo: MutableStateFlow<Pair<String, Map<LocalDate, Int>>?> = MutableStateFlow(null)
+    private val _statisticsInfo: MutableStateFlow<Pair<String, Map<LocalDate, Int>>?> =
+        MutableStateFlow(null)
     val statisticsInfo: StateFlow<Pair<String, Map<LocalDate, Int>>?> = _statisticsInfo
 
-    private val _statisticsParameters: MutableStateFlow<ExerciseStatisticsParameters?> = MutableStateFlow(null)
+    private val _statisticsParameters: MutableStateFlow<ExerciseStatisticsParameters?> =
+        MutableStateFlow(null)
     val statisticsParameters: StateFlow<ExerciseStatisticsParameters?> = _statisticsParameters
 
     val statisticsEntryProducer = ChartEntryModelProducer(getStatisticsEntries())
@@ -83,11 +85,13 @@ class StatisticsViewModel @Inject constructor(
         val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yy")
         var x = 0
         statisticsInfo.value?.second?.forEach { statisticsEntry ->
-            dateEntryList.add(DateEntry(
-                date = statisticsEntry.key.format(dateFormatter),
-                x = x.toFloat(),
-                y = statisticsEntry.value.toFloat()
-            ))
+            dateEntryList.add(
+                DateEntry(
+                    date = statisticsEntry.key.format(dateFormatter),
+                    x = x.toFloat(),
+                    y = statisticsEntry.value.toFloat()
+                )
+            )
             x++
         }
         return dateEntryList

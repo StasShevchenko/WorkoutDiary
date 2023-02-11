@@ -14,25 +14,11 @@ import com.example.workoutdiary.data.model.entities.ExerciseStatisticsParameters
 import com.example.workoutdiary.data.model.entities.Training
 import com.example.workoutdiary.databinding.HomeScreenFragmentBinding
 import com.example.workoutdiary.presentation.MainActivity
+import com.example.workoutdiary.presentation.home_screen.chart_utils.*
 import com.example.workoutdiary.presentation.utils.FabButtonClick
-import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
 import com.patrykandpatrick.vico.core.axis.horizontal.HorizontalAxis
 import com.patrykandpatrick.vico.core.axis.vertical.VerticalAxis
-import com.patrykandpatrick.vico.core.chart.insets.Insets
-import com.patrykandpatrick.vico.core.chart.segment.SegmentProperties
-import com.patrykandpatrick.vico.core.component.OverlayingComponent
-import com.patrykandpatrick.vico.core.component.marker.MarkerComponent
-import com.patrykandpatrick.vico.core.component.shape.DashedShape
-import com.patrykandpatrick.vico.core.component.shape.LineComponent
-import com.patrykandpatrick.vico.core.component.shape.ShapeComponent
-import com.patrykandpatrick.vico.core.component.shape.Shapes
-import com.patrykandpatrick.vico.core.component.shape.cornered.Corner
-import com.patrykandpatrick.vico.core.component.shape.cornered.MarkerCorneredShape
-import com.patrykandpatrick.vico.core.component.text.textComponent
-import com.patrykandpatrick.vico.core.context.MeasureContext
-import com.patrykandpatrick.vico.core.extension.copyColor
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
-import com.patrykandpatrick.vico.views.dimensions.dimensionsOf
 import com.patrykandpatrick.vico.views.scroll.copy
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -87,83 +73,12 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 findNavController().navigate(action)
             }
 
-
             with(chart) {
                 entryProducer = statisticsViewModel.statisticsEntryProducer
                 chartScrollSpec = chartScrollSpec.copy(initialScroll = InitialScroll.End)
                 (bottomAxis as HorizontalAxis).valueFormatter =
-                    AxisValueFormatter { value, chartValues ->
-                        if (chartValues.chartEntryModel.entries.isNotEmpty()) {
-                            (chartValues.chartEntryModel.entries[0].getOrNull(value.toInt()) as DateEntry?)
-                                ?.date
-                                ?.run { this }
-                                .orEmpty()
-                        } else "There is no any data"
-                    }
-                val labelBackgroundShape = MarkerCorneredShape(all = Corner.FullyRounded)
-                val label = textComponent {
-                    this.color = -1
-                    this.padding = dimensionsOf(horizontalDp = 8f, verticalDp = 4f)
-                    this.background = ShapeComponent(
-                        shape = labelBackgroundShape,
-                        color = -1
-                    )
-                        .setShadow(
-                            radius = 4f,
-                            dy = 2f,
-                            applyElevationOverlay = true
-                        )
-                }
-                val indicatorInner =
-                    ShapeComponent(shape = Shapes.pillShape, color = R.color.purple_500)
-                val indicatorCenter =
-                    ShapeComponent(shape = Shapes.pillShape, color = R.color.white)
-                val indicatorOuter = ShapeComponent(shape = Shapes.pillShape, color = R.color.white)
-
-                val indicator = OverlayingComponent(
-                    outer = indicatorOuter,
-                    innerPaddingAllDp = 10f,
-                    inner = OverlayingComponent(
-                        outer = indicatorCenter,
-                        inner = indicatorInner,
-                        innerPaddingAllDp = 5f
-                    ),
-                )
-                val guideline = LineComponent(
-                    color = R.color.white,
-                    thicknessDp = 2f,
-                    shape = DashedShape(
-                        shape = Shapes.pillShape,
-                        dashLengthDp = 8f,
-                        gapLengthDp = 4f
-                    )
-                )
-                this.marker = object : MarkerComponent(
-                    label = label,
-                    indicator = indicator,
-                    guideline = guideline
-                ) {
-                    init {
-                        indicatorSizeDp = 30f
-                        onApplyEntryColor = { entryColor ->
-                            indicatorOuter.color = entryColor.copyColor(alpha = 32)
-                            with(indicatorCenter) {
-                                color = entryColor
-                                setShadow(radius = 12f, color = entryColor)
-                            }
-                        }
-                    }
-
-                    override fun getInsets(
-                        context: MeasureContext,
-                        outInsets: Insets,
-                        segmentProperties: SegmentProperties
-                    ) = with(context) {
-                        outInsets.top =
-                            label.getHeight(this) + labelBackgroundShape.tickSizeDp.pixels +
-                                    4f.pixels * 1.3f - 2f.pixels
-                    }
-                }
+                   DateValueFormatter()
+                marker = getMarker()
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
@@ -223,6 +138,20 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                                 "distance" -> "Дистанция"
                                 else -> "Повторения"
                             }
+                        if (parameters?.statisticsParameter == "distance") {
+                            (binding.chart.startAxis as VerticalAxis).valueFormatter =
+                                DistanceValueFormatter()
+                            val marker = getMarker()
+                            marker.labelFormatter = DistanceMarkerLabelFormatter()
+                            binding.chart.marker = marker
+                        }
+                        if (parameters?.statisticsParameter == "time") {
+                            (binding.chart.startAxis as VerticalAxis).valueFormatter =
+                                TimeValueFormatter()
+                            val marker = getMarker()
+                            marker.labelFormatter = TimeMarkerLabelFormatter()
+                            binding.chart.marker = marker
+                        }
                     }
                 }
             }
