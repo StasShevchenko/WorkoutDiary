@@ -37,7 +37,6 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
         val activity = activity as MainActivity
         activity.setFabListener(this)
         binding = HomeScreenFragmentBinding.bind(view)
-
         val trainingDaysAdapter = TrainingDaysAdapter(this)
 
         binding.apply {
@@ -174,6 +173,7 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 statisticsCardView.visibility = View.VISIBLE
                 emptyParametersMessageTextView.visibility = View.GONE
                 emptyDataMessageTextView.visibility = View.VISIBLE
+                statisticsChartContainer.visibility = View.GONE
             }
         } else {
             with(binding) {
@@ -213,4 +213,5 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
             )
         findNavController().navigate(action)
     }
+
 }
