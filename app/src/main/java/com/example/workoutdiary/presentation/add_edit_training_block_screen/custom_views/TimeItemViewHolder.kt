@@ -32,7 +32,7 @@ class TimeItemViewHolder(
 
     override fun bindData(itemPosition: Int, itemData: ParameterizedSet) {
         setNumberText.text =
-            "Подход № $itemPosition"
+            context.getString(R.string.set_number, itemPosition.toString())
         val minutesNumber = if (itemData.time != null) (itemData.time / 60).toString() else ""
         minutesEditText.setText(minutesNumber)
         minutesEditText.addTextChangedListener { text ->
@@ -57,7 +57,7 @@ class TimeItemViewHolder(
 
     override fun validateItem(itemData: ValidateSet) {
         if (itemData.timeError) {
-            secondsEditText.error = "Введите данные"
+            secondsEditText.error = context.getString(R.string.enter_data)
         }
     }
 

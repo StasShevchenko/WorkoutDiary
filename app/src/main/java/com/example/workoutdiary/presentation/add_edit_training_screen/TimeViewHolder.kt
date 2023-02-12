@@ -18,8 +18,12 @@ class TimeViewHolder(
             data.second.forEach {
                 val textView = TextView(binding.root.context)
                 textView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Body1)
-                textView.text =
-                    "Подход ${it.setOrder}: ${it.time!!.toInt() / 60} мин. ${it.time!!.toInt() % 60} сек."
+                textView.text = binding.root.context.getString(
+                    R.string.time_set_number,
+                    it.setOrder.toString(),
+                    (it.time!!.toInt() / 60).toString(),
+                    (it.time.toInt() % 60).toString()
+                )
                 binding.setList.addView(textView)
             }
         }

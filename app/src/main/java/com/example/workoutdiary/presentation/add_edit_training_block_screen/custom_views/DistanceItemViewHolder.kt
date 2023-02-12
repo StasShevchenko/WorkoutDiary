@@ -31,7 +31,7 @@ class DistanceItemViewHolder(
 
     override fun bindData(itemPosition: Int, itemData: ParameterizedSet) {
         setNumberText.text =
-            "Подход № $itemPosition"
+            context.getString(R.string.set_number, itemPosition.toString())
         val kilometersNumber =
             if (itemData.distance != null) (itemData.distance / 1000).toString() else ""
         kilometersEditText.setText(kilometersNumber)
@@ -63,7 +63,7 @@ class DistanceItemViewHolder(
 
     override fun validateItem(itemData: ValidateSet) {
         if (itemData.distanceError) {
-            metersEditText.error = "Введите данные"
+            metersEditText.error = context.getString(R.string.enter_data)
         }
     }
 

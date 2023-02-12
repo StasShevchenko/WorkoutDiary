@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.add_edit_training_screen
 
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.databinding.TrainingDetailsItemBinding
@@ -14,11 +15,13 @@ class WeightAndRepsViewHolder(
         binding.apply {
             trainingBlockNameTextView.text = data.first.exerciseName
             binding.setList.removeAllViews()
-            data.second.forEach{
+            data.second.forEach {
                 val textView = TextView(binding.root.context)
                 textView.setTextAppearance(androidx.constraintlayout.widget.R.style.TextAppearance_AppCompat_Body1)
-                textView.text =
-                    "Подход ${it.setOrder}: ${it.repeats} повторений ${it.weight} кг"
+                textView.text = binding.root.context.getString(
+                    R.string.weight_reps_set_number, it.setOrder.toString(),
+                    it.repeats.toString(), it.weight.toString()
+                )
                 setList.addView(textView)
             }
         }

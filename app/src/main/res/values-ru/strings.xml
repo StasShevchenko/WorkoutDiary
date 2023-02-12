@@ -56,4 +56,14 @@
     <string name="app_language">Язык приложения:</string>
     <string name="russian">Русский</string>
     <string name="english">Английский</string>
+    <string name="set_number">Set № %1$s</string>
+    <string name="enter_data">Введите данные!</string>
+    <string name="sure_to_delete_training_message">Вы действительно хотите удалить тренировку?</string>
+    <string name="yes">Да</string>
+    <string name="added_to_favourites">Тренировка добавлена в избранные!</string>
+    <string name="deleted_from_favourites">Тренировка удалена из избранных!</string>
+    <string name="distance_set_number">Сет № %1$s: %2$s км %3$s м</string>
+    <string name="repeats_set_number">Сет № %1$s: %2$s повторений</string>
+    <string name="time_set_number">Сет № %1$s: %2$s мин. %3$s сек.</string>
+    <string name="weight_reps_set_number">Сет № %1$s: %2$s повторений %3$s кг</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.workoutdiary.presentation.add_edit_training_screen
 
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.relation_entities.ExerciseTrainingBlock
 import com.example.workoutdiary.data.model.relation_entities.ParameterizedSet
 import com.example.workoutdiary.databinding.TrainingDetailsItemBinding
@@ -16,8 +17,12 @@ class DistanceViewHolder(
             data.second.forEach {
                 val textView = TextView(binding.root.context)
                 textView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Body1)
-                textView.text =
-                    "Подход ${it.setOrder}: ${it.distance!!.toInt() / 1000} км ${it.distance!!.toInt() % 1000} м"
+                textView.text = binding.root.context.getString(
+                    R.string.distance_set_number,
+                    it.setOrder.toString(),
+                    (it.distance!!.toInt() / 1000).toString(),
+                    (it.distance.toInt() % 1000).toString()
+                )
                 binding.setList.addView(textView)
             }
         }

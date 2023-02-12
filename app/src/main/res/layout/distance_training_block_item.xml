@@ -42,7 +42,7 @@
             android:layout_margin="8dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:hint="@string/meteres">
+            android:hint="@string/meters">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/distance_meters_edit_text"

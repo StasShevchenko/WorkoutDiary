@@ -54,4 +54,14 @@
     <string name="app_language">App language:</string>
     <string name="russian">Russian</string>
     <string name="english">English</string>
+    <string name="set_number">Set № %1$s</string>
+    <string name="enter_data">Enter data!</string>
+    <string name="sure_to_delete_training_message">Are you sure that you want to delete training?</string>
+    <string name="yes">Yes</string>
+    <string name="added_to_favourites">Training was added to favourites!</string>
+    <string name="deleted_from_favourites">Training deleted from favourites!</string>
+    <string name="distance_set_number">Set № %1$s: %2$s km %3$s m</string>
+    <string name="repeats_set_number">Set № %1$s: %2$s repeats</string>
+    <string name="time_set_number">Set № %1$s: %2$s min %3$s sec</string>
+    <string name="weight_reps_set_number">Set № %1$s: %2$s repeats %3$s kg</string>
 </resources>

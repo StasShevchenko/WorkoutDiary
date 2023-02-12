@@ -26,7 +26,7 @@ class RepsItemViewHolder(
 
     override fun bindData(itemPosition: Int, itemData: ParameterizedSet) {
         setNumberText.text =
-            "Подход № $itemPosition"
+            context.getString(R.string.set_number, itemPosition.toString())
         val repsNumber = if (itemData.repeats != null) itemData.repeats.toString() else ""
         repsEditText.setText(repsNumber)
         repsEditText.addTextChangedListener { text ->
@@ -36,7 +36,7 @@ class RepsItemViewHolder(
 
     override fun validateItem(itemData: ValidateSet) {
         if (itemData.repsError) {
-            repsEditText.error = "Введите данные!"
+            repsEditText.error = context.getString(R.string.enter_data)
         }
     }
 

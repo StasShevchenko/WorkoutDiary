@@ -32,8 +32,8 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
     TrainingBlocksMoveCallback.ItemTouchHelperSwapFinishedCallback {
     private val viewModel: AddEditTrainingScreenViewModel by viewModels()
 
-    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = AddEditTrainingScreenBinding.bind(view)
@@ -76,10 +76,10 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
             }
             deleteTrainingButton.setOnClickListener {
                 AlertDialog.Builder(requireContext())
-                    .setTitle("Удалить тренировку")
-                    .setMessage("Вы действительно хотите удалить тренировку?")
+                    .setTitle(getString(R.string.delete_training))
+                    .setMessage(getString(R.string.sure_to_delete_training_message))
                     .setIcon(R.drawable.ic_delete)
-                    .setPositiveButton("Да") { _, _ ->
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
                         viewModel.onEvent(AddEditTrainingScreenEvent.DeletePressed)
                     }.create()
                     .show()
@@ -98,7 +98,8 @@ class AddEditTrainingScreenFragment : Fragment(R.layout.add_edit_training_screen
                     }
                     is AddEditTrainingScreenViewModel.UiEvent.FavouriteChanged -> {
                         val message =
-                            if (event.isFavourite) "Тренировка добавлена в избранные!" else "Тренировка удалена из избранных!"
+                            if (event.isFavourite) getString(R.string.added_to_favourites) else getString(
+                                                            R.string.deleted_from_favourites)
                         Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
                     }
                 }
