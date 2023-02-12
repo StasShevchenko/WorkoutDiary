@@ -20,14 +20,16 @@
         />
 
     <item
-        android:enabled="false"
-        android:title=""
-        />
-
-    <item
         android:title=""
         android:enabled="true"
         android:id="@+id/calendarScreenFragment"
         android:icon="@drawable/ic_calendar"/>
+
+    <item
+        android:enabled="true"
+        android:title=""
+        android:id="@+id/settingsScreenFragment"
+        android:icon="@drawable/ic_settings"
+        />
 
 </menu>

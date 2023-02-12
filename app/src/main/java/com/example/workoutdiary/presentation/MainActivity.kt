@@ -1,8 +1,6 @@
 package com.example.workoutdiary.presentation
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -10,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -19,8 +16,8 @@ import com.example.workoutdiary.data.data_source.WorkoutDatabase
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -42,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
-        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
         val bottomBar: BottomAppBar = findViewById(R.id.bottomAppBar)
         navView.background = null
         val fab = findViewById<FloatingActionButton>(R.id.training_fab)
@@ -69,6 +66,13 @@ class MainActivity : AppCompatActivity() {
                     fab.isEnabled = true
                 }
                 R.id.exercisesAndMusclesScreenFragment -> {
+                    bottomBar.visibility = View.VISIBLE
+                    navView.visibility = View.VISIBLE
+                    fab.hide()
+                    bottomBar.fabCradleMargin = 24f
+                    fab.isEnabled = false
+                }
+                R.id.settingsScreenFragment -> {
                     bottomBar.visibility = View.VISIBLE
                     navView.visibility = View.VISIBLE
                     fab.hide()

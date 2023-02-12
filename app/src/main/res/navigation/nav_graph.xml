@@ -121,4 +121,8 @@
             android:name="trainingDate"
             app:argType="java.time.LocalDate" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsScreenFragment"
+        android:name="com.example.workoutdiary.presentation.settings_screen.SettingsScreenFragment"
+        android:label="SettingScreenFragment" />
 </navigation>
