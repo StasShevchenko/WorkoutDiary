@@ -1,55 +1,57 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">WorkoutDiary</string>
-    <string name="no_trainings">Тренировок нет</string>
-    <string name="training_name">Название тренировки</string>
-    <string name="add_exercise">Добавить упражнение</string>
-    <string name="delete_training">Удалить тренировку</string>
-    <string name="today">(сегодня)</string>
-    <string name="muscle_type">Мышечная группа</string>
-    <string name="exercise">Упражнение</string>
-    <string name="training_block_header">Тренировочный блок</string>
-    <string name="sets_count">Число подходов:</string>
-    <string name="save_text">Сохранить</string>
-    <string name="reps">Повторения</string>
-    <string name="weight">Вес (кг)</string>
-    <string name="delete">Удалить</string>
-    <string name="exercise_name">Название упражнения</string>
-    <string name="exercise_description">Описание упражнения (опционально)</string>
-    <string name="add_exercise_header">Добавление упражнения</string>
-    <string name="exercise_type">Тип упражнения</string>
-    <string name="muscle_name">Название мышечной группы</string>
-    <string name="add_muscle">Добавить мышечную группу</string>
-    <string name="add_muscle_group">Добавление мышечной группы</string>
-    <string name="no_training">Нет тренировки</string>
-    <string name="statistics">Общая статистика</string>
-    <string name="date_axis">Дата</string>
-    <string name="reps_axis">Повторения</string>
-    <string name="edit">Редактировать</string>
-    <string name="statistics_settings">Настройки статистики</string>
-    <string name="statistics_settings_hint">Выберите упражнение для вывода лучших результатов его
-        выполнения для каждой из тренировок</string>
-    <string name="statistics_parameter">Показатель статистики:</string>
-    <string name="time">Время</string>
-    <string name="distance">Дистанция</string>
-    <string name="empty_statistics_data_message">Недостаточно данных для отображения статистики по упражнению :(\n
-        Нажмите на карточку для настройки параметров.
-        \nДанная статистика отображает лучшие результаты выполнения упражнения в каждом из тренировочных дней.
+    <string name="no_trainings">No training</string>
+    <string name="training_name">Training name</string>
+    <string name="add_exercise">Add exercise</string>
+    <string name="delete_training">Delete training</string>
+    <string name="today">(today)</string>
+    <string name="muscle_type">Muscle group</string>
+    <string name="exercise">Exercise</string>
+    <string name="training_block_header">Training block</string>
+    <string name="sets_count">Sets number:</string>
+    <string name="save_text">Save</string>
+    <string name="reps">Repeats</string>
+    <string name="weight">Weight (kg)</string>
+    <string name="delete">Delete</string>
+    <string name="exercise_name">Exercise name</string>
+    <string name="exercise_description">Exercise description (optional)</string>
+    <string name="add_exercise_header">Adding an exercise</string>
+    <string name="exercise_type">Exercise type</string>
+    <string name="muscle_name">Muscle group name</string>
+    <string name="add_muscle">Add muscle group</string>
+    <string name="add_muscle_group">Adding a muscle group</string>
+    <string name="no_training">No training</string>
+    <string name="statistics">Common statistics</string>
+    <string name="date_axis">Date</string>
+    <string name="reps_axis">Repeats</string>
+    <string name="edit">Edit</string>
+    <string name="statistics_settings">Statistics setting</string>
+    <string name="statistics_settings_hint">Choose an exercise to show its best results for each training day</string>
+    <string name="statistics_parameter">Statistics parameter:</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
+    <string name="empty_statistics_data_message">Not enough data to show statistics for this exercise :(\n
+        Click on card to configure statistics parameters
+        \nCurrent statistics shows best results in exercise for each training day
     </string>
-    <string name="empty_statistics_parameters_message">Параметры для отображения статистики по упражнению
-        не настроены!\nНажмите на карточку для настройки параметров.</string>
-    <string name="reset_parameters">Сбросить параметры</string>
-    <string name="new_training">Новая тренировка</string>
-    <string name="create_training_from_template">Выбрать из избранных</string>
-    <string name="create_new_training">Создать новую тренировку</string>
-    <string name="empty_templates_message">У вас пока еще нет избранных тренировок :(\nДля добавление
-        тренировки в избранные перейдите на экран редактирования любой тренировки и нажмите на кнопку-сердечко.</string>
-    <string name="favourite_trainings">Избранные тренировки</string>
-    <string name="deleteFavouritesInfoMessage">При удалении тренировки из списка избранных изменяется только
-        лишь статус всех тренировок с соответствующим названием.Сами тренировки при этом не удаляются.
-        \nСмахните карточку вправо для удаления.</string>
-    <string name="minutes">Минуты</string>
-    <string name="seconds">Секунды</string>
-    <string name="kilometers">Километры</string>
-    <string name="meteres">Метры</string>
-    <string name="settings">Настройки</string>
+    <string name="empty_statistics_parameters_message">Statistics parameters aren\'t configured!\n
+        Click on card to configure parameters.</string>
+    <string name="reset_parameters">Reset parameters</string>
+    <string name="new_training">New training</string>
+    <string name="create_training_from_template">Choose from favourites</string>
+    <string name="create_new_training">Create new training</string>
+    <string name="empty_templates_message">You haven\'t any favourite trainings yet :(\nTo add
+        training to favourites click on heart shaped button on the edit training screen.</string>
+    <string name="favourite_trainings">Favourite trainings</string>
+    <string name="deleteFavouritesInfoMessage">When you delete training from favourites list it will only
+         change favourite status of all trainings with this name. Trainings will not be deleted.\nSwipe right to delete.
+        </string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="kilometers">Kilometers</string>
+    <string name="meters">Meters</string>
+    <string name="settings">Settings</string>
+    <string name="app_language">App language:</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
 </resources>

@@ -15,8 +15,8 @@ android {
         targetSdk = Dependencies.ProjectConfig.targetSdk
         versionCode = Dependencies.ProjectConfig.versionCode
         versionName = Dependencies.ProjectConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner";
+        resourceConfigurations.addAll(listOf("en", "ru"))
     }
     kapt {
         correctErrorTypes = true
