@@ -21,9 +21,9 @@ class ExercisesAndMusclesScreenFragment : Fragment(R.layout.add_exercises_and_mu
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager){ tab, position ->
             if (position == 0) {
-                tab.text = "Упражнения"
+                tab.text = getString(R.string.exercises)
             } else {
-                tab.text = "Мышцы"
+                tab.text = getString(R.string.muscles)
             }
         }.attach()
 

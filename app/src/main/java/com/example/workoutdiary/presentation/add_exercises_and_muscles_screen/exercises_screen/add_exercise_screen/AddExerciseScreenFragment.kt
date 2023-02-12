@@ -13,12 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddExerciseScreenFragmentBinding
-import com.example.workoutdiary.presentation.add_edit_training_screen.AddEditTrainingScreenEvent
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.Duration
 
 @AndroidEntryPoint
 class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment) {
@@ -29,8 +27,8 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
         val binding = AddExerciseScreenFragmentBinding.bind(requireView())
         val exerciseMapper = ExerciseTypeMapper(resources.getStringArray(R.array.exercise_types))
         if (arguments?.getInt("exerciseId") != null) {
-            binding.addExerciseButton.text = "обновить упражнение"
-            binding.headerTextView.text = "Обновление упражнения"
+            binding.addExerciseButton.text = getString(R.string.update_exercise)
+            binding.headerTextView.text = getString(R.string.exercise_updating)
         }
         binding.apply {
             exerciseTypeChoiceView.setText(resources.getStringArray(R.array.exercise_types)[0])
@@ -106,8 +104,8 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                     }
                     AddExerciseScreenViewModel.UiEvent.UpdatePressed -> {
                         AlertDialog.Builder(requireContext())
-                            .setTitle("Обновление упражнения")
-                            .setMessage("Внимание! Данные об упражнении будут обновлены и во всех тренировках. Продолжить?")
+                            .setTitle(getString(R.string.exercise_updating))
+                            .setMessage(getString(R.string.training_update_attention_message))
                             .setPositiveButton("Да") { _, _ ->
                                 viewModel.onEvent(AddExercisesScreenEvent.UpdateConfirmed)
                             }.create()
@@ -116,14 +114,14 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                     AddExerciseScreenViewModel.UiEvent.ExerciseAlreadyExists -> {
                         Snackbar.make(
                             view,
-                            "Такое упражнение уже существует!",
+                            getString(R.string.exercise_exists),
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }
                     AddExerciseScreenViewModel.UiEvent.ValidationFailed -> {
                         Snackbar.make(
                             view,
-                            "Заполните все необходимые поля!",
+                            getString(R.string.enter_all_fields),
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }

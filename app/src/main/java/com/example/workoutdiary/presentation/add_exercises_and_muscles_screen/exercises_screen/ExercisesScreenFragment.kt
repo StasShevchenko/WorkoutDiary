@@ -63,7 +63,7 @@ ExercisesAdapter.ExerciseClick{
     override fun onDeleteClickListener() {
         val snackbar = Snackbar.make(
             rootView,
-            "Удерживайте для удаления",
+            getString(R.string.hold_to_delete),
             Snackbar.LENGTH_SHORT
         )
         snackbar.setAction("OK") {
@@ -75,10 +75,10 @@ ExercisesAdapter.ExerciseClick{
 
     override fun onLongDeleteClickListener(exercise: Exercise) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Удаление")
-            .setMessage("Внимание! Упражнение будет удалено из всех тренировок! Продолжить?")
+            .setTitle(getString(R.string.deletion))
+            .setMessage(getString(R.string.exercise_delete_attention_message))
             .setIcon(R.drawable.ic_delete)
-            .setPositiveButton("Да") { _, _ ->
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 viewModel.deleteExercise(exercise)
             }.create()
             .show()

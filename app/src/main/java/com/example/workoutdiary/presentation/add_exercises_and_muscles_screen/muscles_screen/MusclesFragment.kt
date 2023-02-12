@@ -57,7 +57,7 @@ class MusclesFragment : Fragment(R.layout.muscles_fragment), MusclesAdapter.Musc
     override fun onDeleteClick() {
         val snackbar = Snackbar.make(
             requireView(),
-            "Удерживайте для удаления",
+            getString(R.string.hold_to_delete),
             Snackbar.LENGTH_SHORT
         )
         snackbar.anchorView =
@@ -70,10 +70,10 @@ class MusclesFragment : Fragment(R.layout.muscles_fragment), MusclesAdapter.Musc
 
     override fun onDeleteLongClick(muscle: Muscle) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Удаление")
-            .setMessage("Внимание! Все упражнения данной группы будут удалены из всех тренировок! Продолжить?")
+            .setTitle(getString(R.string.deletion))
+            .setMessage(getString(R.string.muscle_group_exercises_deletion_attention_message))
             .setIcon(R.drawable.ic_delete)
-            .setPositiveButton("Да") { _, _ ->
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 viewModel.deleteMuscle(muscle)
             }.create()
             .show()

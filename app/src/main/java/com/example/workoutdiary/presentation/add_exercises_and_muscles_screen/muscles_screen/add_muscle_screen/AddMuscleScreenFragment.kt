@@ -1,6 +1,5 @@
 package com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.muscles_screen.add_muscle_screen
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
@@ -25,8 +24,8 @@ class AddMuscleScreenFragment : Fragment(R.layout.add_muscle_screen_fragment) {
         super.onViewCreated(view, savedInstanceState)
         val binding = AddMuscleScreenFragmentBinding.bind(view)
         if (arguments?.getInt("muscleId") != null) {
-            binding.headerTextView.text = "Обновление мышечной группы"
-            binding.addMuscleButton.text = "Обновить мышечную группу"
+            binding.headerTextView.text = getString(R.string.muscle_group_updating)
+            binding.addMuscleButton.text = getString(R.string.update_muscle_group)
         }
 
         binding.apply {
@@ -42,7 +41,7 @@ class AddMuscleScreenFragment : Fragment(R.layout.add_muscle_screen_fragment) {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.muscleNameError.collectLatest { error ->
                     if (error) {
-                        binding.muscleNameEditText.error = "Введите название мышечной группы"
+                        binding.muscleNameEditText.error = getString(R.string.enter_muscle_group_name)
                     }
                 }
             }
@@ -67,7 +66,7 @@ class AddMuscleScreenFragment : Fragment(R.layout.add_muscle_screen_fragment) {
                     AddMuscleScreenViewModel.UiEvent.MuscleAlreadyExists -> {
                         Snackbar.make(
                             requireView(),
-                            "Мышечная группа уже существует!",
+                            getString(R.string.muscle_group_exists),
                             Snackbar.LENGTH_SHORT
                         ).show()
                     }

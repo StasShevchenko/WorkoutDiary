@@ -64,4 +64,27 @@
     <string name="repeats_set_number">Set № %1$s: %2$s repeats</string>
     <string name="time_set_number">Set № %1$s: %2$s min %3$s sec</string>
     <string name="weight_reps_set_number">Set № %1$s: %2$s repeats %3$s kg</string>
+    <string name="update_exercise">Update exercise</string>
+    <string name="exercise_updating">Exercise updating</string>
+    <string name="training_update_attention_message">Attention! Exercise data will be updated in all trainings. Continue?</string>
+    <string name="exercise_exists">This exercise is already exists!</string>
+    <string name="enter_all_fields">Enter all necessary fields!</string>
+    <string name="hold_to_delete">Hold to delete</string>
+    <string name="deletion">Deletion</string>
+    <string name="exercise_delete_attention_message">Attention! Exercise will be deleted from all trainings! Continue?</string>
+    <string name="muscle_group_updating">Muscle group updating</string>
+    <string name="update_muscle_group">Update muscle group</string>
+    <string name="enter_muscle_group_name">Enter muscle group name</string>
+    <string name="muscle_group_exists">This muscle group is already exists!</string>
+    <string name="muscle_group_exercises_deletion_attention_message">Attention!
+        All exercises in this muscle group will be deleted from all trainings! Continue?</string>
+    <string name="weight_and_reps">Weight and repeats</string>
+    <string name="exercises">Exercises</string>
+    <string name="muscles">Muscles</string>
+    <string-array name="exercise_types">
+        <item>@string/reps</item>
+        <item>@string/weight_and_reps</item>
+        <item>@string/time</item>
+        <item>@string/distance</item>
+    </string-array>
 </resources>

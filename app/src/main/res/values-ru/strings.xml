@@ -66,4 +66,21 @@
     <string name="repeats_set_number">Сет № %1$s: %2$s повторений</string>
     <string name="time_set_number">Сет № %1$s: %2$s мин. %3$s сек.</string>
     <string name="weight_reps_set_number">Сет № %1$s: %2$s повторений %3$s кг</string>
+    <string name="update_exercise">Обновить упражнение</string>
+    <string name="exercise_updating">Обновление упражнения</string>
+    <string name="training_update_attention_message">Внимание! Данные об упражнении будут обновлены и во всех тренировках. Продолжить?</string>
+    <string name="exercise_exists">Такое упражнение уже существует!</string>
+    <string name="enter_all_fields">Заполните все необходимые поля!</string>
+    <string name="hold_to_delete">Удерживайте для удаления</string>
+    <string name="deletion">Удаление</string>
+    <string name="exercise_delete_attention_message">Внимание! Упражнение будет удалено из всех тренировок! Продолжить?</string>
+    <string name="muscle_group_updating">Обновление мышечной группы</string>
+    <string name="update_muscle_group">Обновить мышечную группу</string>
+    <string name="enter_muscle_group_name">Введите название мышечной группы</string>
+    <string name="muscle_group_exists">Мышечная группа уже существует!</string>
+    <string name="muscle_group_exercises_deletion_attention_message">Внимание!
+        Все упражнения данной группы будут удалены из всех тренировок! Продолжить?</string>
+    <string name="weight_and_reps">Вес и повторения</string>
+    <string name="exercises">Упражнения</string>
+    <string name="muscles">Мышцы</string>
 </resources>
