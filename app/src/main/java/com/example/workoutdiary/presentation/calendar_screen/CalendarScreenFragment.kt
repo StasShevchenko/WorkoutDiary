@@ -1,5 +1,6 @@
 package com.example.workoutdiary.presentation.calendar_screen
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -28,15 +29,18 @@ import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 
 @AndroidEntryPoint
 class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabButtonClick {
     private val viewModel: CalendarScreenViewModel by viewModels()
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -107,15 +111,16 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
             }
             trainingsCalendar.monthHeaderBinder =
                 object : MonthHeaderFooterBinder<MonthViewContainer> {
+                    @RequiresApi(Build.VERSION_CODES.N)
                     override fun bind(container: MonthViewContainer, data: CalendarMonth) {
+                        val formatter = DateTimeFormatter.ofPattern("MMM yyyy", resources.configuration.locales.get(0))
                         container.monthHeaderTextView.text =
-                            data.yearMonth.month.toString().lowercase()
-                                .replaceFirstChar { ch -> ch.uppercase() } + " " + data.yearMonth.year.toString()
+                            data.yearMonth.format(formatter)
                         container.titlesContainer.children.map { it as TextView }
                             .forEachIndexed { index, textView ->
                                 val dayOfWeek = daysOfWeek[index]
                                 val title =
-                                    dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.getDefault())
+                                    dayOfWeek.getDisplayName(TextStyle.NARROW, resources.configuration.locales.get(0))
                                 textView.text = title
                             }
                     }
@@ -149,11 +154,11 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
                         if (currentTraining != null && currentTrainingDetails.isNotEmpty()) {
                             val trainingNameTextView = TextView(requireContext())
                             trainingNameTextView.text =
-                                "Имя тренировки: " + currentTraining.trainingName
+                                getString(R.string.training_name) +": " + currentTraining.trainingName
                             trainingNameTextView.gravity = Gravity.START
                             trainingNameTextView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Title)
                             val exercisesHeaderTextView = TextView(requireContext())
-                            exercisesHeaderTextView.text = "Упражнения:"
+                            exercisesHeaderTextView.text = getString(R.string.exercises) + ":"
                             exercisesHeaderTextView.gravity = Gravity.START
                             exercisesHeaderTextView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Title)
                             binding.trainingDetailsContainer.addView(trainingNameTextView)
@@ -181,7 +186,7 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
                             }
                         } else {
                             val emptyMessageTextView = TextView(requireContext())
-                            emptyMessageTextView.text = "Тренировки нет"
+                            emptyMessageTextView.text = getString(R.string.no_training)
                             emptyMessageTextView.gravity = Gravity.START
                             emptyMessageTextView.setTextAppearance(androidx.appcompat.R.style.TextAppearance_AppCompat_Title)
                             binding.trainingDetailsContainer.addView(emptyMessageTextView)

@@ -91,25 +91,25 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                 launch {
                     statisticsViewModel.totalTrainingsCount.collectLatest { totalTrainingsCount ->
                         binding.totalTrainingsCountTextView.text =
-                            "Всего тренировок: ${totalTrainingsCount}"
+                            getString(R.string.total_trainings, totalTrainingsCount.toString())
                     }
                 }
                 launch {
                     statisticsViewModel.totalSetsCount.collectLatest { totalSetsCount ->
                         binding.totalSetsCountTextView.text =
-                            "Всего выполнено подходов: ${totalSetsCount}"
+                            getString(R.string.total_sets, totalSetsCount.toString())
                     }
                 }
                 launch {
                     statisticsViewModel.totalRepsCount.collectLatest { totalRepsCount ->
                         binding.totalRepsCountTextView.text =
-                            "Всего повторений в упражнениях: ${totalRepsCount}"
+                            getString(R.string.total_reps, totalRepsCount.toString())
                     }
                 }
                 launch {
                     statisticsViewModel.totalWeightCount.collectLatest { totalWeightCount ->
                         binding.totalWeightCountTextView.text =
-                            "Всего поднято: ${totalWeightCount} кг веса"
+                            getString(R.string.total_weight, totalWeightCount.toString())
                     }
                 }
                 launch {
@@ -131,11 +131,11 @@ class HomeScreenFragment : Fragment(R.layout.home_screen_fragment), FabButtonCli
                         )
                         (binding.chart.startAxis as VerticalAxis).title =
                             when (parameters?.statisticsParameter) {
-                                "repeats" -> "Повторения"
-                                "weight" -> "Вес (кг)"
-                                "time" -> "Время"
-                                "distance" -> "Дистанция"
-                                else -> "Повторения"
+                                "repeats" -> getString(R.string.reps)
+                                "weight" -> getString(R.string.weight)
+                                "time" -> getString(R.string.time)
+                                "distance" -> getString(R.string.distance)
+                                else -> getString(R.string.reps)
                             }
                         if (parameters?.statisticsParameter == "distance") {
                             (binding.chart.startAxis as VerticalAxis).valueFormatter =

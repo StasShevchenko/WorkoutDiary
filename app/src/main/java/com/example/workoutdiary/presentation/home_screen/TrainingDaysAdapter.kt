@@ -2,7 +2,6 @@ package com.example.workoutdiary.presentation.home_screen
 
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.ConfigurationCompat
@@ -60,7 +59,7 @@ class TrainingDaysAdapter(private val clickListener: OnTrainingClickListener) : 
                     if (trainingDay.training.trainingName.isNotBlank()) {
                         trainingInfoTextView.text = trainingDay.training.trainingName
                     } else {
-                        trainingInfoTextView.text = "Без названия"
+                        trainingInfoTextView.text = binding.root.context.getString(R.string.without_name)
                     }
                 }
             } else {

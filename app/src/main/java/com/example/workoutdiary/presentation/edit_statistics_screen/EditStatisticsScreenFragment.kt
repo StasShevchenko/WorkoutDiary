@@ -96,7 +96,7 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                     EditStatisticsScreenViewModel.UiEvent.ValidationFailed -> {
                         val snackbar = Snackbar.make(
                             view,
-                            "Выберите упражнение!",
+                            getString(R.string.choose_an_exercise),
                             Snackbar.LENGTH_SHORT
                         )
                         snackbar.setAction("OK") {
@@ -104,7 +104,6 @@ class EditStatisticsScreenFragment : Fragment(R.layout.edit_statistics_screen) {
                         }
                         snackbar.show()
                     }
-                    else -> {}
                 }
             }
         }

@@ -81,6 +81,13 @@
     <string name="weight_and_reps">Weight and repeats</string>
     <string name="exercises">Exercises</string>
     <string name="muscles">Muscles</string>
+    <string name="choose_an_exercise">Choose an exercise!</string>
+    <string name="last_training">Last training: %1$s</string>
+    <string name="without_name">Without name</string>
+    <string name="total_trainings">Total trainings: %1$s</string>
+    <string name="total_sets">Total sets: %1$s</string>
+    <string name="total_reps">Total reps: %1$s</string>
+    <string name="total_weight">Total weight: %1$s</string>
     <string-array name="exercise_types">
         <item>@string/reps</item>
         <item>@string/weight_and_reps</item>
