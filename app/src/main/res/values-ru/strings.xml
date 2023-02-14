@@ -90,4 +90,8 @@
     <string name="total_sets">Всего выполнено подходов: %1$s</string>
     <string name="total_reps">Всего повторений: %1$s</string>
     <string name="total_weight">Всего поднятно: %1$s кг веса</string>
+    <string name="violet">Фиолетовая</string>
+    <string name="green">Зелёная</string>
+    <string name="red">Красная</string>
+    <string name="app_theme">Тема приложения:</string>
 </resources>

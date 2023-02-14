@@ -88,6 +88,10 @@
     <string name="total_sets">Total sets: %1$s</string>
     <string name="total_reps">Total reps: %1$s</string>
     <string name="total_weight">Total weight: %1$s</string>
+    <string name="violet">Violet</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="app_theme">App theme:</string>
     <string-array name="exercise_types">
         <item>@string/reps</item>
         <item>@string/weight_and_reps</item>

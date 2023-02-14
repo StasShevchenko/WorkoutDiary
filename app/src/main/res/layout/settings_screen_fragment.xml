@@ -35,4 +35,32 @@
             android:layout_height="wrap_content"/>
     </RadioGroup>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/app_theme" />
+
+    <RadioGroup
+        android:id="@+id/themeRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/violetThemeRadioButton"
+            android:layout_width="match_parent"
+            android:text="@string/violet"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/greenThemeRadioButton"
+            android:layout_width="match_parent"
+            android:text="@string/green"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/redThemeRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/red"/>
+    </RadioGroup>
+
 </LinearLayout>

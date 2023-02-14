@@ -3,11 +3,23 @@
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <!-- Colors for violet theme -->
     <color name="sky_blue_main">#717BF1</color>
     <color name="sky_blue_main_light">#F4F4FB</color>
     <color name="sky_blue_secondary">#41B1E9</color>
+
+    <!-- Colors for green theme -->
+    <color name="green_main">#4CAF50</color>
+    <color name="green_main_light">#F4F4FB</color>
+    <color name="green_secondary">#80e27e</color>
+
+    <!-- Colors for red theme -->
+    <color name="red_main">#EF5350</color>
+    <color name="red_main_light">#F4F4FB</color>
+    <color name="red_secondary">#FF867C</color>
 </resources>
