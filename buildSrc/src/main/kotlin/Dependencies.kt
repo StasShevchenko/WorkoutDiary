@@ -96,6 +96,11 @@ object Dependencies {
         const val chartsViews = "com.patrykandpatrick.vico:views:$chartsVersion"
     }
 
+    object Datastore{
+        private const val datastoreVersion = "1.0.0"
+        const val datastore = "androidx.datastore:datastore-preferences:$datastoreVersion"
+    }
+
 }
 
 

@@ -49,7 +49,7 @@ android {
 
 dependencies {
 
-    constraints{
+    constraints {
         implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1") {
             because("transitive dependencies conflict between two libraries")
         }
@@ -84,6 +84,8 @@ dependencies {
     implementation(Dependencies.Calendar.calendar)
 
     implementation(Dependencies.Charts.chartsViews)
+
+    implementation(Dependencies.Datastore.datastore)
 
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
