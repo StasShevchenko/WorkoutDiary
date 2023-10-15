@@ -1,8 +1,8 @@
 package com.example.workoutdiary.presentation.home_screen
 
 import com.example.workoutdiary.R
+import com.patrykandpatrick.vico.core.chart.dimensions.HorizontalDimensions
 import com.patrykandpatrick.vico.core.chart.insets.Insets
-import com.patrykandpatrick.vico.core.chart.segment.SegmentProperties
 import com.patrykandpatrick.vico.core.component.OverlayingComponent
 import com.patrykandpatrick.vico.core.component.marker.MarkerComponent
 import com.patrykandpatrick.vico.core.component.shape.DashedShape
@@ -59,7 +59,7 @@ fun getMarker() : MarkerComponent{
         override fun getInsets(
             context: MeasureContext,
             outInsets: Insets,
-            segmentProperties: SegmentProperties
+            horizontalDimensions: HorizontalDimensions
         ) = with(context) {
             outInsets.top =
                 label.getHeight(this) + labelBackgroundShape.tickSizeDp.pixels +

@@ -1,10 +1,10 @@
 object Dependencies {
 
     object AndroidX{
-        private const val coreKtxVersion = "1.7.0"
+        private const val coreKtxVersion = "1.12.0"
         const val coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
 
-        private const val appCompatVersion = "1.6.0"
+        private const val appCompatVersion = "1.6.1"
         const val appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
 
         private const val constraintLayoutVersion = "2.1.3"
@@ -37,7 +37,7 @@ object Dependencies {
     }
 
     object DaggerHilt{
-        private const val hiltVersion = "2.43.2"
+        private const val hiltVersion = "2.48"
         const val hiltAndroid = "com.google.dagger:hilt-android:$hiltVersion"
         const val hiltCompiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
@@ -45,7 +45,7 @@ object Dependencies {
     }
 
     object Navigation{
-        private const val navigationVersion = "2.5.3"
+        private const val navigationVersion = "2.7.2"
 
         const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
         const val navigationUi = "androidx.navigation:navigation-ui-ktx:$navigationVersion"
@@ -79,7 +79,7 @@ object Dependencies {
     object ProjectConfig{
         const val appId = "com.example.workoutdiary"
         const val compileSdk = 33
-        const val minSdk = 21
+        const val minSdk = 24
         const val targetSdk = 32
         const val versionCode = 1
         const val versionName = "1.0"
@@ -92,7 +92,7 @@ object Dependencies {
     }
 
     object Charts{
-        private const val chartsVersion = "1.6.3"
+        private const val chartsVersion = "1.12.0"
         const val chartsViews = "com.patrykandpatrick.vico:views:$chartsVersion"
     }
 

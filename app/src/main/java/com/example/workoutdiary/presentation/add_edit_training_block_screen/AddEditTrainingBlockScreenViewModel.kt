@@ -1,5 +1,6 @@
 package com.example.workoutdiary.presentation.add_edit_training_block_screen
 
+import android.util.Log
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -17,7 +18,11 @@ import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.GetT
 import com.example.workoutdiary.domain.use_case.training_detailse_use_cases.InsertTrainingBlock
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -64,7 +69,7 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
 
 
     init {
-        setOrder = state.get("setOrder")!!
+        setOrder = state["setOrder"]!!
         if (state.get<Int>("trainingBlockId") != -1) {
             currentTrainingBlockId = state.get<Int>("trainingBlockId")!!
             viewModelScope.launch {
@@ -76,10 +81,12 @@ class AddEditTrainingBlockScreenViewModel @Inject constructor(
                     getMuscles().collect { muscles ->
                         isDataLoadingFinished = true
                         _muscles.value = muscles
-                        _validateSets.value =
-                            (trainingBlockDetails.values.toList()[0] as MutableList<ParameterizedSet>).map { parameterizedSet ->
-                                ValidateSet(parameterizedSet)
-                            }
+                        if (trainingBlockDetails.values.toList().isNotEmpty()) {
+                            _validateSets.value =
+                                (trainingBlockDetails.values.toList()[0] as MutableList<ParameterizedSet>).map { parameterizedSet ->
+                                    ValidateSet(parameterizedSet)
+                                }
+                        }
                     }
                 }
             }

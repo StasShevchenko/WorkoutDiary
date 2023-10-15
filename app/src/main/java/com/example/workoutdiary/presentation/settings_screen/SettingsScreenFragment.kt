@@ -1,9 +1,9 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.workoutdiary.presentation.settings_screen
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
@@ -23,10 +23,10 @@ class SettingsScreenFragment : Fragment(R.layout.settings_screen_fragment) {
 
     @Inject
     lateinit var dataStore: PreferencesManager
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = SettingsScreenFragmentBinding.bind(view)
+
         binding.apply {
             if (resources.configuration.locales.get(0).language == "en") {
                 englishLanguageRadioButton.isChecked = true

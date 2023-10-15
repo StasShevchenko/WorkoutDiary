@@ -56,7 +56,7 @@
     <string name="app_language">Язык приложения:</string>
     <string name="russian">Русский</string>
     <string name="english">Английский</string>
-    <string name="set_number">Set № %1$s</string>
+    <string name="set_number">Сет № %1$s</string>
     <string name="enter_data">Введите данные!</string>
     <string name="sure_to_delete_training_message">Вы действительно хотите удалить тренировку?</string>
     <string name="yes">Да</string>

@@ -1,31 +1,33 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
-    compileSdk = Dependencies.ProjectConfig.compileSdk
 
+    compileSdk = 34
     defaultConfig {
         applicationId = Dependencies.ProjectConfig.appId
         minSdk = Dependencies.ProjectConfig.minSdk
-        targetSdk = Dependencies.ProjectConfig.targetSdk
+        targetSdk = 34
         versionCode = Dependencies.ProjectConfig.versionCode
         versionName = Dependencies.ProjectConfig.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner";
         resourceConfigurations.addAll(listOf("en", "ru"))
-    }
-    kapt {
-        correctErrorTypes = true
+        multiDexEnabled = true
     }
     buildFeatures {
         viewBinding = true
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -35,14 +37,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
 
         isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
+    namespace = "com.example.workoutdiary"
 
 }
 
@@ -67,13 +70,13 @@ dependencies {
 
     implementation(Dependencies.LifeCycle.lifecycle)
 
-    kapt(Dependencies.Room.roomCompiler)
+    ksp(Dependencies.Room.roomCompiler)
     implementation(Dependencies.Room.roomKtx)
     implementation(Dependencies.Room.roomRuntime)
 
     coreLibraryDesugaring(Dependencies.CoreLibraryDesugaring.desugarJdkLibs)
 
-    kapt(Dependencies.DaggerHilt.hiltCompiler)
+    ksp(Dependencies.DaggerHilt.hiltCompiler)
     implementation(Dependencies.DaggerHilt.hiltAndroid)
 
     implementation(Dependencies.Coroutines.coroutinesCore)

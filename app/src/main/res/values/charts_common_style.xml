@@ -50,7 +50,6 @@
     <style name="RepsChartBottomAxisStyle" parent="RepsChartAxisStyle">
         <item name="titleStyle">@style/RepsChartBottomAxisTitleStyle</item>
         <item name="title">@string/date_axis</item>
-        <item name="horizontalAxisTickPosition">center</item>
     </style>
 
     <style name="RepsChartLineChartStyle">
