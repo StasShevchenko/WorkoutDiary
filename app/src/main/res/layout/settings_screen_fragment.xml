@@ -16,29 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/app_language" />
-
-    <RadioGroup
-        android:id="@+id/languageRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/russianLanguageRadioButton"
-            android:layout_width="match_parent"
-            android:text="@string/russian"
-            android:layout_height="wrap_content"/>
-        <RadioButton
-            android:id="@+id/englishLanguageRadioButton"
-            android:text="@string/english"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:text="@string/app_theme" />
 
     <RadioGroup

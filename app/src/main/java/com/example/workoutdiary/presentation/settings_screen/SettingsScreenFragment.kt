@@ -4,8 +4,6 @@ package com.example.workoutdiary.presentation.settings_screen
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.workoutdiary.R
@@ -28,25 +26,6 @@ class SettingsScreenFragment : Fragment(R.layout.settings_screen_fragment) {
         val binding = SettingsScreenFragmentBinding.bind(view)
 
         binding.apply {
-            if (resources.configuration.locales.get(0).language == "en") {
-                englishLanguageRadioButton.isChecked = true
-            } else{
-                russianLanguageRadioButton.isChecked = true
-            }
-            englishLanguageRadioButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    AppCompatDelegate.setApplicationLocales(
-                        LocaleListCompat.forLanguageTags("en")
-                    )
-                }
-            }
-            russianLanguageRadioButton.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    AppCompatDelegate.setApplicationLocales(
-                        LocaleListCompat.forLanguageTags("ru")
-                    )
-                }
-            }
             violetThemeRadioButton.setOnClickListener {
                 binding.themeRadioGroup.clearCheck()
                 binding.violetThemeRadioButton.isChecked = true

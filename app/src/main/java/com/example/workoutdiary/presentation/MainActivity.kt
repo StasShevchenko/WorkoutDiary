@@ -12,40 +12,46 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.workoutdiary.R
+import com.example.workoutdiary.data.data_source.WorkoutDatabase
+import com.example.workoutdiary.data.preferences.AppTheme
+import com.example.workoutdiary.data.preferences.PreferencesManager
 import com.example.workoutdiary.presentation.utils.FabButtonClick
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationBarView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var fabButtonClick: FabButtonClick? = null
-//    @Inject
-//    lateinit var db: WorkoutDatabase
-//    @Inject
-//    lateinit var settings: PreferencesManager
+    @Inject
+    lateinit var db: WorkoutDatabase
+    @Inject
+    lateinit var settings: PreferencesManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //TODO: resolve this hack with empty trainings deleting in the future
-//        runBlocking {
-//            db.trainingDao.deleteEmptyTrainings()
-//            val preferences = settings.preferencesFlow.first()
-//            when (preferences.theme) {
-//                AppTheme.VIOLET -> {
-//                    setTheme(R.style.VioletTheme)
-//                }
-//                AppTheme.GREEN -> {
-//                    setTheme(R.style.GreenTheme)
-//                }
-//                AppTheme.RED -> {
-//                    setTheme(R.style.RedTheme)
-//                }
-//            }
-//        }
+        runBlocking {
+            db.trainingDao.deleteEmptyTrainings()
+            val preferences = settings.preferencesFlow.first()
+            when (preferences.theme) {
+                AppTheme.VIOLET -> {
+                    setTheme(R.style.VioletTheme)
+                }
+                AppTheme.GREEN -> {
+                    setTheme(R.style.GreenTheme)
+                }
+                AppTheme.RED -> {
+                    setTheme(R.style.RedTheme)
+                }
+            }
+        }
         setContentView(R.layout.activity_main)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

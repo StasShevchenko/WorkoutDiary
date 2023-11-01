@@ -56,6 +56,4 @@ interface TrainingDetailsDao {
             "USING (trainingBlockId) WHERE trainingBlockId = :trainingBlockId")
     fun getTrainingBlockWithDetailsByTrainingBlockId(trainingBlockId: Int): Flow<Map<ExerciseTrainingBlock, List<ParameterizedSet>>>
 
-
-
 }
