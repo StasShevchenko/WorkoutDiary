@@ -2,14 +2,12 @@ package com.example.workoutdiary.presentation.calendar_screen
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,7 +27,6 @@ import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -39,9 +36,8 @@ import java.util.*
 
 @AndroidEntryPoint
 class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabButtonClick {
-    private val viewModel: CalendarScreenViewModel by viewModels()
+    val viewModel: CalendarScreenViewModel by viewModels()
     @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = CalendarScreenFragmentBinding.bind(view)
@@ -111,7 +107,6 @@ class CalendarScreenFragment : Fragment(R.layout.calendar_screen_fragment), FabB
             }
             trainingsCalendar.monthHeaderBinder =
                 object : MonthHeaderFooterBinder<MonthViewContainer> {
-                    @RequiresApi(Build.VERSION_CODES.N)
                     override fun bind(container: MonthViewContainer, data: CalendarMonth) {
                         val formatter = DateTimeFormatter.ofPattern("MMM yyyy", resources.configuration.locales.get(0))
                         container.monthHeaderTextView.text =

@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TODO: resolve this hack with empty trainings deleting in the future
         runBlocking {
             db.trainingDao.deleteEmptyTrainings()
             val preferences = settings.preferencesFlow.first()

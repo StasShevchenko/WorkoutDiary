@@ -47,6 +47,8 @@
         <TextView
             android:id="@+id/description_text_view"
             android:layout_width="match_parent"
+            android:linksClickable="true"
+            android:autoLink="web|email"
             tools:text = "Обычные отжимания от пола"
             android:layout_height="wrap_content"/>
     </LinearLayout>
