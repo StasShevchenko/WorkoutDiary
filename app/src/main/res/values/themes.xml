@@ -48,8 +48,9 @@
         <item name="colorOnSurface">@color/black</item>
     </style>
 
-
-
-
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">54dp</item>
+    </style>
 
 </resources>
