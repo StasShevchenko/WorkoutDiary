@@ -102,7 +102,7 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                                     .error(R.drawable.ic_broken_image)
                                     .into(binding.imagePicker, object : Callback{
                                         override fun onSuccess() {
-                                            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_INSIDE
+                                            binding.imagePicker.scaleType = ImageView.ScaleType.FIT_CENTER
                                         }
                                         override fun onError(e: Exception?) {
                                         }

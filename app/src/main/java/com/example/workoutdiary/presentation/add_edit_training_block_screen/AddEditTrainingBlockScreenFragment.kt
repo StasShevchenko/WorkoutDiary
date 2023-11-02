@@ -14,6 +14,7 @@ import com.example.workoutdiary.R
 import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.databinding.AddEditTrainingBlockScreenBinding
+import com.example.workoutdiary.presentation.utils.resolveColorAttr
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -37,7 +38,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             exerciseChoiceView.doOnTextChanged { text, _, _, _ ->
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.ExerciseEntered(text.toString()))
             }
-            muscleChoiceView.doOnTextChanged{text, _, _, _ ->
+            muscleChoiceView.doOnTextChanged { text, _, _, _ ->
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.MuscleEntered(text.toString()))
             }
             deleteTrainingBlockButton.setOnClickListener {
@@ -49,21 +50,31 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
             numberPickerIncreaseButton.setOnClickListener {
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.SetNumberIncreased)
             }
-            saveTrainingBlockButton.setOnClickListener{
+            saveTrainingBlockButton.setOnClickListener {
                 viewModel.onEvent(AddEditTrainingBlockScreenEvent.SaveChosen)
             }
             setsListView.apply {
                 setOnRepsEntered { index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.RepsEntered(index, value))
                 }
-                setOnWeightEntered{ index, value ->
+                setOnWeightEntered { index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.WeightEntered(index, value))
                 }
-                setOnTimeEntered{ index, value ->
+                setOnTimeEntered { index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.TimeEntered(index, value))
                 }
                 setOnDistanceEntered { index, value ->
                     viewModel.onEvent(AddEditTrainingBlockScreenEvent.DistanceEntered(index, value))
+                }
+            }
+
+            exerciseDetailsImageButton.setOnClickListener {
+                if (viewModel.currentExercise.value != null) {
+                    val action =
+                        AddEditTrainingBlockScreenFragmentDirections.actionAddEditTrainingBlockScreenFragmentToExerciseDetailsFragment(
+                            exerciseId = viewModel.currentExercise.value!!.exerciseId
+                        )
+                    findNavController().navigate(action)
                 }
             }
 
@@ -77,7 +88,16 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                                 binding.scrollView.visibility = View.VISIBLE
                                 binding.progressBar.visibility = View.INVISIBLE
                             }
+                            if (exercise == null) binding.exerciseDetailsImageButton.setColorFilter(
+                                R.color.gray_100
+                            )
                             exercise?.let {
+                                binding.exerciseDetailsImageButton.setColorFilter(
+                                    resolveColorAttr(
+                                        binding.root.context,
+                                        com.google.android.material.R.attr.colorPrimary
+                                    )
+                                )
                                 binding.setsListView.submitSetsList(
                                     parametersList,
                                     exercise.exerciseType
@@ -109,20 +129,25 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                             )
                         binding.muscleChoiceView.setAdapter(muscleAdapter)
                         binding.muscleChoiceView.setOnItemClickListener { parent, _, i, _ ->
-                            viewModel.onEvent(AddEditTrainingBlockScreenEvent.MuscleSelected(parent.getItemAtPosition(i) as Muscle))
+                            viewModel.onEvent(
+                                AddEditTrainingBlockScreenEvent.MuscleSelected(
+                                    parent.getItemAtPosition(
+                                        i
+                                    ) as Muscle
+                                )
+                            )
                         }
                     }
                 }
             }
 
-            viewLifecycleOwner.lifecycleScope.launch{
-                viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED){
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                     viewModel.currentMuscle.collectLatest { currentMuscle ->
-                        if(currentMuscle == null){
+                        if (currentMuscle == null) {
                             binding.exerciseChoiceView.isEnabled = false
                             binding.exerciseChoiceView.setText("")
-                        }
-                        else{
+                        } else {
                             binding.exerciseChoiceView.isEnabled = true
                         }
                     }
@@ -134,6 +159,7 @@ class AddEditTrainingBlockScreenFragment : Fragment(R.layout.add_edit_training_b
                         is AddEditTrainingBlockScreenViewModel.UiEvent.SavePressed -> {
                             findNavController().popBackStack()
                         }
+
                         AddEditTrainingBlockScreenViewModel.UiEvent.DeletePressed -> {
                             findNavController().popBackStack()
                         }

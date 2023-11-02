@@ -75,6 +75,9 @@
             android:name="exerciseId"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_addEditTrainingBlockScreenFragment_to_exerciseDetailsFragment"
+            app:destination="@id/exerciseDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/exercisesAndMusclesScreenFragment"
@@ -125,4 +128,12 @@
         android:id="@+id/settingsScreenFragment"
         android:name="com.example.workoutdiary.presentation.settings_screen.SettingsScreenFragment"
         android:label="SettingScreenFragment" />
+    <fragment
+        android:id="@+id/exerciseDetailsFragment"
+        android:name="com.example.workoutdiary.presentation.exercise_details_screen.ExerciseDetailsFragment"
+        android:label="ExerciseDetailsFragment" >
+        <argument
+            android:name="exerciseId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
