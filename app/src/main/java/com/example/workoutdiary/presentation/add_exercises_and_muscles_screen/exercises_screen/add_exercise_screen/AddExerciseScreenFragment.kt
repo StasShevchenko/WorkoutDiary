@@ -35,7 +35,7 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
         if (uri != null) {
             val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
             requireContext().contentResolver.takePersistableUriPermission(uri, flag)
-            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_CROP
+            binding.imagePicker.scaleType = ImageView.ScaleType.FIT_CENTER
             val encodedUri = uri.toString()
             viewModel.onEvent(AddExercisesScreenEvent.ImagePathUpdated(encodedUri))
             val decoded = Uri.parse(encodedUri)
@@ -102,7 +102,7 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                                     .error(R.drawable.ic_broken_image)
                                     .into(binding.imagePicker, object : Callback{
                                         override fun onSuccess() {
-                                            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_CROP
+                                            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_INSIDE
                                         }
                                         override fun onError(e: Exception?) {
                                         }
