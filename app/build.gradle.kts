@@ -93,4 +93,6 @@ dependencies {
     testImplementation(Dependencies.Testing.junit4)
     androidTestImplementation(Dependencies.Testing.junitAndroidExt)
     androidTestImplementation(Dependencies.Testing.espresso)
+
+    implementation(Dependencies.Picasso.picasso)
 }

@@ -1,9 +1,15 @@
 package com.example.workoutdiary.presentation.add_exercises_and_muscles_screen.exercises_screen.add_exercise_screen
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +20,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.workoutdiary.R
 import com.example.workoutdiary.databinding.AddExerciseScreenFragmentBinding
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,10 +29,27 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment) {
     private val viewModel: AddExerciseScreenViewModel by viewModels()
+    private lateinit var binding: AddExerciseScreenFragmentBinding
 
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            requireContext().contentResolver.takePersistableUriPermission(uri, flag)
+            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_CROP
+            val encodedUri = uri.toString()
+            viewModel.onEvent(AddExercisesScreenEvent.ImagePathUpdated(encodedUri))
+            val decoded = Uri.parse(encodedUri)
+            Picasso.get()
+                .load(decoded)
+                .error(R.drawable.ic_broken_image)
+                .into(binding.imagePicker)
+        } else {
+            Log.d("PhotoPicker", "No media selected")
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = AddExerciseScreenFragmentBinding.bind(requireView())
+        binding = AddExerciseScreenFragmentBinding.bind(requireView())
         val exerciseMapper = ExerciseTypeMapper(resources.getStringArray(R.array.exercise_types))
         if (arguments?.getInt("exerciseId") != null) {
             binding.addExerciseButton.text = getString(R.string.update_exercise)
@@ -56,6 +81,11 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
             addExerciseButton.setOnClickListener {
                 viewModel.onEvent(AddExercisesScreenEvent.ExerciseAdded)
             }
+            imagePicker.setOnClickListener{
+
+                // Launch the photo picker and let the user choose only images.
+                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -66,6 +96,18 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                             exerciseNameEditText.setText(exercise.exerciseName)
                             exerciseDescriptionEditText.setText(exercise.exerciseDescription)
                             exerciseTypeChoiceView.setText(exerciseMapper.getNameByValue(exercise.exerciseType))
+                            exercise.imagePath?.let{
+                                Picasso.get()
+                                    .load(exercise.imagePath)
+                                    .error(R.drawable.ic_broken_image)
+                                    .into(binding.imagePicker, object : Callback{
+                                        override fun onSuccess() {
+                                            binding.imagePicker.scaleType = ImageView.ScaleType.CENTER_CROP
+                                        }
+                                        override fun onError(e: Exception?) {
+                                        }
+                                    })
+                            }
                             val exerciseTypeAdapter = ArrayAdapter(
                                 requireContext(),
                                 android.R.layout.simple_list_item_1,
@@ -128,7 +170,8 @@ class AddExerciseScreenFragment : Fragment(R.layout.add_exercise_screen_fragment
                 }
             }
         }
-    }
 
+
+    }
 
 }

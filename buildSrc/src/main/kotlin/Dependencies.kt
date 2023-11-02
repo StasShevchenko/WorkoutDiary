@@ -85,6 +85,11 @@ object Dependencies {
         const val versionName = "1.0"
     }
 
+    object Picasso{
+        private const val picassoVersion = "2.8"
+        const val picasso = "com.squareup.picasso:picasso:$picassoVersion"
+    }
+
 
     object Calendar{
         private const val calendarVersion = "2.0.4"

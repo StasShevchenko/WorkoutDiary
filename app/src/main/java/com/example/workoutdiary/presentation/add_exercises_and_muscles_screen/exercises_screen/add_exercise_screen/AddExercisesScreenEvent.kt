@@ -8,6 +8,8 @@ sealed class AddExercisesScreenEvent{
     data class MuscleSelected(val muscle: Muscle) : AddExercisesScreenEvent()
     data class ExerciseDescriptionEntered(val description: String) : AddExercisesScreenEvent()
     data class ExerciseTypeSelected(val exerciseType: ExerciseType) : AddExercisesScreenEvent()
+
+    data class ImagePathUpdated(val imagePath: String?) : AddExercisesScreenEvent()
     object ExerciseAdded : AddExercisesScreenEvent()
     object UpdateConfirmed : AddExercisesScreenEvent()
 }

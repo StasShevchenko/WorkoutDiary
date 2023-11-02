@@ -7,12 +7,16 @@ import com.example.workoutdiary.data.model.entities.Exercise
 import com.example.workoutdiary.data.model.entities.Muscle
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.AddExercise
 import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExercise
+import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExerciseByName
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscle
 import com.example.workoutdiary.domain.use_case.muscles_use_cases.GetMuscles
-import com.example.workoutdiary.domain.use_case.exercise_use_cases.GetExerciseByName
 import com.example.workoutdiary.utils.ExerciseType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +28,7 @@ class AddExerciseScreenViewModel @Inject constructor(
     private val getMuscles: GetMuscles,
     private val getExerciseByName: GetExerciseByName,
     savedStateHandle: SavedStateHandle,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _currentExercise: MutableStateFlow<Exercise?> = MutableStateFlow(null)
     val currentExercise: StateFlow<Exercise?> = _currentExercise
@@ -33,11 +37,13 @@ class AddExerciseScreenViewModel @Inject constructor(
     val muscles: StateFlow<List<Muscle>> = _muscles
 
     var currentMuscle: Muscle? = null
-    private set
+        private set
 
     private var exerciseDescription: String? = null
 
     private var exerciseName: String? = null
+
+    private var imagePath: String? = null
 
     private var exerciseType: ExerciseType = ExerciseType.REPS
 
@@ -51,6 +57,7 @@ class AddExerciseScreenViewModel @Inject constructor(
                 exerciseName = exercise.exerciseName
                 exerciseType = exercise.exerciseType
                 exerciseDescription = exercise.exerciseDescription
+                imagePath = exercise.imagePath
                 currentMuscle = getMuscle(exercise.muscleId)
                 _currentExercise.value = exercise
             }
@@ -71,8 +78,7 @@ class AddExerciseScreenViewModel @Inject constructor(
                         viewModelScope.launch {
                             _eventFlow.emit(UiEvent.ValidationFailed)
                         }
-                    }
-                    else{
+                    } else {
                         viewModelScope.launch {
                             val checkExercise = getExerciseByName(exerciseName!!)
                             if (checkExercise == null) {
@@ -85,38 +91,42 @@ class AddExerciseScreenViewModel @Inject constructor(
                                 )
                                 addExercise(exercise)
                                 _eventFlow.emit(UiEvent.AddPressed)
-                            }
-                            else{
-                               _eventFlow.emit(UiEvent.ExerciseAlreadyExists)
+                            } else {
+                                _eventFlow.emit(UiEvent.ExerciseAlreadyExists)
                             }
                         }
                     }
-                } else{
+                } else {
                     if (exerciseName.isNullOrEmpty()) {
                         viewModelScope.launch {
                             _eventFlow.emit(UiEvent.ValidationFailed)
                         }
-                    } else{
+                    } else {
                         viewModelScope.launch {
                             _eventFlow.emit(UiEvent.UpdatePressed)
                         }
                     }
                 }
             }
+
             is AddExercisesScreenEvent.ExerciseDescriptionEntered -> {
                 exerciseDescription = event.description.ifEmpty {
                     null
                 }
             }
+
             is AddExercisesScreenEvent.ExerciseNameEntered -> {
                 exerciseName = event.exerciseName
             }
+
             is AddExercisesScreenEvent.ExerciseTypeSelected -> {
                 exerciseType = event.exerciseType
             }
+
             is AddExercisesScreenEvent.MuscleSelected -> {
                 currentMuscle = event.muscle
             }
+
             AddExercisesScreenEvent.UpdateConfirmed -> {
                 viewModelScope.launch {
                     val exercise = Exercise(
@@ -124,16 +134,21 @@ class AddExerciseScreenViewModel @Inject constructor(
                         exerciseName = exerciseName!!,
                         exerciseType = exerciseType,
                         exerciseDescription = exerciseDescription,
+                        imagePath = imagePath,
                         muscleId = currentMuscle!!.muscleId
                     )
                     addExercise(exercise)
                     _eventFlow.emit(UiEvent.AddPressed)
                 }
             }
+
+            is AddExercisesScreenEvent.ImagePathUpdated -> {
+                imagePath = event.imagePath
+            }
         }
     }
 
-    sealed class UiEvent{
+    sealed class UiEvent {
         object AddPressed : UiEvent()
         object UpdatePressed : UiEvent()
         object ValidationFailed : UiEvent()
